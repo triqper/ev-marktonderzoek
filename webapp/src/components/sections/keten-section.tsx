@@ -35,7 +35,7 @@ const ketenRollen = [
   { rol: "EMSP", functie: "Levert de laadpas/app aan de eindgebruiker, factureert de klant", marge: "Marge op doorverkoop kWh (typisch enkele % tot ~15%)" },
   { rol: "Roamingplatform (OCPI-hub)", functie: "Koppelt CPO's en EMSP's technisch aan elkaar", marge: "Transactiefee per roaming-sessie" },
   { rol: "PSP", functie: "Verwerkt de daadwerkelijke geldtransactie", marge: "Transactiefee (interchange + PSP-marge)" },
-  { rol: "Bank/kaartuitgever", functie: "Faciliteert de onderliggende rekening/kaart", marge: "Interchange fee (klein, EU-gereguleerd)" },
+  { rol: "Bank/kaartuitgever", functie: "Faciliteert de onderliggende rekening/kaart", marge: "Interchange fee (klein, EU-gereguleerd: 0,2-0,3%)" },
 ];
 
 export function KetenSection() {

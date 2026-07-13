@@ -1,5 +1,13 @@
 {
   "_meta": { "framework": "Testing Business Ideas (Bland) + Lean Analytics — per top-aanname (A1, A2, A3, A7) een corporate-realistisch experiment" },
+  "juridische_quickscan": {
+    "aanname_id": "A6",
+    "omschrijving": "Juridische quickscan AFIR/PSD3 als onderdeel van Fase 1 (Desk Research & Expert Validation)",
+    "subtaken": [
+      "Vaststellen actuele PSD3/PSR-status: PSD3/PSR is een EU-wetgevingstraject (Commissievoorstel juni 2023), nog niet van kracht — verifieer de actuele triloog-/implementatiestatus bij aanvang van het validatietraject",
+      "Toetsen AFIR-reikwijdte op propositieniveau: verplichte contactloze kaartbetaling geldt alleen bij snelladers ≥50 kW (nieuw geplaatst vanaf april 2024, bestaand netwerk uiterlijk 2027); bij regulier AC-laden (<50 kW) is geen fysieke kaartlezer verplicht — Verordening (EU) 2023/1804, artikel 5, lid 1-2"
+    ]
+  },
   "experimenten": [
     {
       "aanname_id": "A1",

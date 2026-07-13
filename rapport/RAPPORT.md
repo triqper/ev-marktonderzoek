@@ -12,11 +12,13 @@
 
 ## 1. Executive Summary
 
-De Europese en Nederlandse EV-laadmarkt groeit hard: Nederland telt medio 2026 ca. **701.149 volledig elektrische personenauto's** [FEIT, RVO 2026] en **~210.000 publieke laadpunten** [FEIT, RVO 2026], terwijl de EU-brede BEV-nieuwverkoop in Q1 2026 een marktaandeel van **19,4%** bereikte [FEIT, ACEA 2026]. Dit vertaalt zich naar een geschat Nederlands publiek laadtransactievolume van **~95 miljoen transacties/jaar** en een publieke laadomzet van **~€950 miljoen/jaar** [SCHATTING, ±25%].
+De Europese en Nederlandse EV-laadmarkt groeit hard: Nederland telt medio 2026 ca. **701.149 volledig elektrische personenauto's** [FEIT, RVO 2026] en **~210.000 publieke laadpunten** [FEIT, RVO 2026], terwijl de EU-brede BEV-nieuwverkoop in Q1 2026 een marktaandeel van **19,4%** bereikte (Q1 2026; meest recente cijfer t/m mei 2026: 20%) [FEIT, ACEA 2026]. Dit vertaalt zich naar een geschat Nederlands publiek laadtransactievolume van **~60-100 miljoen transacties/jaar (middenscenario ~80 miljoen)** en een publieke laadomzet van **~€600-1.000 miljoen/jaar (midden ~€800 miljoen)** [SCHATTING, ±25%].
+
+> **Let op:** het BEV-nieuwverkoopcijfer is een EU-breed cijfer. De Nederlandse BEV-nieuwverkoop kromp begin 2026 door afbouw van fiscale voordelen (YTD mei 2026: -9,7% t.o.v. 2025), met pas in mei een licht herstel. De EU-groei wordt vooral gedragen door Duitsland, Frankrijk en Italië — het "hard groeiende markt"-frame geldt sterker voor de EU dan voor NL specifiek.
 
 Een bank die een geïntegreerde laad- en betaaloplossing in de app aanbiedt, speelt in op een reële markt met een duidelijke betaalketen-frictie: consumenten jongleren vandaag met meerdere laadpassen, apps en tarieven. De bank kan hier in theorie waarde toevoegen via vertrouwd betaalgemak, KYC-infrastructuur en bereik. **Echter: de kernaanname dat klanten specifiek via de bank-app willen laden — in plaats van via een bestaande laadpas of EMSP-app — is vandaag volledig onbewezen [AANNAME, hoogste risicoprioriteit in dit dossier].** Ook de marge-haalbaarheid is onzeker: de laadketen kent van nature dunne marges (CPO/EMSP-niveau doorgaans 5-15%), en het is niet vanzelfsprekend dat daar ruimte overblijft voor een extra financiële schakel.
 
-Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van **1% van alle Nederlandse publieke laadtransacties** (~950.000 transacties/jaar) bij een aannemelijke take-rate al een omzetpotentieel van **circa €0,5-1,4 miljoen/jaar** voor de bank kan opleveren [SCHATTING op basis van expliciete formules, zie hoofdstuk 8]; bij 10% marktaandeel loopt dit op tot **€5-14 miljoen/jaar**. Dit is aantrekkelijk genoeg om verder te valideren, maar te onzeker om nu al te investeren in een volledige bouw.
+Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van **1% van alle Nederlandse publieke laadtransacties** (~600.000-1.000.000 transacties/jaar) in het EMSP-model een omzetpotentieel van **circa €0,3-1,5 miljoen/jaar** voor de bank kan opleveren (in het conservatieve betaallaag-model: €30.000-150.000/jaar) [SCHATTING op basis van expliciete formules, zie hoofdstuk 6]; bij 10% marktaandeel loopt dit op tot **€3-15 miljoen/jaar** (EMSP-model). Dit is aantrekkelijk genoeg om verder te valideren, maar te onzeker om nu al te investeren in een volledige bouw.
 
 **Aanbeveling:** **Verder valideren, niet direct bouwen.** Start een 90-dagen validatietraject (hoofdstuk 12) met vier gerichte experimenten rond de meest risicovolle aannames (klantvraag, marge, technische integratie, gedragsverandering) voordat een investeringsbesluit voor een MVP of pilot wordt genomen. De totale kosten van dit validatietraject bedragen naar schatting €38.000-70.000 en 8-10 weken — een fractie van de kosten van een voortijdige bouw van een verkeerde propositie.
 
@@ -25,15 +27,15 @@ Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van *
 ## 2. Belangrijkste Inzichten (Top 10)
 
 1. De Nederlandse EV-markt is volwassen genoeg voor een serieuze propositie: 701.149 BEV's, 210.000 publieke laadpunten, groeiend [FEIT, RVO 2026].
-2. Stedelijke laadpalen (openbare weg) genereren het grootste transactievolume (~34%) maar de laagste besteding per sessie — dit is het lastigste segment om marge op te maken [SCHATTING].
-3. AC-laden domineert qua transactievolume (~68%) maar DC/HPC domineert qua omzet en energie — de waarde zit in een kleiner aantal grotere sessies [SCHATTING].
+2. Stedelijke laadpalen (openbare weg) genereren het grootste transactievolume (~35%) maar de laagste besteding per sessie — dit is het lastigste segment om marge op te maken [SCHATTING].
+3. AC-laden domineert qua transactievolume (~70%) maar DC/HPC domineert qua omzet en energie — de waarde zit in een kleiner aantal grotere sessies [SCHATTING].
 4. De betaalketen kent al meerdere schakels (CPO, EMSP, roamingplatform, PSP) die elk een marge nemen — een bank voegt een extra schakel toe, geen vervanging [FEIT/analyse, hoofdstuk 5].
-5. AFIR-regelgeving verplicht CPO's al tot directe contactloze kaartbetaling op de paal zelf — een bank-app-oplossing moet hier complementair aan zijn, niet mee concurreren [FEIT, EU-verordening 2023/1804].
+5. AFIR verplicht contactloze kaartbetaling alleen bij snelladers ≥50 kW (nieuw geplaatst vanaf april 2024, bestaand netwerk uiterlijk 2027). Bij regulier AC-laden (<50 kW, ~95% van het NL-netwerk) is geen fysieke kaartlezer verplicht — ad-hoc betaling via app/QR-code blijft daar de norm. Dit maakt het AC-segment relevanter voor een bank-app-oplossing dan het DC/HPC-segment [FEIT, Verordening (EU) 2023/1804 (AFIR), artikel 5, lid 1-2] — en versterkt inzicht 7 hieronder (particuliere thuislader/vakantierijder als kansrijkste segmenten).
 6. Er bestaan al witlabel-precedenten (Plugsurfing, vergelijkbare EMSP-platformen) die aantonen dat technische integratie via een partner haalbaar is zonder dat de bank zelf honderden CPO-koppelingen hoeft te bouwen [FEIT/analyse].
 7. De grootste commerciële kans zit niet bij de zakelijke lease-rijder (betaalstroom loopt al via werkgever) maar bij de **particuliere thuislader** en de **ad-hoc vakantierijder** — segmenten waar bankgemak een reëel alternatief is voor een aparte laadpas [SCHATTING, persona-analyse hoofdstuk 4].
 8. De kernaanname — willen klanten dit specifiek via de bank-app? — is de meest kritieke en tegelijk de minst onderbouwde aanname in dit hele dossier [AANNAME, risicoscore 20/25, hoogste in de matrix].
-9. Lage gebruiksfrequentie (gemiddeld 2-9 transacties/maand afhankelijk van laadtype) is een structureel obstakel voor gewoontevorming rond een nieuwe app-flow [SCHATTING].
-10. Bij 5% marktaandeel is de businesscase potentieel aantrekkelijk (~€2,4-7 miljoen omzet/jaar), maar dit scenario staat of valt met aannames die nu nog niet getest zijn — vandaar het advies om eerst te valideren, niet te bouwen.
+9. Lage gebruiksfrequentie (gemiddeld 1-2 tot 8-10 transacties/maand afhankelijk van laadtype) is een structureel obstakel voor gewoontevorming rond een nieuwe app-flow [SCHATTING].
+10. Bij 5% marktaandeel is de businesscase potentieel aantrekkelijk (~€1,5-7,5 miljoen omzet/jaar in het EMSP-model), maar dit scenario staat of valt met aannames die nu nog niet getest zijn — vandaar het advies om eerst te valideren, niet te bouwen.
 
 ---
 
@@ -41,52 +43,66 @@ Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van *
 
 ### 3.1 Omvang van de markt — NL, EU en kernlanden (2026, verwachting tot 2030)
 
-| Land | EV-park (BEV+PHEV) | Publieke laadpunten | Geschat jaarlijks laadtransactievolume | Geschatte publieke laadomzet/jaar |
-|---|---|---|---|---|
-| **Nederland** | ~931.000 (701.149 BEV [FEIT] + ~230.000 PHEV [SCHATTING]) | ~210.000 [FEIT] | ~95 miljoen [SCHATTING ±25%] | ~€950 mln [SCHATTING ±25%] |
-| **Duitsland** | ~2,98 mln (2,03 mln BEV [FEIT] + ~0,95 mln PHEV [SCHATTING]) | ~165.000 [SCHATTING ±15%] | ~78 miljoen [SCHATTING ±30%] | n.b. |
-| **Frankrijk** | ~2,5 mln geëlektrificeerd [FEIT, EAFO eind 2025] | ~155.000 [SCHATTING ±15%] | ~62 miljoen [SCHATTING ±30%] | n.b. |
-| **België** | ~480.000 [SCHATTING ±20%] | ~44.000 [SCHATTING ±20%] | ~17 miljoen [SCHATTING ±30%] | n.b. |
-| **Nordics (NO/SE/DK/FI)** | ~2,6 mln [SCHATTING ±20%], Zweden alleen: 755.000 [FEIT, EAFO] | ~95.000 [SCHATTING ±25%] | ~48 miljoen [SCHATTING ±30%] | n.b. |
-| **Verenigd Koninkrijk** | ~1,9 mln [SCHATTING ±20%] | ~82.000 [SCHATTING ±15%] | ~55 miljoen [SCHATTING ±30%] | n.b. |
-| **EU27 totaal** | ~19 mln (12,5 mln BEV + 6,5 mln PHEV) [SCHATTING ±20-25%] | ~1,6 mln (extrapolatie o.b.v. EAFO deelset van 1.155.861 uit 14/27 lidstaten) [SCHATTING ±20%] | ~620 miljoen [SCHATTING ±30%] | ~€7,4 mld [SCHATTING ±30%] |
+| Land | EV-park (BEV+PHEV) | Publieke laadpunten | Geschat jaarlijks laadtransactievolume | Geschatte publieke laadomzet/jaar | Bron |
+|---|---|---|---|---|---|
+| **Nederland** | ~1.244.500 (701.149 BEV [FEIT] + 543.355 PHEV [FEIT]) | ~210.000 [FEIT] | ~60-100 miljoen (midden ~80 mln) [SCHATTING ±25%] | ~€600-1.000 mln (midden ~€800 mln) [SCHATTING ±25%] | RVO, Stand van zaken elektrisch vervoer en laadpunten (peildatum juli 2026) |
+| **Duitsland** | ~2,98 mln (2,03 mln BEV [FEIT] + ~0,95 mln PHEV [SCHATTING]) | ~165.000 [SCHATTING ±15%] | ~78 miljoen [SCHATTING ±30%] | n.b. | BEV: EAFO (1-1-2026); PHEV: eigen schatting o.b.v. KBA |
+| **Frankrijk** | ~2,5 mln geëlektrificeerd [FEIT, EAFO eind 2025] | ~155.000 [SCHATTING ±15%] | ~62 miljoen [SCHATTING ±30%] | n.b. | EAFO; laadpunten: eigen schatting o.b.v. EAFO-aggregatie (secundair: Avere-France) |
+| **België** | ~480.000 [SCHATTING ±20%] | ~44.000 [SCHATTING ±20%] | ~17 miljoen [SCHATTING ±30%] | n.b. | Eigen schatting o.b.v. EAFO-trend (geen recent EAFO-parkcijfer) |
+| **Nordics (NO/SE/DK/FI)** | ~2,6 mln [SCHATTING ±20%], Zweden alleen: 755.000 [FEIT, EAFO] | ~95.000 [SCHATTING ±25%] | ~48 miljoen [SCHATTING ±30%] | n.b. | Zweden: EAFO (eind 2025); regio: eigen extrapolatie |
+| **Verenigd Koninkrijk** | ~1,9 mln [SCHATTING ±20%] | ~82.000 [SCHATTING ±15%] | ~55 miljoen [SCHATTING ±30%] | n.b. | Eigen schatting o.b.v. SMMT/ZapMap (VK valt buiten EAFO-kerndekking) |
+| **EU27 totaal** | ~19 mln (12,5 mln BEV + 6,5 mln PHEV) [SCHATTING ±20-25%] | ~1,6 mln (extrapolatie o.b.v. EAFO deelset van 1.155.861 uit 14/27 lidstaten) [SCHATTING ±20%] | ~620 miljoen [SCHATTING ±30%] | ~€7,4 mld [SCHATTING ±30%] | EAFO-deelset + eigen extrapolatie; parkcijfers: IEA/ACEA |
 
-**Groeivooruitzicht tot 2030 [AANNAME, macro-extrapolatie]:** bij aanhoudende BEV-nieuwverkoopgroei van het huidige tempo (EU BEV-aandeel steeg van 17,4% in 2025 naar 19,4% in Q1 2026 [FEIT, ACEA]) is een verdrievoudiging tot verviervoudiging van het EU-brede laadtransactievolume richting 2030 een redelijke ordegrootte-verwachting, in lijn met de EU Fit-for-55/AFIR-doelstellingen voor laadinfrastructuur. Dit is een macro-extrapolatie, geen voorspelling — de daadwerkelijke groeicurve hangt af van batterijprijzen, subsidiebeleid en netcapaciteit.
+*Bronherijking: waar mogelijk zijn de landencijfers geüniformeerd op EAFO (European Alternative Fuels Observatory, Europese Commissie). Waar EAFO geen recent cijfer publiceert, is de SCHATTING-markering behouden en is per rij vermeld welke bron wél is gebruikt.*
+
+**Toelichting NL-stekkerpark en transactiemodel.** Het PHEV-cijfer (543.355) is een RVO-feit met peildatum juli 2026 en corrigeert een eerdere eigen schatting van ~230.000 (factor 2,3 te laag); het totale NL-stekkerpark komt daarmee op ~1.244.500. Belangrijk voor de interpretatie: PHEV's laden gemiddeld minder frequent publiek dan BEV's. Het transactiemodel achter de kolom "laadtransactievolume" (zie `lib/calculations.ts` en hoofdstuk 6) is **laadpunt-gebaseerd** (publieke laadpunten × sessiefrequentie) en dus niet 1-op-1 aan het BEV- of PHEV-park gekoppeld — dit is een expliciete modelaanname. De ~210.000 (semi-)publieke laadpunten bestaan uit ~119.000 regulier publiek (openbare weg), ~80.000 semi-publiek (parkeerterreinen winkels/bedrijven) en ~6.000 snelladers [FEIT, RVO/Nationale Agenda Laadinfrastructuur, begin 2026].
+
+**Groeivooruitzicht tot 2030 [AANNAME, macro-extrapolatie]:**
+- **EU-scenario:** bij aanhoudende BEV-nieuwverkoopgroei van het huidige tempo (EU BEV-aandeel steeg van 17,4% in 2025 naar 19,4% in Q1 2026; t/m mei 2026: 20% [FEIT, ACEA]) is een verdrievoudiging tot verviervoudiging van het EU-brede laadtransactievolume richting 2030 een redelijke ordegrootte-verwachting, in lijn met de EU Fit-for-55/AFIR-doelstellingen voor laadinfrastructuur.
+- **NL-scenario (voorzichtiger):** de Nederlandse BEV-nieuwverkoop kromp begin 2026 door afbouw van fiscale voordelen (YTD mei 2026: -9,7% t.o.v. 2025). Voor Nederland is daarom een groei van het laadtransactievolume met ×2 tot ×3 richting 2030 een realistischer bandbreedte, gegeven aflopende fiscale prikkels.
+
+Dit is een macro-extrapolatie, geen voorspelling — de daadwerkelijke groeicurve hangt af van batterijprijzen, subsidiebeleid en netcapaciteit.
 
 ### 3.2 Transactievolume & technische segmentatie (AC / DC / HPC)
 
+> **Modelmatige extrapolatie** o.b.v. het Nationaal Laadonderzoek (VER/RUG/RVO) en de NAL Voortgangsrapportage 2025; werkelijke waarden kunnen ±20-30% afwijken. Waarden zijn bewust afgerond om schijnprecisie te vermijden (percentages op 5%-stappen, bedragen op €0,50, tijden op 5-10 min, frequenties als bandbreedte).
+
 | Segment | Aandeel transacties | Aandeel omzet | Aandeel energie | Gem. transactiewaarde | Gem. kWh/sessie | Gem. sessieduur | Transacties/gebruiker/maand |
 |---|---|---|---|---|---|---|---|
-| **AC** (≤22 kW) | 68% | 38% | 42% | €6,50 | 12,5 kWh | 145 min | 9,2 |
-| **DC** (50-150 kW) | 26% | 41% | 39% | €15,80 | 21,6 kWh | 32 min | 2,8 |
-| **HPC** (>150 kW) | 6% | 21% | 19% | €28,40 | 34,2 kWh | 22 min | 1,1 |
+| **AC** (≤22 kW) | ~70% | ~40% | ~40% | ~€6,50 | ~12,5 kWh | ~145 min | 8-10 |
+| **DC** (50-150 kW) | ~25% | ~40% | ~40% | ~€16 | ~22 kWh | ~30 min | 2-4 |
+| **HPC** (>150 kW) | ~5% | ~20% | ~20% | ~€28,50 | ~34 kWh | ~20 min | 1-2 |
 
-*Alle waarden in deze tabel: [SCHATTING], analytisch model o.b.v. ElaadNL Nationaal Laadonderzoek 2023 als referentiekader met extrapolatie naar 2026 — zie `data/market-data.json`.*
+*Alle waarden in deze tabel: [SCHATTING], analytisch model met het Nationaal Laadonderzoek (VER/RUG/RVO, meest recente 5e editie) als referentiekader, geëxtrapoleerd naar 2026 — zie `data/market-data.json`. Door afronding tellen aandelen niet altijd exact op tot 100%.*
 
 **Inzicht:** AC-laden is volumedrager maar geen waardedrager; HPC is een klein deel van het volume maar levert disproportioneel veel omzet en energie. Voor een bankpropositie betekent dit dat puur op transactievolume sturen (bijv. focus op stedelijk AC-laden) tot lage omzet per klant leidt, terwijl DC/HPC een hogere transactiewaarde heeft maar minder frequent voorkomt.
 
 ### 3.3 Differentiatie naar laadlocaties
 
+> **Modelmatige extrapolatie** o.b.v. het Nationaal Laadonderzoek (VER/RUG/RVO); werkelijke waarden kunnen ±20-30% afwijken. Waarden afgerond conform de afrondingsregel in §3.2.
+
 | Locatietype | Aandeel transacties | Gem. sessieduur | Gem. besteding | Gebruiksfrequentie | Typisch gebruikersprofiel |
 |---|---|---|---|---|---|
-| Snelweg/tankstation | 22% | 24 min | €24,50 | Hoog, piekgebonden | Zakelijk, lange afstand, vakantie |
-| Stedelijke laadpaal (openbare weg) | 34% | 210 min | €7,80 | Zeer hoog, dagelijks | Bewoner zonder eigen oprit |
-| Woonwijk (bestemming) | 12% | 320 min | €6,20 | Hoog, overwegend nacht | Particuliere EV-bezitter |
-| Werkplek | 16% | 260 min | €8,10 | Werkdagen | Lease-rijder, forens |
-| Supermarkt/retail | 9% | 38 min | €9,40 | Middel | Particulier, forens |
-| Destination (horeca/hotel) | 7% | 95 min | €11,60 | Laag-middel | Vakantierijder |
+| Snelweg/tankstation | ~20% | ~25 min | ~€24,50 | Hoog, piekgebonden | Zakelijk, lange afstand, vakantie |
+| Stedelijke laadpaal (openbare weg) | ~35% | ~210 min | ~€8 | Zeer hoog, dagelijks | Bewoner zonder eigen oprit |
+| Woonwijk (bestemming) | ~10% | ~320 min | ~€6 | Hoog, overwegend nacht | Particuliere EV-bezitter |
+| Werkplek | ~15% | ~260 min | ~€8 | Werkdagen | Lease-rijder, forens |
+| Supermarkt/retail | ~10% | ~40 min | ~€9,50 | Middel | Particulier, forens |
+| Destination (horeca/hotel) | ~5% | ~95 min | ~€11,50 | Laag-middel | Vakantierijder |
 
-*Alle waarden: [SCHATTING] — zie toelichting §3.2.*
+*Alle waarden: [SCHATTING] — zie toelichting §3.2. Door afronding tellen aandelen niet exact op tot 100%.*
 
 ### 3.4 Laadpersona's
 
+> **Modelmatige extrapolatie** o.b.v. RDW-kentekensegmentatie en het Nationaal Laadonderzoek (VER/RUG/RVO); werkelijke waarden kunnen ±20-30% afwijken. Percentages afgerond op 5%-stappen.
+
 | Persona | Marktaandeel EV-park | Aandeel laadtransacties | AC/DC-voorkeur | Prijsgevoeligheid | Relevantie bankpropositie |
 |---|---|---|---|---|---|
-| Zakelijke lease-forens | 34% | 30% | AC werkplek/thuis | Laag | **Laag-middel** — werkgever betaalt, bank zit buiten beslisketen |
-| Particuliere thuislader | 38% | 22% | AC thuis, publiek incidenteel | Hoog | **Hoog** — zoekt actief overzicht/besparing |
-| Stadsbewoner zonder oprit | 14% | 27% | AC, lange sessies | Hoog | **Middel** — grootste volume, maar concessie-gebonden |
-| Veelrijder/logistiek | 4% | 11% | DC/HPC | Middel | **Middel** — interessant voor MKB-vlootbeheer, smal segment |
-| Vakantie-/weekendrijder | 6% | 5% | HPC snelweg | Middel | **Hoog** — ad-hoc gebruik = laagste omschakeldrempel |
+| Zakelijke lease-forens | ~35% | ~30% | AC werkplek/thuis | Laag | **Laag-middel** — werkgever betaalt, bank zit buiten beslisketen |
+| Particuliere thuislader | ~40% | ~20% | AC thuis, publiek incidenteel | Hoog | **Hoog** — zoekt actief overzicht/besparing |
+| Stadsbewoner zonder oprit | ~15% | ~25% | AC, lange sessies | Hoog | **Middel** — grootste volume, maar concessie-gebonden |
+| Veelrijder/logistiek | ~5% | ~10% | DC/HPC | Middel | **Middel** — interessant voor MKB-vlootbeheer, smal segment |
+| Vakantie-/weekendrijder | ~5% | ~5% | HPC snelweg | Middel | **Hoog** — ad-hoc gebruik = laagste omschakeldrempel |
 
 *Bron: `data/personas.json`, [SCHATTING/AANNAME] — analytisch gemodelleerd, geen primair enquêteonderzoek binnen dit dossier uitgevoerd.*
 
@@ -104,7 +120,7 @@ Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van *
 | **EMSP** (eMobility Service Provider) | Levert de laadpas/app aan de eindgebruiker, factureert de klant | Marge op doorverkoop kWh (typisch enkele tot ~15%) |
 | **Roamingplatform (OCPI-hub)** | Koppelt CPO's en EMSP's technisch aan elkaar, zodat één pas overal werkt | Transactiefee per roaming-sessie |
 | **PSP** (Payment Service Provider) | Verwerkt de daadwerkelijke geldtransactie (kaart/incasso) | Transactiefee (interchange + PSP-marge) |
-| **Bank/kaartuitgever** | Faciliteert de onderliggende rekening/kaart | Interchange fee (klein, gereguleerd binnen EU) |
+| **Bank/kaartuitgever** | Faciliteert de onderliggende rekening/kaart | Interchange fee (klein, EU-gereguleerd: 0,2-0,3% voor consumentenkaarten) |
 | **Laadpas/app (fysiek/digitaal)** | Het klantinterface tussen gebruiker en EMSP | Onderdeel van EMSP-propositie |
 
 **ASCII-schema geld- en datastroom bij een publieke laadtransactie:**
@@ -175,7 +191,7 @@ Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van *
 ### 5.2 Risico's
 
 - **Strategisch:** risico op focusverlies — mobility valt buiten de kernactiviteit (betalen/sparen/lenen) van de meeste banken; reputatieschade bij een mislukte lancering.
-- **Juridisch (AFIR/PSD3):** AFIR verplicht CPO's al tot contactloze kaartbetaling op de paal — een bank-app-laag moet hier complementair aan zijn. PSD3 (in ontwikkeling) kan aanvullende eisen stellen aan de rol van banken als betaalintermediair in nieuwe verticals. *Dit vereist gerichte juridische toetsing — buiten de scope van dit marktdossier.*
+- **Juridisch (AFIR/PSD3):** AFIR verplicht contactloze kaartbetaling alleen bij snelladers ≥50 kW (nieuw geplaatst vanaf april 2024, bestaand netwerk uiterlijk 2027). Bij regulier AC-laden (<50 kW, ~95% van het NL-netwerk) is geen fysieke kaartlezer verplicht — ad-hoc betaling via app/QR-code blijft daar de norm. Dit maakt het AC-segment relevanter voor een bank-app-oplossing dan het DC/HPC-segment [FEIT, Verordening (EU) 2023/1804, artikel 5, lid 1-2]. PSD3 kan aanvullende eisen stellen aan de rol van banken als betaalintermediair in nieuwe verticals [AANNAME — PSD3/PSR is een EU-wetgevingstraject (Commissievoorstel juni 2023), nog niet van kracht; verifieer de actuele triloog-/implementatiestatus bij aanvang van het validatietraject, zie hoofdstuk 8, Fase 1]. *Dit vereist gerichte juridische toetsing — buiten de scope van dit marktdossier.*
 - **Operationeel:** afhankelijkheid van een technische partner (EMSP/roamingplatform) voor dekking; laadpaal-uptime en -dekking liggen buiten de controle van de bank.
 - **Commercieel:** dunne marges in de keten (zie hoofdstuk 4) laten mogelijk weinig ruimte voor een extra schakel zonder de eindprijs voor de klant te verhogen — wat weer de aantrekkelijkheid t.o.v. bestaande opties ondermijnt.
 
@@ -188,7 +204,7 @@ Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van *
 ### 6.1 Expliciete formules
 
 ```
-(1) Totaal NL publieke laadtransacties/jaar (T_totaal)      = 95.000.000  [SCHATTING, zie market-data.json]
+(1) Totaal NL publieke laadtransacties/jaar (T_totaal)      = 60 / 80 / 100 miljoen (laag/midden/hoog)  [SCHATTING, zie market-data.json]
 (2) Marktaandeel bank (s)                                    = 1% / 5% / 10%  [scenario-variabelen]
 (3) Transacties bank (T_bank)                                 = T_totaal × s
 (4) Gemiddelde transactiewaarde (v)                            = €10,00  [SCHATTING, gewogen gemiddelde AC/DC/HPC-mix]
@@ -197,15 +213,21 @@ Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van *
 (7) Bruto-omzet bank                                            = TPV × m
 ```
 
+*Onderbouwing T_totaal-bandbreedte: bottom-up check op basis van ~205.000 publieke punten × gemiddelde sessiefrequentie geeft 60-100 mln; de eerdere puntschatting van 95 mln zit aan de bovenkant van deze range. Externe kalibratiecheck: Vattenfall InCharge rapporteert ~8 mln publieke sessies/jaar bij één CPO (2025, +68% YoY). Het model is laadpunt-gebaseerd en maakt geen onderscheid tussen BEV- en PHEV-laadgedrag — zie §3.1 en `lib/calculations.ts`.*
+
 ### 6.2 Scenariotabel
 
-| Scenario | Marktaandeel | Transacties/jaar | TPV | Omzet bij m=0,5% | Omzet bij m=1,0% | Omzet bij m=1,5% |
-|---|---|---|---|---|---|---|
-| **Scenario 1** | 1% | 950.000 | €9.500.000 | €47.500 | €95.000 | €142.500 |
-| **Scenario 2** | 5% | 4.750.000 | €47.500.000 | €237.500 | €475.000 | €712.500 |
-| **Scenario 3** | 10% | 9.500.000 | €95.000.000 | €475.000 | €950.000 | €1.425.000 |
+Elke cel toont de laag-hoog-bandbreedte van T_totaal (60-100 mln); het middenscenario (80 mln) staat tussen haakjes waar relevant.
 
-**Let op — herziening t.o.v. Executive Summary:** de Executive Summary noemt bredere ranges (€0,5-1,4 mln bij 1%, €5-14 mln bij 10%) omdat daar ook hogere take-rate-varianten (tot 15%, zoals bij een volwaardige EMSP-marge in plaats van een dunne betaal-toeslag) zijn meegenomen. Deze tabel toont het conservatieve scenario waarbij de bank puur een betaalmarge pakt (0,5-1,5%, vergelijkbaar met interchange-achtige economics). Het bredere scenario (EMSP-achtige marge van 5-15% op de volledige kWh-waarde) staat in §6.3.
+| Scenario | Marktaandeel | Transacties/jaar (laag-hoog) | TPV (laag-hoog) | Omzet bij m=0,5% | Omzet bij m=1,0% | Omzet bij m=1,5% |
+|---|---|---|---|---|---|---|
+| **Scenario 1** | 1% | 600.000-1.000.000 (midden 800.000) | €6-10 mln (midden €8 mln) | €30.000-50.000 | €60.000-100.000 | €90.000-150.000 |
+| **Scenario 2** | 5% | 3,0-5,0 mln (midden 4,0 mln) | €30-50 mln (midden €40 mln) | €150.000-250.000 | €300.000-500.000 | €450.000-750.000 |
+| **Scenario 3** | 10% | 6,0-10,0 mln (midden 8,0 mln) | €60-100 mln (midden €80 mln) | €300.000-500.000 | €600.000-1.000.000 | €900.000-1.500.000 |
+
+> Gecombineerde onzekerheid in volume, transactiewaarde en take-rate betekent dat de werkelijke jaaromzet een factor 3-5 kan afwijken van de middenwaarde in bovenstaande tabel.
+
+**Let op — herziening t.o.v. Executive Summary:** de Executive Summary noemt bredere ranges (€0,3-1,5 mln bij 1%, €3-15 mln bij 10%) omdat daar ook hogere take-rate-varianten (tot 15%, zoals bij een volwaardige EMSP-marge in plaats van een dunne betaal-toeslag) zijn meegenomen. Deze tabel toont het conservatieve betaallaag-scenario (0,5-1,5% totale take-rate, vergelijkbaar met PSP-/acquiring-marges). Ter referentie: zuivere interchange is in de EU gereguleerd op 0,2% (debit) / 0,3% (credit) voor consumentenkaarten [FEIT, Verordening (EU) 2015/751, Interchange Fee Regulation] en is op zichzelf dus geen zelfstandig verdienmodel voor de bank. Het bredere scenario (EMSP-achtige marge van 5-15% op de volledige kWh-waarde) staat in §6.3.
 
 ### 6.3 Alternatief verdienmodel: volledige EMSP-marge i.p.v. betaalmarge
 
@@ -215,11 +237,13 @@ Indien de bank niet alleen de betaling faciliteert maar als volwaardige EMSP opt
 Omzet bank (EMSP-model) = TPV × m_emsp,  met m_emsp = 5%-15%
 ```
 
-| Scenario | TPV | Omzet bij m=5% | Omzet bij m=10% | Omzet bij m=15% |
+| Scenario | TPV (laag-hoog) | Omzet bij m=5% | Omzet bij m=10% | Omzet bij m=15% |
 |---|---|---|---|---|
-| 1% marktaandeel | €9.500.000 | €475.000 | €950.000 | €1.425.000 |
-| 5% marktaandeel | €47.500.000 | €2.375.000 | €4.750.000 | €7.125.000 |
-| 10% marktaandeel | €95.000.000 | €4.750.000 | €9.500.000 | €14.250.000 |
+| 1% marktaandeel | €6-10 mln | €0,3-0,5 mln | €0,6-1,0 mln | €0,9-1,5 mln |
+| 5% marktaandeel | €30-50 mln | €1,5-2,5 mln | €3,0-5,0 mln | €4,5-7,5 mln |
+| 10% marktaandeel | €60-100 mln | €3,0-5,0 mln | €6,0-10,0 mln | €9,0-15,0 mln |
+
+> Gecombineerde onzekerheid in volume, transactiewaarde en take-rate betekent dat de werkelijke jaaromzet een factor 3-5 kan afwijken van de middenwaarde in bovenstaande tabel.
 
 *Dit EMSP-model verklaart de bredere range in de Executive Summary. Welk model realistisch is, hangt direct af van de propositiekeuze (pure betaallaag vs. volwaardig EMSP) — dit is zelf een te valideren strategische keuze, geen vaststaand gegeven.*
 
@@ -271,7 +295,7 @@ Omzet bank (EMSP-model) = TPV × m_emsp,  met m_emsp = 5%-15%
 
 ### Fase 1: Desk Research & Expert Validation (Week 1-2)
 - Doel: elimineer bekende onzekerheden met harde secundaire data (dit rapport is hiervan de eerste iteratie).
-- Activiteiten: verdiepend marktonderzoek per segment, juridische quickscan AFIR/PSD3, expertinterviews CPO/EMSP-finance (start A2).
+- Activiteiten: verdiepend marktonderzoek per segment, juridische quickscan AFIR/PSD3 (incl. subtaak: vaststellen actuele PSD3/PSR-status — het Commissievoorstel uit juni 2023 is nog niet van kracht), expertinterviews CPO/EMSP-finance (start A2).
 - **Kill/pivot/go:** Go indien marge-model uit A2 een plausibel positief scenario toont; anders pivot naar alternatief verdienmodel of stop.
 
 ### Fase 2: Probleem- & Waardevalidatie (Week 2-4)
@@ -321,19 +345,24 @@ Dit rapport is expliciet **niet** bedoeld als vervanging van deze vervolgstappen
 ## 11. Bijlage — Bronnenlijst
 
 **Internationaal/Publiek:**
-- ACEA (European Automobile Manufacturers' Association) — *New car registrations: full year 2025 & Q1 2026*, 2026.
-- EAFO (European Alternative Fuels Observatory, Europese Commissie) — *Data updates en landenrapportages*, 2025-2026.
-- Europese Commissie — AFIR-verordening (EU) 2023/1804, Alternative Fuels Infrastructure Regulation.
+- ACEA (European Automobile Manufacturers' Association) — *New car registrations*, persberichten (maandelijks): full year 2025, Q1 2026 en mei 2026 YTD, https://www.acea.auto/pc-registrations/. <!-- LLM-verwerkbaarheid: direct verwerkbaar -->
+- EAFO (European Alternative Fuels Observatory, Europese Commissie) — *Data updates en landenrapportages*, 2025-2026; gebruikt als uniforme bron voor de landenvergelijking in §3.1. <!-- LLM-verwerkbaarheid: direct verwerkbaar -->
+- Europese Commissie — AFIR-verordening (EU) 2023/1804, Alternative Fuels Infrastructure Regulation (m.n. artikel 5, lid 1-2 inzake betaalvereisten).
+- Europese Commissie — Verordening (EU) 2015/751 (Interchange Fee Regulation): interchange-plafond 0,2% (debit) / 0,3% (credit) voor consumentenkaarten.
 - EEA (European Environment Agency) — *New registrations of electric vehicles*, indicatorrapportage.
 
 **Nederlandse overheid & validatie-instellingen:**
-- RVO.nl — *Stand van zaken elektrisch vervoer en laadpunten*, 2026.
-- ElaadNL — *Nationaal Laadonderzoek 2023* (referentiekader voor gebruikspatronen).
+- RVO.nl — *Stand van zaken elektrisch vervoer en laadpunten* (maandelijks bijgewerkt), https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken — peildatum juli 2026; bron voor park- en verkoopcijfers, incl. het PHEV-park (543.355). <!-- LLM-verwerkbaarheid: direct verwerkbaar -->
+- Nationaal Laadonderzoek (samenwerking Vereniging Elektrische Rijders (VER), Rijksuniversiteit Groningen (RUG) en RVO) — meest recente 5e editie, 3.500+ respondenten; referentiekader voor gebruikspatronen (§3.2/3.3). Volledig rapport via de VER-website. *NB: eerdere versies van dit dossier schreven dit onderzoek onterecht primair toe aan ElaadNL.* <!-- LLM-verwerkbaarheid: verwerkbaar, vervangt verouderde bron (ElaadNL 2023) -->
+- NAL Voortgangsrapportage 2025 (Nationale Agenda Laadinfrastructuur, gepubliceerd april 2026) — plaatsingstempo, laadmix en laaddrukanalyse (aanvullende bron voor §3.2/3.3). <!-- LLM-verwerkbaarheid: verwerkbaar (PDF-tabellen) -->
+- CBS StatLine (wagenpark, historische reeksen) — vrij toegankelijke open API. <!-- LLM-verwerkbaarheid: direct verwerkbaar (open API) -->
 
 **Marktdata/prijsvergelijking (secundair, ter onderbouwing van tariefniveaus):**
 - MyVoltCost, Charge24, ANWB, Consumentenbond — laadtariefvergelijkingen NL, 2026.
+- DOT-NL — actuele laadtarieven. <!-- LLM-verwerkbaarheid: beperkt — vergt aggregatie vóór gebruik -->
+- Vattenfall InCharge — jaarcijfers (~8 mln publieke laadsessies/jaar, 2025, +68% YoY); gebruikt als kalibratiecheck op het sessievolume-model. <!-- LLM-verwerkbaarheid: beperkt — één CPO, alleen als sanity check -->
 
 **Eigen analyse:**
-- Alle als [SCHATTING] of [AANNAME] gelabelde cijfers zijn eigen analytische extrapolaties van bovenstaande bronnen, uitgevoerd t.b.v. dit dossier — geraadpleegd juli 2026. Zie `/data/*.json` voor het volledige, herleidbare cijferregister per databronvermelding.
+- Alle als [SCHATTING] of [AANNAME] gelabelde cijfers zijn eigen analytische extrapolaties van bovenstaande bronnen, uitgevoerd t.b.v. dit dossier — geraadpleegd juli 2026. Zie `/data/*.json` voor het volledige, herleidbare cijferregister per databronvermelding (elk cijferobject bevat een `data_asof`-peildatum en waar beschikbaar een `source_url`).
 
-**Kanttekening bij bronnenhiërarchie:** dit dossier kon binnen de beschikbare tijd en toegang geen betaalde consultancyrapporten (McKinsey, Deloitte, EY, PwC, Roland Berger, BCG) of ACM/BOVAG/CBS-microdata raadplegen. Waar dergelijke bronnen normaliter de voorkeur zouden hebben boven eigen extrapolatie, is dit expliciet benoemd als kennishiaat in hoofdstuk 10.
+**Kanttekening bij bronnenhiërarchie:** dit dossier kon binnen de beschikbare tijd en toegang geen betaalde consultancyrapporten (McKinsey, Deloitte, EY, PwC, Roland Berger, BCG) raadplegen. CBS-macrodata is via StatLine wél vrij toegankelijk en is als bron opgenomen; het werkelijke kennishiaat zit bij **microdata en niet-openbare CPO-transactiedata** (bijv. sessie-niveau data van individuele exploitanten en niet-gepubliceerde ACM/BOVAG-detailanalyses). Waar dergelijke bronnen normaliter de voorkeur zouden hebben boven eigen extrapolatie, is dit expliciet benoemd als kennishiaat in hoofdstuk 10.

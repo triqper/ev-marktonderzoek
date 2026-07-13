@@ -24,10 +24,34 @@ export function MarktSection() {
         />
 
         <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <KpiCard label="NL private thuisladers" value="667.000" type="FEIT" sublabel="RVO.nl, 2026" />
-          <KpiCard label="EU27 BEV-nieuwverkoop Q1 2026" value="19,4%" type="FEIT" sublabel="ACEA, Q1 2026" />
-          <KpiCard label="EU27 geschat laadpuntenpark" value="~1,6 mln" type="SCHATTING" sublabel="Extrapolatie EAFO-deelset" />
-          <KpiCard label="Gem. publiek laadtarief NL" value="€0,48/kWh" type="FEIT" sublabel="Prijsvergelijkers, 2026" />
+          <KpiCard
+            label="NL private thuisladers"
+            value="667.000"
+            type="FEIT"
+            sublabel="RVO.nl, 2026"
+            tooltip="data_asof: juli 2026 — RVO, Stand van zaken elektrisch vervoer en laadpunten."
+          />
+          <KpiCard
+            label="EU27 BEV-nieuwverkoop Q1 2026"
+            value="19,4%"
+            type="FEIT"
+            sublabel="ACEA, Q1 2026 (t/m mei: 20%)"
+            tooltip="data_asof: 2026-03-31 (Q1); actualisering t/m mei 2026: 20% (ACEA). Let op: EU-breed cijfer — NL BEV-nieuwverkoop kromp begin 2026 (YTD mei: -9,7%) door afbouw van fiscale voordelen."
+          />
+          <KpiCard
+            label="EU27 geschat laadpuntenpark"
+            value="~1,6 mln"
+            type="SCHATTING"
+            sublabel="Extrapolatie EAFO-deelset"
+            tooltip="data_asof: begin 2026 — extrapolatie van EAFO-deelset (1.155.861 punten, 14/27 lidstaten) naar EU27."
+          />
+          <KpiCard
+            label="Gem. publiek laadtarief NL"
+            value="€0,48/kWh"
+            type="FEIT"
+            sublabel="Prijsvergelijkers, 2026"
+            tooltip="data_asof: juli 2026 — MyVoltCost/Charge24/Consumentenbond-tariefvergelijkingen."
+          />
         </div>
 
         <Tabs defaultValue="omvang">
@@ -42,6 +66,12 @@ export function MarktSection() {
           </TabsContent>
 
           <TabsContent value="segmentatie" className="space-y-6 pt-4">
+            <p className="text-sm text-muted-foreground">
+              Modelmatige extrapolatie o.b.v. het Nationaal Laadonderzoek (VER/RUG/RVO) en de NAL
+              Voortgangsrapportage 2025; werkelijke waarden kunnen ±20-30% afwijken. Waarden bewust
+              afgerond (percentages op 5%-stappen, bedragen op €0,50, tijden op 5-10 min,
+              frequenties als bandbreedte).
+            </p>
             <SegmentatieChart />
             <div className="overflow-x-auto rounded-lg border border-border">
               <Table>
@@ -73,6 +103,11 @@ export function MarktSection() {
           </TabsContent>
 
           <TabsContent value="locaties" className="space-y-6 pt-4">
+            <p className="text-sm text-muted-foreground">
+              Modelmatige extrapolatie o.b.v. het Nationaal Laadonderzoek (VER/RUG/RVO); werkelijke
+              waarden kunnen ±20-30% afwijken. Waarden afgerond; aandelen tellen door afronding
+              niet exact op tot 100%.
+            </p>
             <LocatieTreemap />
             <div className="overflow-x-auto rounded-lg border border-border">
               <Table>

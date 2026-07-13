@@ -92,7 +92,8 @@ succesvol doorlopen bij oplevering (zie "Zelfcontrole" hieronder).
 ## Belangrijkste beperking
 
 Dit dossier is samengesteld uit publiek toegankelijke bronnen (RVO, ACEA, EAFO,
-ElaadNL, prijsvergelijkers) geraadpleegd in juli 2026, aangevuld met transparant
+het Nationaal Laadonderzoek (VER/RUG/RVO), de NAL Voortgangsrapportage 2025,
+CBS StatLine en prijsvergelijkers) geraadpleegd in juli 2026, aangevuld met transparant
 onderbouwde macro-schattingen waar directe brondata ontbrak. Er is **geen**
 primair klantonderzoek, geen toegang tot betaalde consultancyrapporten en geen
 geverifieerde CPO/EMSP-transactiedata gebruikt. Zie hoofdstuk 10 van het rapport

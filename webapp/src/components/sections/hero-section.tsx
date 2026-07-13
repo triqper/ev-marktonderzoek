@@ -36,19 +36,33 @@ export function HeroSection() {
         </motion.div>
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <KpiCard label="NL publieke laadpunten" value="210.000" type="FEIT" sublabel="RVO.nl, 2026" />
-          <KpiCard label="NL BEV-park" value="701.149" type="FEIT" sublabel="RVO.nl, 2026" />
+          <KpiCard
+            label="NL publieke laadpunten"
+            value="210.000"
+            type="FEIT"
+            sublabel="RVO.nl, 2026"
+            tooltip="data_asof: juli 2026 — RVO, Stand van zaken elektrisch vervoer en laadpunten. Uitsplitsing: ~119.000 regulier publiek, ~80.000 semi-publiek, ~6.000 snelladers."
+          />
+          <KpiCard
+            label="NL BEV-park"
+            value="701.149"
+            type="FEIT"
+            sublabel="RVO.nl, 2026"
+            tooltip="data_asof: juli 2026 — RVO. Daarnaast 543.355 PHEV's (FEIT, RVO): totaal stekkerpark ~1.244.500."
+          />
           <KpiCard
             label="Geschat NL transactievolume"
-            value="~95 mln/jaar"
+            value="~60-100 mln/jaar"
             type="SCHATTING"
-            sublabel="±25% foutmarge"
+            sublabel="midden ~80 mln, ±25%"
+            tooltip="data_asof: juli 2026 — laadpunt-gebaseerd model (niet BEV/PHEV-specifiek), zie data/market-data.json. Kalibratie: Vattenfall InCharge ~8 mln sessies/jr bij één CPO (2025)."
           />
           <KpiCard
             label="Omzetpotentieel bank (5% aandeel, EMSP-model)"
-            value="€2,4-7,1 mln/jr"
+            value="€1,5-7,5 mln/jr"
             type="SCHATTING"
             sublabel="Zie interactieve scenario's"
+            tooltip="data_asof: juli 2026 — doorgerekend over T_totaal 60-100 mln en EMSP-marge 5-15%. Werkelijke jaaromzet kan factor 3-5 afwijken van de middenwaarde."
           />
         </div>
       </div>

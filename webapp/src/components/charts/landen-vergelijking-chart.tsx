@@ -10,7 +10,7 @@ import { formatNumber } from "@/lib/utils";
 const landen = marketData.landen as any;
 
 const data = [
-  { land: "Nederland", evPark: 701149 + 230000, laadpunten: 210000 },
+  { land: "Nederland", evPark: 701149 + 543355, laadpunten: 210000 },
   { land: "Duitsland", evPark: 2034260 + 950000, laadpunten: 165000 },
   { land: "Frankrijk", evPark: 2500000, laadpunten: 155000 },
   { land: "Nordics", evPark: 2600000, laadpunten: 95000 },
@@ -26,7 +26,7 @@ export function LandenVergelijkingChart() {
       type="SCHATTING"
       data={data}
       filename="landen-vergelijking"
-      footnote="NL- en DE-BEV-cijfers zijn FEIT (RVO/EAFO); PHEV-restpark en overige landen zijn SCHATTING met foutmarge — zie data/market-data.json."
+      footnote="NL-cijfers (incl. 543.355 PHEV, data_asof juli 2026) en DE-BEV zijn FEIT (RVO/EAFO); DE-PHEV en overige landen zijn SCHATTING met foutmarge. Waar mogelijk geüniformeerd op EAFO; per rij is de gebruikte bron vastgelegd in data/market-data.json."
     >
       <ResponsiveContainer width="100%" height={320}>
         <BarChart data={data} layout="vertical" margin={{ left: 8, right: 16, top: 8, bottom: 8 }}>

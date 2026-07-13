@@ -38,7 +38,7 @@ export function SegmentatieChart() {
       type="SCHATTING"
       data={data}
       filename="segmentatie-laadtype"
-      footnote="Analytisch model o.b.v. ElaadNL Nationaal Laadonderzoek 2023 als referentiekader — zie data/market-data.json."
+      footnote="Analytisch model o.b.v. het Nationaal Laadonderzoek (VER/RUG/RVO, 5e editie) en de NAL Voortgangsrapportage 2025 als referentiekader — zie data/market-data.json. Waarden afgerond; ±20-30% mogelijk."
     >
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data} margin={{ left: 0, right: 16, top: 8, bottom: 8 }}>

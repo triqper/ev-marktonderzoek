@@ -8,7 +8,7 @@ import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { CustomTooltip } from "@/components/charts/custom-tooltip";
 import { CHART_COLORS, GRID_STROKE, TICK_STYLE } from "@/components/charts/chart-theme";
-import { berekenScenario, SCENARIO_BOUNDS, SCENARIO_DEFAULTS } from "@/lib/calculations";
+import { berekenScenarioRange, SCENARIO_BOUNDS, SCENARIO_DEFAULTS } from "@/lib/calculations";
 import { formatEUR, formatNumber, formatPercent } from "@/lib/utils";
 import { EpistemicBadge } from "@/components/epistemic-badge";
 
@@ -56,32 +56,28 @@ export function ScenarioPanel() {
 
   // Adoptiegraad en laadfrequentie werken door op het totaal transactievolume
   // t.o.v. de basiswaarden (31% resp. 5x/maand) — transparant en herleidbaar.
-  const totaalTransacties = React.useMemo(() => {
-    const basis = SCENARIO_DEFAULTS.totaalTransacties;
-    const adoptieFactor = adoptiegraad / 31;
-    const frequentieFactor = laadfrequentie / 5;
-    return basis * adoptieFactor * frequentieFactor;
-  }, [adoptiegraad, laadfrequentie]);
+  const volumeFactor = React.useMemo(
+    () => (adoptiegraad / 31) * (laadfrequentie / 5),
+    [adoptiegraad, laadfrequentie]
+  );
 
+  // T_totaal is een bandbreedte (laag/midden/hoog) — elk resultaat wordt voor
+  // de drie volumescenario's doorgerekend i.p.v. één puntschatting.
   const resultaat = React.useMemo(
     () =>
-      berekenScenario({
-        totaalTransacties,
-        marktaandeelPct: marktaandeel,
-        gemTransactiewaarde: transactiewaarde,
-        margePct: marge,
-      }),
-    [totaalTransacties, marktaandeel, transactiewaarde, marge]
+      berekenScenarioRange(
+        { marktaandeelPct: marktaandeel, gemTransactiewaarde: transactiewaarde, margePct: marge },
+        volumeFactor
+      ),
+    [volumeFactor, marktaandeel, transactiewaarde, marge]
   );
 
   const chartData = [1, 5, 10].map((s) => {
-    const r = berekenScenario({
-      totaalTransacties,
-      marktaandeelPct: s,
-      gemTransactiewaarde: transactiewaarde,
-      margePct: marge,
-    });
-    return { label: `${s}%`, tpv: r.tpv, omzet: r.omzetBank, isActief: s === marktaandeel };
+    const r = berekenScenarioRange(
+      { marktaandeelPct: s, gemTransactiewaarde: transactiewaarde, margePct: marge },
+      volumeFactor
+    );
+    return { label: `${s}%`, tpv: r.mid.tpv, omzet: r.mid.omzetBank, isActief: s === marktaandeel };
   });
 
   return (
@@ -132,32 +128,46 @@ export function ScenarioPanel() {
             Adoptiegraad en laadfrequentie schalen het totale NL-transactievolume t.o.v. de
             uitgangswaarden (31% nieuwverkoopaandeel, 5 sessies/maand). Zie <code className="rounded bg-muted px-1 py-0.5">lib/calculations.ts</code> voor de exacte formule.
           </p>
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            T_totaal is gebaseerd op laadpunt-gebaseerd laadgedrag (publieke laadpunten ×
+            sessiefrequentie), niet BEV/PHEV-specifiek — zie{" "}
+            <code className="rounded bg-muted px-1 py-0.5">data/market-data.json</code>.
+          </p>
         </CardContent>
       </Card>
 
       <div className="space-y-6">
         <div className="grid gap-4 sm:grid-cols-3">
-          <motion.div key={resultaat.transactiesBank} initial={{ opacity: 0.4 }} animate={{ opacity: 1 }}>
+          <motion.div key={resultaat.mid.transactiesBank} initial={{ opacity: 0.4 }} animate={{ opacity: 1 }}>
             <Card>
               <CardContent className="p-5">
                 <div className="text-sm text-muted-foreground">Transacties/jaar (bank)</div>
-                <div className="mt-1 text-2xl font-semibold tabular-nums">{formatNumber(resultaat.transactiesBank, { compact: true })}</div>
+                <div className="mt-1 text-2xl font-semibold tabular-nums">{formatNumber(resultaat.mid.transactiesBank, { compact: true })}</div>
+                <div className="mt-1 text-xs tabular-nums text-muted-foreground">
+                  laag {formatNumber(resultaat.low.transactiesBank, { compact: true })} · hoog {formatNumber(resultaat.high.transactiesBank, { compact: true })}
+                </div>
               </CardContent>
             </Card>
           </motion.div>
-          <motion.div key={resultaat.tpv} initial={{ opacity: 0.4 }} animate={{ opacity: 1 }}>
+          <motion.div key={resultaat.mid.tpv} initial={{ opacity: 0.4 }} animate={{ opacity: 1 }}>
             <Card>
               <CardContent className="p-5">
                 <div className="text-sm text-muted-foreground">Total Payment Volume</div>
-                <div className="mt-1 text-2xl font-semibold tabular-nums">{formatEUR(resultaat.tpv, { compact: true })}</div>
+                <div className="mt-1 text-2xl font-semibold tabular-nums">{formatEUR(resultaat.mid.tpv, { compact: true })}</div>
+                <div className="mt-1 text-xs tabular-nums text-muted-foreground">
+                  laag {formatEUR(resultaat.low.tpv, { compact: true })} · hoog {formatEUR(resultaat.high.tpv, { compact: true })}
+                </div>
               </CardContent>
             </Card>
           </motion.div>
-          <motion.div key={resultaat.omzetBank} initial={{ opacity: 0.4 }} animate={{ opacity: 1 }}>
+          <motion.div key={resultaat.mid.omzetBank} initial={{ opacity: 0.4 }} animate={{ opacity: 1 }}>
             <Card className="border-primary/40">
               <CardContent className="p-5">
                 <div className="text-sm text-muted-foreground">Geschatte omzet bank/jaar</div>
-                <div className="mt-1 text-2xl font-semibold tabular-nums text-primary">{formatEUR(resultaat.omzetBank, { compact: true })}</div>
+                <div className="mt-1 text-2xl font-semibold tabular-nums text-primary">{formatEUR(resultaat.mid.omzetBank, { compact: true })}</div>
+                <div className="mt-1 text-xs tabular-nums text-muted-foreground">
+                  laag {formatEUR(resultaat.low.omzetBank, { compact: true })} · hoog {formatEUR(resultaat.high.omzetBank, { compact: true })}
+                </div>
               </CardContent>
             </Card>
           </motion.div>
@@ -172,6 +182,11 @@ export function ScenarioPanel() {
             <EpistemicBadge type="SCHATTING" />
           </CardHeader>
           <CardContent>
+            <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
+              Weergegeven bij het midden-volumescenario (T_totaal = 80 mln; bandbreedte 60-100 mln).
+              Gecombineerde onzekerheid in volume, transactiewaarde en take-rate betekent dat de
+              werkelijke jaaromzet een factor 3-5 kan afwijken van de middenwaarde.
+            </p>
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={chartData} margin={{ left: 8, right: 16, top: 8, bottom: 8 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} vertical={false} />

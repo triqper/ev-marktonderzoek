@@ -13,7 +13,7 @@ export function BusinesscaseSection() {
         />
         <Card className="mb-6">
           <CardContent className="overflow-x-auto p-6">
-            <pre className="min-w-[560px] font-mono text-xs leading-relaxed text-muted-foreground sm:text-sm">{`(1) Totaal NL publieke laadtransacties/jaar (T_totaal) = 95.000.000  [SCHATTING]
+            <pre className="min-w-[560px] font-mono text-xs leading-relaxed text-muted-foreground sm:text-sm">{`(1) Totaal NL publieke laadtransacties/jaar (T_totaal) = 60 / 80 / 100 mln (laag/midden/hoog)  [SCHATTING]
 (2) Marktaandeel bank (s)                             = 1% / 5% / 10%
 (3) Transacties bank (T_bank)                          = T_totaal x s
 (4) Gemiddelde transactiewaarde (v)                     = EUR 10,00  [SCHATTING]

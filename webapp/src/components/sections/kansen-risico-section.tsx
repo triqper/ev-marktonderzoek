@@ -13,7 +13,7 @@ const kansen = [
 
 const risicos = [
   { titel: "Strategisch", tekst: "Risico op focusverlies — mobility valt buiten de kernactiviteit van de meeste banken." },
-  { titel: "Juridisch (AFIR/PSD3)", tekst: "AFIR verplicht CPO's al tot contactloze kaartbetaling op de paal; PSD3 kan aanvullende eisen stellen. Vereist gerichte juridische toetsing." },
+  { titel: "Juridisch (AFIR/PSD3)", tekst: "AFIR verplicht contactloze kaartbetaling alleen bij snelladers ≥50 kW (nieuw vanaf april 2024, bestaand netwerk uiterlijk 2027; art. 5 lid 1-2). Bij regulier AC-laden (<50 kW, ~95% van het NL-netwerk) is geen fysieke kaartlezer verplicht — dit maakt het AC-segment juist relevanter voor een bank-app. PSD3 kan aanvullende eisen stellen [AANNAME: PSD3/PSR is een lopend EU-wetgevingstraject (voorstel juni 2023), nog niet van kracht — actuele status verifiëren bij aanvang validatietraject]. Vereist gerichte juridische toetsing." },
   { titel: "Operationeel", tekst: "Afhankelijkheid van een technische partner voor dekking; laadpaal-uptime ligt buiten controle van de bank." },
   { titel: "Commercieel", tekst: "Dunne marges in de keten laten mogelijk weinig ruimte voor een extra schakel." },
 ];

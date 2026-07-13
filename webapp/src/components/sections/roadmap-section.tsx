@@ -8,7 +8,7 @@ const fasen = [
     titel: "Fase 1 — Desk Research & Expert Validation",
     periode: "Week 1-2",
     doel: "Elimineer bekende onzekerheden met harde secundaire data.",
-    activiteiten: ["Verdiepend marktonderzoek per segment", "Juridische quickscan AFIR/PSD3", "Expertinterviews CPO/EMSP-finance (start A2)"],
+    activiteiten: ["Verdiepend marktonderzoek per segment", "Juridische quickscan AFIR/PSD3 (incl. vaststellen actuele PSD3/PSR-status)", "Expertinterviews CPO/EMSP-finance (start A2)"],
     beslissing: "Go indien marge-model plausibel positief; anders pivot naar alternatief verdienmodel of stop.",
   },
   {
