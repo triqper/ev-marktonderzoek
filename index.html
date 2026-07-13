@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EV-laadmarkt · Omzetpotentie & investeringsmemorandum 2026–2030</title>
+  <meta name="description" content="Strategisch marktonderzoek en vijfjaars omzetmodel voor de betaal- en e-mobility-laag van de EV-laadmarkt in Nederland en Europa." />
+  <link rel="preconnect" href="#" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Direct naar inhoud</a>
+
+<!-- ===================== TOPBAR ===================== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand-mark"><span class="brand-badge">⚡</span> EV-Laadmarkt · Omzetmodel</div>
+    <nav class="topnav" aria-label="Hoofdstukken">
+      <a class="navlink" href="#samenvatting">Samenvatting</a>
+      <a class="navlink" href="#analyse">Analyse</a>
+      <a class="navlink" href="#markt">Markt</a>
+      <a class="navlink" href="#model">Financieel model</a>
+      <a class="navlink" href="#scenario">Scenario &amp; risico</a>
+      <a class="navlink" href="#strategie">Strategie</a>
+      <a class="navlink" href="#wijzigingen">Wijzigingen</a>
+      <a class="navlink" href="#bronnen">Bronnen</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" aria-label="Wissel licht/donker thema" title="Licht/donker">◐</button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<div class="hero">
+  <div class="eyebrow">Strategisch marktonderzoek &amp; investeringsmemorandum</div>
+  <h1>Hoe groot is de realistische omzetpotentie van de EV-laadmarkt voor onze organisatie in 2026–2030?</h1>
+  <p class="lede">Een kwantitatieve, reproduceerbare doorrekening van de betaal- en e-mobility-laag van het publieke laden in Nederland en Europa — met drie scenario's, een Monte Carlo-analyse en een geprioriteerde strategische agenda voor directie en Raad van Bestuur.</p>
+  <div class="hero-meta">
+    <span>Horizon <b>5 jaar (2026–2030)</b></span>
+    <span>Thuismarkt <b>Nederland</b>, uitrol <b>Europa</b></span>
+    <span>Peildatum <b>juli 2026</b></span>
+    <span>Rekenkern <b>volledig herleidbaar</b></span>
+  </div>
+</div>
+
+<!-- ===================== SCENARIO CONTROL BAR ===================== -->
+<div class="scenario-bar" id="scenarioBar">
+  <div class="scenario-bar-inner">
+    <strong style="font-size:.9rem">Scenario:</strong>
+    <div class="seg" id="scenarioSeg" role="group" aria-label="Kies scenario">
+      <button data-sc="conservatief" aria-pressed="false">Conservatief</button>
+      <button data-sc="basis" aria-pressed="true">Basis</button>
+      <button data-sc="ambitieus" aria-pressed="false">Ambitieus</button>
+    </div>
+    <span class="scenario-hint" id="scenarioHint">Alle cijfers, KPI's en grafieken op deze pagina rekenen live mee.</span>
+    <span class="scenario-pill" id="cagrPill">CAGR —</span>
+  </div>
+</div>
+
+<main id="main" class="wrap">
+
+  <!-- ===================== A. EXECUTIVE SUMMARY ===================== -->
+  <section class="block" id="samenvatting">
+    <div class="section-head"><span class="section-num">A</span><h2>Executive summary</h2></div>
+    <p class="section-sub">Kernboodschap voor besluitvorming. Twee pagina's; onderbouwing volgt in hoofdstukken B–G.</p>
+
+    <div class="kpi-grid" id="kpiSummary"><!-- gevuld door app.js --></div>
+
+    <div class="grid-2" style="margin-top:8px">
+      <div class="card">
+        <h3>De kans in één alinea</h3>
+        <p class="card-note">De EV-laadmarkt verschuift van hardware-uitrol naar <b>transactievolume</b>. Nederland heeft met ~181.000 (semi-)publieke laadpunten en het hoogste aandeel straatladen van Europa de meest volwassen publieke laadmarkt. Elke laadsessie is een betaaltransactie met roaming-, settlement- en issuing-componenten. Onze organisatie kan zich positioneren als de <b>betaal- en e-mobility-laag</b> (betaalverwerking, eMSP/roaming-orkestratie, platform-SaaS en embedded finance voor wagenparken) en meegroeien met een markt die richting 2030 met ~20–25% per jaar groeit.</p>
+      </div>
+      <div class="card">
+        <h3>Het antwoord op de bestuursvraag</h3>
+        <p class="card-note">De realistische (basis-)omzetpotentie loopt op van een aanloopjaar naar een <b id="sumY5">—</b> jaaromzet in 2030 (<span id="sumRange">—</span> in de conservatief–ambitieus-bandbreedte). Cumulatief over vijf jaar bedraagt de omzet <b id="sumCum">—</b>. De Monte Carlo-analyse plaatst het 2030-resultaat met 80% waarschijnlijkheid tussen <b id="sumP10">—</b> (P10) en <b id="sumP90">—</b> (P90). De grootste hefboom is ons <b>verwerkt transactie-aandeel</b>, gevolgd door de <b>take rate</b> en de <b>EV-vloeigroei</b>.</p>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-head"><div>
+        <div class="chart-title">Omzetgroei per scenario, 2026–2030</div>
+        <div class="chart-desc">Jaaromzet uit betaalverwerking, eMSP/roaming, platform-SaaS en embedded finance.</div>
+      </div>
+        <div class="view-toggle" data-viewtoggle="summaryChart"><button data-view="chart" aria-pressed="true">Grafiek</button><button data-view="table" aria-pressed="false">Tabel</button></div>
+      </div>
+      <div id="summaryChart"></div>
+      <div id="summaryLegend"></div>
+      <div id="summaryChartTable" class="hidden"></div>
+      <div class="chart-foot">Bron: eigen rekenmodel (zie hoofdstuk C &amp; methodologie). Beweeg over de lijnen voor jaarwaarden.</div>
+    </div>
+
+    <div class="callout">
+      <h4>Aanbeveling in één zin</h4>
+      <p style="margin:0">Start in 2026 een <b>fleet- en roaming-pilot in Nederland</b> op een interoperabele (OCPI/ISO 15118) betaalstack, bewijs de unit-economics, en schaal vanaf 2027 gefaseerd naar de Europese kernmarkten — een no-regret move met de hoogste risicogewogen ROI.</p>
+    </div>
+  </section>
+
+  <!-- ===================== B. ANALYSE HUIDIG RAPPORT ===================== -->
+  <section class="block" id="analyse">
+    <div class="section-head"><span class="section-num">B</span><h2>Analyse van het uitgangsrapport</h2></div>
+    <p class="section-sub">Het uitgangspunt was een lege repository (alleen een README). Onderstaande review beoordeelt de nulsituatie en verantwoordt elke toevoeging in dit rapport — volledigheid, opbouw, bronbetrouwbaarheid, reproduceerbaarheid, aannames, ontbrekende inzichten, risico's en scenario's.</p>
+
+    <div class="table-wrap" style="margin:16px 0">
+      <table id="reviewTable"><thead><tr><th>Onderdeel</th><th>Beoordeling</th><th>Waarom</th><th>Impact</th><th>Voorgestelde verbetering</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Ontbrekende informatie voor een investeringsbesluit</h3>
+        <p class="card-note">Onderstaande onderwerpen waren nodig om de bestuursvraag te beantwoorden. Elk is toegevoegd en gekoppeld aan het logische hoofdstuk.</p>
+        <div class="table-wrap"><table id="topicTable"><thead><tr><th>Onderwerp</th><th>Hoofdstuk</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="card">
+        <h3>Wat een investeringsbesluit vereist</h3>
+        <ul style="padding-left:18px;margin:0;color:var(--text-secondary)">
+          <li><b>Marktomvang</b> — TAM/SAM/SOM in omzettermen, niet alleen hardware.</li>
+          <li><b>Verdienmodel</b> — expliciete betaalketen (acquiring, issuing, interchange, eMSP/roaming, embedded finance).</li>
+          <li><b>Scenario's</b> — geen puntschatting maar een bandbreedte met kansverdeling.</li>
+          <li><b>Onzekerheid</b> — gevoeligheid van omzet voor de kernaannames.</li>
+          <li><b>Risico &amp; regelgeving</b> — AFIR, PSD2/PSD3, interchange caps, Plug&amp;Charge.</li>
+          <li><b>Reproduceerbaarheid</b> — één rekenkern, aanpasbare aannames, gedocumenteerde bronnen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MARKT & CONTEXT ===================== -->
+  <section class="block" id="markt">
+    <div class="section-head"><span class="section-num">B+</span><h2>Marktomvang, waardeketen &amp; regelgeving</h2></div>
+    <p class="section-sub">De onderbouwing onder het omzetmodel: hoe groot is de markt (TAM/SAM/SOM), waar in de keten verdienen wij, en welke regels bepalen het speelveld?</p>
+
+    <div class="grid-2" style="align-items:start">
+      <div class="chart-card" style="margin-top:0">
+        <div class="chart-title">TAM · SAM · SOM — waardelaag EU, 2030 (€/jaar)</div>
+        <div class="chart-desc">Omzetpool van betaalverwerking + eMSP/roaming + platform + embedded finance op publiek laadverkeer.</div>
+        <div id="funnelChart"></div>
+        <div class="chart-foot">SOM = basis-scenario 2030-jaaromzet uit het rekenmodel; rekent mee met de scenariokeuze.</div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px">
+          <h3>Definities</h3>
+          <p class="card-note"><b>TAM</b> — de volledige Europese waardelaag boven op publieke laad-GMV (~8% van GMV: betaalmarge, roaming, platform, issuing). <b>SAM</b> — de markten en segmenten die wij realistisch kunnen bedienen (NL + DACH/Benelux/Nordics; publiek + fleet). <b>SOM</b> — ons haalbare aandeel binnen de planningshorizon.</p>
+        </div>
+        <div class="card">
+          <h3>Waarom Nederland als beachhead</h3>
+          <p class="card-note">Hoogste laadpuntdichtheid van Europa (~181k in 2024, ~210k in 2026), ~35–40% BEV-aandeel in nieuwverkoop, en het grootste aandeel <b>publiek/straatladen</b> — dus de meeste betaaltransacties per voertuig. Ideaal om unit-economics te bewijzen vóór Europese opschaling.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:26px">De waardeketen van een laadtransactie</h3>
+    <p class="section-sub">Elke publieke laadsessie doorloopt een keten waarin wij op meerdere punten waarde kunnen vangen.</p>
+    <div class="grid-3" style="margin:14px 0">
+      <div class="card"><h3>🔌 CPO</h3><p class="card-note">Charge Point Operator: exploiteert de laadpunten, levert energie, bepaalt het tarief. Onze rol: <b>acquiring &amp; settlement</b> van hun transacties, plus platform-SaaS.</p></div>
+      <div class="card"><h3>📲 eMSP</h3><p class="card-note">e-Mobility Service Provider: levert de laadpas/app aan de bestuurder. Onze rol: <b>eMSP-enabling</b>, tarief-/roaming-orkestratie, issuing van laadpassen.</p></div>
+      <div class="card"><h3>🌐 Roaming-hub</h3><p class="card-note">Hubject/Spark koppelen CPO's en eMSP's (OCPI). Onze rol: <b>betaal- en clearinglaag</b> bovenop roaming — settlement, FX, reconciliatie, embedded finance.</p></div>
+    </div>
+    <div class="callout">
+      <h4>Waar wij verdienen (verdienmodel)</h4>
+      <p style="margin:0">1) <b>Betaalverwerking/acquiring</b> — take rate op verwerkte GMV. 2) <b>eMSP/roaming-marge</b> — vaste fee + markup per transactie. 3) <b>Platform-SaaS</b> — abonnement per aangesloten laadpunt. 4) <b>Issuing &amp; embedded finance</b> — interchange en financiële diensten op zakelijke laadpassen/wagenparken. Deze vier stromen vormen de bouwstenen van het omzetmodel in hoofdstuk C.</p>
+    </div>
+
+    <h3 style="margin-top:26px">Regelgeving &amp; standaarden</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Regelgeving die het speelveld bepaalt</h3>
+        <ul style="padding-left:18px;margin:0;color:var(--text-secondary)">
+          <li><b>AFIR</b> (in werking apr-2024): 1,3 kW publiek vermogen per BEV; 400 kW-pools elke 60 km op TEN-T; <b>verplichte ad-hoc contactloze kaartbetaling</b> bij snelladers ≥50 kW. Kans (volume) én bedreiging (commoditisering betaallaag).</li>
+          <li><b>PSD2 → PSD3 / PSR</b>: sterke klantauthenticatie, Open Banking → <b>Open Finance</b>; kansen voor account-to-account en embedded finance, maar herziening van interchange-modellen.</li>
+          <li><b>Instant Payments (SEPA)</b>: realtime settlement verlaagt working capital in de keten.</li>
+          <li><b>Interchange-caps</b>: drukken issuing-marges; embedded finance verbreedt de opbrengstenmix.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Technische standaarden (interoperabiliteit = randvoorwaarde)</h3>
+        <ul style="padding-left:18px;margin:0;color:var(--text-secondary)">
+          <li><b>OCPP</b> — laadpunt ↔ backend.</li>
+          <li><b>OCPI</b> — CPO ↔ eMSP ↔ roaming (tarief, autorisatie, CDR).</li>
+          <li><b>ISO 15118-2/-20 · Plug&amp;Charge</b> — certificaat-gebaseerde auth+betaling zonder pas/app; Hubject en Spark Alliance drijvend.</li>
+          <li><b>Roaming-hubs</b> — Hubject (>1 mln laadpunten, 2.750+ partners), Spark Alliance (>11.000 laadpunten).</li>
+        </ul>
+      </div>
+    </div>
+
+    <details class="disc">
+      <summary>Technologische disrupties richting 2030 — batterij, V2G, smart charging, AI, autonoom</summary>
+      <p style="color:var(--text-secondary)"><b>Smart charging &amp; V2G</b> maken van de auto een net-asset; betaalstromen worden bidirectioneel (bestuurder wordt ook leverancier), wat nieuwe settlement- en verrekenmodellen vereist. <b>Batterijverbetering</b> (grotere packs, sneller laden) verhoogt de gemiddelde transactiewaarde. <b>AI</b> optimaliseert tarief-, laad- en fraudebeslissingen realtime. <b>Autonome voertuigen &amp; robotaxi's</b> verschuiven volume naar depot-/fleet-charging met machine-to-machine-betalingen — een B2B-segment met hoge GMV per sessie. <b>Heavy-duty &amp; megawatt-charging</b> (vanaf 2027+) opent een nieuw, kapitaalintensief maar hoogwaardig transactiesegment.</p>
+    </details>
+  </section>
+
+  <!-- ===================== C. FINANCIEEL MODEL ===================== -->
+  <section class="block" id="model">
+    <div class="section-head"><span class="section-num">C</span><h2>Financieel vijfjaarsmodel</h2></div>
+    <p class="section-sub">Driver-gebaseerd model: vloot × publiek kWh/BEV × €/kWh → markt-GMV en transacties; ons verwerkt aandeel × (take rate + fee) + platform-SaaS + embedded finance → omzet. Alle cijfers zijn afgeleid uit één rekenkern en passen zich aan de scenariokeuze en schuifregelaars aan.</p>
+
+    <div class="card" style="margin:12px 0">
+      <h3>Stel het scenario bij (gevoeligheid live)</h3>
+      <p class="card-note">Pas de kernaannames aan; alle KPI's en grafieken herberekenen direct. Reset met de knop.</p>
+      <div class="sliders" id="sliders"></div>
+      <div style="margin-top:12px"><button class="seg" id="resetSliders" style="padding:7px 14px;border:1px solid var(--border);border-radius:9px;background:var(--surface-2);color:var(--text-primary);cursor:pointer;font-weight:600">↺ Reset aannames</button></div>
+    </div>
+
+    <div class="kpi-grid" id="kpiModel"></div>
+
+    <div class="grid-2">
+      <div class="chart-card">
+        <div class="chart-head"><div><div class="chart-title">Omzetopbouw per jaar (€)</div><div class="chart-desc">Naar opbrengststroom.</div></div>
+          <div class="view-toggle" data-viewtoggle="compChart"><button data-view="chart" aria-pressed="true">Grafiek</button><button data-view="table" aria-pressed="false">Tabel</button></div></div>
+        <div id="compChart"></div><div id="compChartTable" class="hidden"></div>
+        <div id="compLegend"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Omzetbrug 2026 → 2030 (€)</div>
+        <div class="chart-desc">Waar komt de groei vandaan?</div>
+        <div id="waterfallChart"></div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:2px">
+      <div class="chart-card"><div class="chart-title">Marktaandeel NL (verwerkte sessies)</div><div class="chart-desc">Aandeel van publieke laadtransacties.</div><div id="shareChart"></div></div>
+      <div class="chart-card"><div class="chart-title">Laadtransacties (verwerkt)</div><div class="chart-desc">Aantal door ons verwerkte sessies.</div><div id="txnChart"></div></div>
+      <div class="chart-card"><div class="chart-title">Actieve gebruikers &amp; fleet-accounts</div><div class="chart-desc">Consument + zakelijk.</div><div id="usersChart"></div></div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-head"><div class="chart-title">Volledig vijfjaarsmodel</div>
+        <div class="view-toggle"><button id="dlCsv" style="border:1px solid var(--border);background:var(--surface-2);color:var(--text-secondary);padding:4px 10px;font-size:.78rem;border-radius:7px;cursor:pointer">⬇ CSV</button></div></div>
+      <div class="table-wrap"><table id="modelTable"></table></div>
+      <div class="chart-foot">EBITDA-marge is scenario-afhankelijk en schaalt met volume; negatieve marge in aanloopjaren weerspiegelt investeringen in platform en go-to-market.</div>
+    </div>
+  </section>
+
+  <!-- ===================== D. SCENARIO & MONTE CARLO ===================== -->
+  <section class="block" id="scenario">
+    <div class="section-head"><span class="section-num">D</span><h2>Scenario- &amp; risicoanalyse</h2></div>
+    <p class="section-sub">Van puntschatting naar kansverdeling: drie scenario's, een Monte Carlo-simulatie (5.000 trekkingen, seeded &amp; reproduceerbaar) en een gevoeligheidsanalyse die laat zien welke aannames de omzet écht bepalen.</p>
+
+    <div class="chart-card">
+      <div class="chart-head"><div><div class="chart-title">Scenariovergelijking — jaaromzet (€)</div><div class="chart-desc">Conservatief · Basis · Ambitieus.</div></div>
+        <div class="view-toggle" data-viewtoggle="scenarioCompare"><button data-view="chart" aria-pressed="true">Grafiek</button><button data-view="table" aria-pressed="false">Tabel</button></div></div>
+      <div id="scenarioCompare"></div><div id="scenarioCompareTable" class="hidden"></div>
+      <div id="scenarioLegend"></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="chart-card">
+        <div class="chart-title">Monte Carlo — verdeling 2030-jaaromzet</div>
+        <div class="chart-desc" id="mcDesc">5.000 trekkingen over de kernonzekerheden (triangulair). Markers = P10/P50/P90.</div>
+        <div id="mcHist"></div>
+        <div class="kpi-grid" id="mcKpi" style="margin-top:10px"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Tornado — gevoeligheid 2030-jaaromzet</div>
+        <div class="chart-desc">Elke balk: effect van de aanname op zijn min/max (overige op basis).</div>
+        <div id="tornadoChart"></div>
+        <div class="chart-foot">De bovenste balken zijn de grootste omzethefbomen — hier stuur je op.</div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Gevoeligheidsmatrix — 2030-jaaromzet (€ mln)</div>
+      <div class="chart-desc">Verwerkt aandeel NL (rijen) × take rate (kolommen), overige aannames op scenariobasis.</div>
+      <div style="overflow-x:auto" id="sensHeatmap"></div>
+    </div>
+  </section>
+
+  <!-- ===================== E. STRATEGIE ===================== -->
+  <section class="block" id="strategie">
+    <div class="section-head"><span class="section-num">E</span><h2>Strategische aanbevelingen</h2></div>
+    <p class="section-sub">Geprioriteerd: waar liggen de grootste kansen en bedreigingen, wat zijn de quick wins, de no-regret moves en de investeringen met de hoogste ROI?</p>
+
+    <div class="grid-2">
+      <div class="card"><h3>🚀 Grootste kansen</h3><ul class="reco-list" id="kansenList" style="margin-top:10px"></ul></div>
+      <div class="card"><h3>⚠️ Grootste bedreigingen</h3><ul class="reco-list" id="bedreigingenList" style="margin-top:10px"></ul></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:18px">
+      <div class="card"><h3>⚡ Quick wins (0–12 mnd)</h3><ul class="reco-list" id="quickwinList" style="margin-top:10px"></ul></div>
+      <div class="chart-card" style="margin:0">
+        <div class="chart-title">Risicomatrix — waarschijnlijkheid × impact</div>
+        <div class="chart-desc">Kleur = risicoscore. Focus op rechtsboven.</div>
+        <div style="overflow-x:auto" id="riskHeatmap"></div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:18px">
+      <h4>No-regret moves</h4>
+      <ul id="noRegretList" style="margin:6px 0 0;padding-left:18px;color:var(--text-secondary)"></ul>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h3>Geprioriteerde investeringsagenda</h3>
+      <div class="table-wrap"><table id="prioTable"><thead><tr><th>Prioriteit</th><th>Initiatief</th><th>Horizon</th><th>ROI-inschatting</th><th>Type</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ===================== F. WIJZIGINGEN ===================== -->
+  <section class="block" id="wijzigingen">
+    <div class="section-head"><span class="section-num">F</span><h2>Concrete doorgevoerde wijzigingen</h2></div>
+    <p class="section-sub">Wat is er ten opzichte van de nulsituatie (lege repository) daadwerkelijk in deze website gebouwd.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Inhoud &amp; structuur</h3>
+        <ul style="padding-left:18px;color:var(--text-secondary)">
+          <li>Volledig interactief rapport met hoofdstukken A–G (investeringsmemorandum-structuur).</li>
+          <li>Marktcontext: TAM/SAM/SOM, waardeketen (CPO/eMSP/roaming), regelgeving (AFIR/PSD3), standaarden (OCPP/OCPI/ISO 15118).</li>
+          <li>Driver-gebaseerd 5-jaars omzetmodel met vier opbrengststromen.</li>
+          <li>Drie scenario's, Monte Carlo (5.000 trekkingen), tornado &amp; gevoeligheidsmatrix.</li>
+          <li>Geprioriteerde strategische agenda + risicomatrix + aannameregister met bronnen.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Techniek, UX &amp; kwaliteit</h3>
+        <ul style="padding-left:18px;color:var(--text-secondary)">
+          <li>Eén reproduceerbare rekenkern (<span class="mono">model.js</span>); geen losse hardgecodeerde cijfers.</li>
+          <li>Afhankelijkheidsvrije, thema-bewuste SVG-grafieken met tooltips en tabel-fallback.</li>
+          <li>Interactieve scenario-switch en live schuifregelaars; CSV-export.</li>
+          <li>Toegankelijkheid: skip-link, ARIA-labels, toetsenbordfocus, tabelweergave naast elke grafiek, licht/donker.</li>
+          <li>Responsive layout; <span class="mono">prefers-reduced-motion</span> en print-stijlen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== G. OPENSTAAND ===================== -->
+  <section class="block" id="openstaand">
+    <div class="section-head"><span class="section-num">G</span><h2>Openstaande verbeterpunten</h2></div>
+    <p class="section-sub">Wat na deze iteratie de grootste toegevoegde waarde zou leveren — eerlijk benoemd voor due diligence.</p>
+    <div class="grid-3">
+      <div class="card"><h3>Data verdiepen</h3><p class="card-note">Vervang teamschattingen (publiek kWh/BEV, aandeelramp, take rate) door primaire data uit ElaadNL/RVO en een concrete pilot; kalibreer per land bij Europese uitrol.</p></div>
+      <div class="card"><h3>Kostenkant &amp; funding</h3><p class="card-note">Voeg een volledige P&amp;L en kasstroom toe (CAC, platform-opex, personeelskosten, capex), en een funding-/waarderingsbrug voor de investeringscasus.</p></div>
+      <div class="card"><h3>Concurrentie &amp; go-to-market</h3><p class="card-note">Diepgaandere concurrentie-benchmark (AMPECO, Driivz, Last Mile Solutions, Hubject) en een land-voor-land toetredingsplan met partnerkeuzes.</p></div>
+      <div class="card"><h3>Geografische kaart</h3><p class="card-note">Interactieve Europakaart met laadpuntdichtheid en marktrijpheid per land (nu tekstueel/tabellarisch beschreven).</p></div>
+      <div class="card"><h3>Correlaties in Monte Carlo</h3><p class="card-note">Modelleer afhankelijkheden tussen aannames (bv. vloeigroei ↔ tarief) i.p.v. onafhankelijke trekkingen.</p></div>
+      <div class="card"><h3>Validatie &amp; audit</h3><p class="card-note">Externe review van aannames en een gevoeligheids-audit door corporate finance vóór definitief investeringsbesluit.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== BRONNEN & AANNAMES ===================== -->
+  <section class="block" id="bronnen">
+    <div class="section-head"><span class="section-num">✔</span><h2>Aannameregister &amp; bronnen</h2></div>
+    <p class="section-sub">Elke aanname met bron, betrouwbaarheid, onzekerheid en alternatief scenario. Schattingen zijn expliciet als zodanig gemarkeerd.</p>
+    <div class="table-wrap" style="margin:12px 0">
+      <table id="assumptionsTable"><thead><tr><th>Aanname</th><th>Waarde</th><th>Bron</th><th>Betrouwbaarheid</th><th>Onzekerheid</th><th>Alternatief / toelichting</th></tr></thead><tbody></tbody></table>
+    </div>
+    <h3>Geraadpleegde bronnen</h3>
+    <ol class="source-list" id="sourceList"></ol>
+    <p class="chart-foot">Marktcijfers zijn geankerd op openbare bronnen (EAFO, RVO, Europese Commissie/AFIR, marktrapporten en tariefdata). Waar primaire data ontbreekt, is een expliciete teamschatting gebruikt met vermelde onzekerheidsmarge. Dit rapport is een onderbouwde inschatting, geen garantie; het vervangt geen formele due diligence.</p>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><b>EV-Laadmarkt · Omzetpotentie &amp; investeringsmemorandum</b> — opgesteld als reproduceerbaar, interactief strategierapport. Peildatum juli 2026.</p>
+    <p>Methodologie en formules: <a href="docs/METHODOLOGIE.md">docs/METHODOLOGIE.md</a>. Alle bedragen in euro's, reëel, exclusief btw. Dit document dient ter besluitvorming door directie/RvB en is geen beleggingsadvies.</p>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/model.js"></script>
+<script src="assets/js/charts.js"></script>
+<script src="assets/js/montecarlo.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
