@@ -251,23 +251,149 @@
   strong { color: var(--ink); font-weight: 650; }
   code { font-family: var(--mono); font-size: 0.87em; background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 3px; padding: 0.05em 0.35em; }
 
-  /* epistemic tags */
-  .tag {
+  /* epistemic tags — now interactive buttons */
+  button.tag {
     display: inline-flex;
     align-items: center;
+    gap: 0.3em;
     font-family: var(--sans);
     font-size: 0.66rem;
     font-weight: 700;
     letter-spacing: 0.05em;
-    padding: 0.08em 0.45em;
+    padding: 0.08em 0.5em;
     border-radius: 3px;
+    border: 1px solid transparent;
     vertical-align: 0.05em;
-    cursor: default;
+    cursor: pointer;
     white-space: nowrap;
+    -webkit-appearance: none;
+    appearance: none;
   }
+  button.tag::after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+    margin-left: 0.05em;
+  }
+  button.tag:hover { filter: brightness(0.94); }
+  .dark button.tag:hover, :root[data-theme="dark"] button.tag:hover { filter: brightness(1.18); }
+  button.tag:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.tag[aria-expanded="true"] { border-color: currentColor; }
   .tag.feit { background: var(--feit-soft); color: var(--feit); }
   .tag.schatting { background: var(--schatting-soft); color: var(--schatting); }
   .tag.aanname { background: var(--aanname-soft); color: var(--aanname); }
+
+  /* reference popover */
+  .ref-overlay {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 60;
+  }
+  .ref-overlay[hidden] { display: none; }
+  .ref-popover {
+    position: fixed;
+    z-index: 61;
+    width: min(380px, calc(100vw - 2rem));
+    max-height: min(70vh, 520px);
+    overflow-y: auto;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule-strong);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1.1rem 1.2rem 1.2rem;
+  }
+  .ref-popover[hidden] { display: none; }
+  .ref-popover-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.7rem;
+  }
+  .ref-popover-close {
+    appearance: none;
+    border: none;
+    background: var(--paper);
+    color: var(--ink-secondary);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .ref-popover-close:hover { color: var(--ink); }
+  .ref-popover-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .ref-bron {
+    font-size: 0.86rem;
+    font-weight: 650;
+    color: var(--ink);
+    margin: 0 0 0.15rem;
+    line-height: 1.35;
+  }
+  .ref-bron a {
+    color: var(--accent-ink);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+  .ref-bron a:hover { opacity: 0.8; }
+  .ref-bron .ext {
+    display: inline-block;
+    font-size: 0.72em;
+    margin-left: 0.15em;
+    opacity: 0.6;
+  }
+  .ref-peildatum { font-size: 0.72rem; color: var(--ink-faint); margin-bottom: 0.6rem; }
+  .ref-citaat {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-secondary);
+    border-left: 2px solid var(--rule-strong);
+    padding-left: 0.75rem;
+    margin: 0 0 0.7rem;
+  }
+  .ref-toelichting {
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--ink-secondary);
+    margin: 0 0 0.4rem;
+  }
+  .ref-secondary {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--rule);
+    padding-top: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  .ref-secondary a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+  @media (max-width: 640px) {
+    .ref-popover {
+      left: 0 !important;
+      right: 0;
+      bottom: 0 !important;
+      top: auto !important;
+      width: 100%;
+      max-height: 75vh;
+      border-radius: 14px 14px 0 0;
+      border-bottom: none;
+      padding-bottom: max(1.2rem, env(safe-area-inset-bottom));
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ref-popover { animation: ref-in 0.14s ease-out; }
+  }
+  @keyframes ref-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
   .callout {
     background: var(--paper-raised);
@@ -385,9 +511,9 @@
   <div class="leeswijzer">
     <strong>Leeswijzer epistemische labels.</strong> Elke cijfermatige claim in dit rapport is gelabeld naar bewijskracht — hover over een label voor de bron of foutmarge.
     <div class="tags">
-      <span class="tag feit" title="Direct ontleend aan een genoemde primaire bron">FEIT</span>
-      <span class="tag schatting" title="Analytisch afgeleid/berekend, met vermelde foutmarge">SCHATTING</span>
-      <span class="tag aanname" title="Expert-inschatting zonder harde onderliggende data — per definitie te valideren">AANNAME</span>
+      <button type="button" class="tag feit" data-ref="def-feit" aria-haspopup="dialog">FEIT</button>
+      <button type="button" class="tag schatting" data-ref="def-schatting" aria-haspopup="dialog">SCHATTING</button>
+      <button type="button" class="tag aanname" data-ref="def-aanname" aria-haspopup="dialog">AANNAME</button>
       <span style="font-size:0.85rem; color:var(--ink-faint);">Volledig register: <code>/data/*.json</code></span>
     </div>
   </div>
@@ -416,7 +542,7 @@
     <section id="s1">
       <div class="eyebrow"><span class="num">01</span> Executive summary</div>
       <h2>Executive summary</h2>
-      <p class="lead">De Europese en Nederlandse EV-laadmarkt groeit hard: Nederland telt medio 2026 ca. <strong>701.149 volledig elektrische personenauto's</strong> <span class="tag feit" title="RVO.nl, 2026">FEIT</span> en <strong>~210.000 publieke laadpunten</strong> <span class="tag feit" title="RVO.nl, 2026">FEIT</span>, terwijl de EU-brede BEV-nieuwverkoop in Q1 2026 een marktaandeel van <strong>19,4%</strong> bereikte <span class="tag feit" title="ACEA, 2026">FEIT</span>. Dit vertaalt zich naar een geschat Nederlands publiek laadtransactievolume van <strong>~95 miljoen transacties/jaar</strong> en een publieke laadomzet van <strong>~€950 miljoen/jaar</strong> <span class="tag schatting" title="±25%">SCHATTING</span>.</p>
+      <p class="lead">De Europese en Nederlandse EV-laadmarkt groeit hard: Nederland telt medio 2026 ca. <strong>701.149 volledig elektrische personenauto's</strong> <button type="button" class="tag feit" data-ref="nl-bev-park" aria-haspopup="dialog">FEIT</button> en <strong>~210.000 publieke laadpunten</strong> <button type="button" class="tag feit" data-ref="nl-laadpunten" aria-haspopup="dialog">FEIT</button>, terwijl de EU-brede BEV-nieuwverkoop in Q1 2026 een marktaandeel van <strong>19,4%</strong> bereikte <button type="button" class="tag feit" data-ref="eu-bev-q1-2026" aria-haspopup="dialog">FEIT</button>. Dit vertaalt zich naar een geschat Nederlands publiek laadtransactievolume van <strong>~95 miljoen transacties/jaar</strong> en een publieke laadomzet van <strong>~€950 miljoen/jaar</strong> <button type="button" class="tag schatting" data-ref="nl-laadomzet" aria-haspopup="dialog">SCHATTING</button>.</p>
 
       <div class="kpi-row">
         <div class="kpi"><div class="v">210.000</div><div class="l">NL publieke laadpunten</div></div>
@@ -425,9 +551,9 @@
         <div class="kpi"><div class="v">€2,4–7,1 mln</div><div class="l">Omzetpotentieel bank, 5% aandeel</div></div>
       </div>
 
-      <p>Een bank die een geïntegreerde laad- en betaaloplossing in de app aanbiedt, speelt in op een reële markt met een duidelijke betaalketen-frictie: consumenten jongleren vandaag met meerdere laadpassen, apps en tarieven. De bank kan hier in theorie waarde toevoegen via vertrouwd betaalgemak, KYC-infrastructuur en bereik. <strong>Echter: de kernaanname dat klanten specifiek via de bank-app willen laden — in plaats van via een bestaande laadpas of EMSP-app — is vandaag volledig onbewezen</strong> <span class="tag aanname" title="Hoogste risicoprioriteit in dit dossier">AANNAME</span>. Ook de marge-haalbaarheid is onzeker: de laadketen kent van nature dunne marges (CPO/EMSP-niveau doorgaans 5-15%), en het is niet vanzelfsprekend dat daar ruimte overblijft voor een extra financiële schakel.</p>
+      <p>Een bank die een geïntegreerde laad- en betaaloplossing in de app aanbiedt, speelt in op een reële markt met een duidelijke betaalketen-frictie: consumenten jongleren vandaag met meerdere laadpassen, apps en tarieven. De bank kan hier in theorie waarde toevoegen via vertrouwd betaalgemak, KYC-infrastructuur en bereik. <strong>Echter: de kernaanname dat klanten specifiek via de bank-app willen laden — in plaats van via een bestaande laadpas of EMSP-app — is vandaag volledig onbewezen</strong> <button type="button" class="tag aanname" data-ref="aanname-kernvraag" aria-haspopup="dialog">AANNAME</button>. Ook de marge-haalbaarheid is onzeker: de laadketen kent van nature dunne marges (CPO/EMSP-niveau doorgaans 5-15%), en het is niet vanzelfsprekend dat daar ruimte overblijft voor een extra financiële schakel.</p>
 
-      <p>Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van <strong>1% van alle Nederlandse publieke laadtransacties</strong> (~950.000 transacties/jaar) bij een aannemelijke take-rate al een omzetpotentieel van <strong>circa €0,5–1,4 miljoen/jaar</strong> voor de bank kan opleveren <span class="tag schatting" title="Zie hoofdstuk 6 voor formules">SCHATTING</span>; bij 10% marktaandeel loopt dit op tot <strong>€5–14 miljoen/jaar</strong>. Dit is aantrekkelijk genoeg om verder te valideren, maar te onzeker om nu al te investeren in een volledige bouw.</p>
+      <p>Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van <strong>1% van alle Nederlandse publieke laadtransacties</strong> (~950.000 transacties/jaar) bij een aannemelijke take-rate al een omzetpotentieel van <strong>circa €0,5–1,4 miljoen/jaar</strong> voor de bank kan opleveren <button type="button" class="tag schatting" data-ref="businesscase-scenarios" aria-haspopup="dialog">SCHATTING</button>; bij 10% marktaandeel loopt dit op tot <strong>€5–14 miljoen/jaar</strong>. Dit is aantrekkelijk genoeg om verder te valideren, maar te onzeker om nu al te investeren in een volledige bouw.</p>
 
       <div class="callout recommend">
         <span class="label">Aanbeveling</span>
@@ -439,15 +565,15 @@
       <div class="eyebrow"><span class="num">02</span> Belangrijkste inzichten</div>
       <h2>Belangrijkste inzichten — top 10</h2>
       <ol class="prose">
-        <li>De Nederlandse EV-markt is volwassen genoeg voor een serieuze propositie: 701.149 BEV's, 210.000 publieke laadpunten, groeiend <span class="tag feit" title="RVO.nl, 2026">FEIT</span>.</li>
-        <li>Stedelijke laadpalen (openbare weg) genereren het grootste transactievolume (~34%) maar de laagste besteding per sessie — dit is het lastigste segment om marge op te maken <span class="tag schatting">SCHATTING</span>.</li>
-        <li>AC-laden domineert qua transactievolume (~68%) maar DC/HPC domineert qua omzet en energie — de waarde zit in een kleiner aantal grotere sessies <span class="tag schatting">SCHATTING</span>.</li>
-        <li>De betaalketen kent al meerdere schakels (CPO, EMSP, roamingplatform, PSP) die elk een marge nemen — een bank voegt een extra schakel toe, geen vervanging <span class="tag feit" title="Zie hoofdstuk 4">FEIT/analyse</span>.</li>
-        <li>AFIR-regelgeving verplicht CPO's al tot directe contactloze kaartbetaling op de paal zelf — een bank-app-oplossing moet hier complementair aan zijn, niet mee concurreren <span class="tag feit" title="EU-verordening 2023/1804">FEIT</span>.</li>
-        <li>Er bestaan al witlabel-precedenten (Plugsurfing, vergelijkbare EMSP-platformen) die aantonen dat technische integratie via een partner haalbaar is zonder dat de bank zelf honderden CPO-koppelingen hoeft te bouwen <span class="tag feit">FEIT/analyse</span>.</li>
-        <li>De grootste commerciële kans zit niet bij de zakelijke lease-rijder (betaalstroom loopt al via werkgever) maar bij de <strong>particuliere thuislader</strong> en de <strong>ad-hoc vakantierijder</strong> — segmenten waar bankgemak een reëel alternatief is voor een aparte laadpas <span class="tag schatting" title="Persona-analyse, hoofdstuk 3.4">SCHATTING</span>.</li>
-        <li>De kernaanname — willen klanten dit specifiek via de bank-app? — is de meest kritieke en tegelijk de minst onderbouwde aanname in dit hele dossier <span class="tag aanname" title="Risicoscore 20/25, hoogste in de matrix">AANNAME</span>.</li>
-        <li>Lage gebruiksfrequentie (gemiddeld 2-9 transacties/maand afhankelijk van laadtype) is een structureel obstakel voor gewoontevorming rond een nieuwe app-flow <span class="tag schatting">SCHATTING</span>.</li>
+        <li>De Nederlandse EV-markt is volwassen genoeg voor een serieuze propositie: 701.149 BEV's, 210.000 publieke laadpunten, groeiend <button type="button" class="tag feit" data-ref="nl-bev-park" aria-haspopup="dialog">FEIT</button>.</li>
+        <li>Stedelijke laadpalen (openbare weg) genereren het grootste transactievolume (~34%) maar de laagste besteding per sessie — dit is het lastigste segment om marge op te maken <button type="button" class="tag schatting" data-ref="locatie-model" aria-haspopup="dialog">SCHATTING</button>.</li>
+        <li>AC-laden domineert qua transactievolume (~68%) maar DC/HPC domineert qua omzet en energie — de waarde zit in een kleiner aantal grotere sessies <button type="button" class="tag schatting" data-ref="segment-ac-dc-hpc" aria-haspopup="dialog">SCHATTING</button>.</li>
+        <li>De betaalketen kent al meerdere schakels (CPO, EMSP, roamingplatform, PSP) die elk een marge nemen — een bank voegt een extra schakel toe, geen vervanging <button type="button" class="tag feit" data-ref="keten-structuur" aria-haspopup="dialog">FEIT/analyse</button>.</li>
+        <li>AFIR-regelgeving verplicht CPO's al tot directe contactloze kaartbetaling op de paal zelf — een bank-app-oplossing moet hier complementair aan zijn, niet mee concurreren <button type="button" class="tag feit" data-ref="afir-regulation" aria-haspopup="dialog">FEIT</button>.</li>
+        <li>Er bestaan al witlabel-precedenten (Plugsurfing, vergelijkbare EMSP-platformen) die aantonen dat technische integratie via een partner haalbaar is zonder dat de bank zelf honderden CPO-koppelingen hoeft te bouwen <button type="button" class="tag feit" data-ref="witlabel-precedent" aria-haspopup="dialog">FEIT/analyse</button>.</li>
+        <li>De grootste commerciële kans zit niet bij de zakelijke lease-rijder (betaalstroom loopt al via werkgever) maar bij de <strong>particuliere thuislader</strong> en de <strong>ad-hoc vakantierijder</strong> — segmenten waar bankgemak een reëel alternatief is voor een aparte laadpas <button type="button" class="tag schatting" data-ref="persona-schatting" aria-haspopup="dialog">SCHATTING</button>.</li>
+        <li>De kernaanname — willen klanten dit specifiek via de bank-app? — is de meest kritieke en tegelijk de minst onderbouwde aanname in dit hele dossier <button type="button" class="tag aanname" data-ref="aanname-kernvraag" aria-haspopup="dialog">AANNAME</button>.</li>
+        <li>Lage gebruiksfrequentie (gemiddeld 2-9 transacties/maand afhankelijk van laadtype) is een structureel obstakel voor gewoontevorming rond een nieuwe app-flow <button type="button" class="tag schatting" data-ref="gebruiksfrequentie" aria-haspopup="dialog">SCHATTING</button>.</li>
         <li>Bij 5% marktaandeel is de businesscase potentieel aantrekkelijk (~€2,4-7 miljoen omzet/jaar), maar dit scenario staat of valt met aannames die nu nog niet getest zijn — vandaar het advies om eerst te valideren, niet te bouwen.</li>
       </ol>
     </section>
@@ -462,19 +588,19 @@
         <table>
           <thead><tr><th>Land</th><th>EV-park (BEV+PHEV)</th><th>Publieke laadpunten</th><th>Laadtransacties/jaar</th><th>Laadomzet/jaar</th></tr></thead>
           <tbody>
-            <tr><td><strong>Nederland</strong></td><td>~931.000 (701.149 BEV <span class="tag feit">FEIT</span> + ~230.000 PHEV <span class="tag schatting">SCHATTING</span>)</td><td>~210.000 <span class="tag feit">FEIT</span></td><td>~95 mln <span class="tag schatting" title="±25%">SCHATTING</span></td><td>~€950 mln <span class="tag schatting" title="±25%">SCHATTING</span></td></tr>
-            <tr><td><strong>Duitsland</strong></td><td>~2,98 mln (2,03 mln BEV <span class="tag feit">FEIT</span> + ~0,95 mln PHEV <span class="tag schatting">SCHATTING</span>)</td><td>~165.000 <span class="tag schatting" title="±15%">SCHATTING</span></td><td>~78 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
-            <tr><td><strong>Frankrijk</strong></td><td>~2,5 mln geëlektrificeerd <span class="tag feit" title="EAFO, eind 2025">FEIT</span></td><td>~155.000 <span class="tag schatting" title="±15%">SCHATTING</span></td><td>~62 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
-            <tr><td><strong>België</strong></td><td>~480.000 <span class="tag schatting" title="±20%">SCHATTING</span></td><td>~44.000 <span class="tag schatting" title="±20%">SCHATTING</span></td><td>~17 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
-            <tr><td><strong>Nordics</strong> (NO/SE/DK/FI)</td><td>~2,6 mln <span class="tag schatting" title="±20%">SCHATTING</span> — Zweden alleen: 755.000 <span class="tag feit" title="EAFO">FEIT</span></td><td>~95.000 <span class="tag schatting" title="±25%">SCHATTING</span></td><td>~48 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
-            <tr><td><strong>Verenigd Koninkrijk</strong></td><td>~1,9 mln <span class="tag schatting" title="±20%">SCHATTING</span></td><td>~82.000 <span class="tag schatting" title="±15%">SCHATTING</span></td><td>~55 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
-            <tr><td><strong>EU27 totaal</strong></td><td>~19 mln (12,5 mln BEV + 6,5 mln PHEV) <span class="tag schatting" title="±20-25%">SCHATTING</span></td><td>~1,6 mln <span class="tag schatting" title="Extrapolatie o.b.v. EAFO-deelset van 1.155.861 uit 14/27 lidstaten, ±20%">SCHATTING</span></td><td>~620 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>~€7,4 mld <span class="tag schatting" title="±30%">SCHATTING</span></td></tr>
+            <tr><td><strong>Nederland</strong></td><td>~931.000 (701.149 BEV <button type="button" class="tag feit" data-ref="nl-bev-park" aria-haspopup="dialog">FEIT</button> + ~230.000 PHEV <button type="button" class="tag schatting" data-ref="nl-phev-schatting" aria-haspopup="dialog">SCHATTING</button>)</td><td>~210.000 <button type="button" class="tag feit" data-ref="nl-laadpunten" aria-haspopup="dialog">FEIT</button></td><td>~95 mln <button type="button" class="tag schatting" data-ref="nl-transactievolume" aria-haspopup="dialog">SCHATTING</button></td><td>~€950 mln <button type="button" class="tag schatting" data-ref="nl-laadomzet" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Duitsland</strong></td><td>~2,98 mln (2,03 mln BEV <button type="button" class="tag feit" data-ref="de-bev-park" aria-haspopup="dialog">FEIT</button> + ~0,95 mln PHEV <button type="button" class="tag schatting" data-ref="de-phev-schatting" aria-haspopup="dialog">SCHATTING</button>)</td><td>~165.000 <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~78 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>n.b.</td></tr>
+            <tr><td><strong>Frankrijk</strong></td><td>~2,5 mln geëlektrificeerd <button type="button" class="tag feit" data-ref="fr-electrified" aria-haspopup="dialog">FEIT</button></td><td>~155.000 <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~62 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>n.b.</td></tr>
+            <tr><td><strong>België</strong></td><td>~480.000 <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~44.000 <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~17 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>n.b.</td></tr>
+            <tr><td><strong>Nordics</strong> (NO/SE/DK/FI)</td><td>~2,6 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button> — Zweden alleen: 755.000 <button type="button" class="tag feit" data-ref="se-plugin-fleet" aria-haspopup="dialog">FEIT</button></td><td>~95.000 <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~48 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>n.b.</td></tr>
+            <tr><td><strong>Verenigd Koninkrijk</strong></td><td>~1,9 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~82.000 <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~55 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>n.b.</td></tr>
+            <tr><td><strong>EU27 totaal</strong></td><td>~19 mln (12,5 mln BEV + 6,5 mln PHEV) <button type="button" class="tag schatting" data-ref="eu27-wagenpark-schatting" aria-haspopup="dialog">SCHATTING</button></td><td>~1,6 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~620 mln <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td><td>~€7,4 mld <button type="button" class="tag schatting" data-ref="landen-extrapolatie" aria-haspopup="dialog">SCHATTING</button></td></tr>
           </tbody>
         </table>
       </div>
       <div class="callout">
-        <span class="label">Groeivooruitzicht tot 2030 <span class="tag aanname" title="Macro-extrapolatie, geen voorspelling">AANNAME</span></span>
-        <p>Bij aanhoudende BEV-nieuwverkoopgroei van het huidige tempo (EU BEV-aandeel steeg van 17,4% in 2025 naar 19,4% in Q1 2026 <span class="tag feit">FEIT</span>) is een verdrievoudiging tot verviervoudiging van het EU-brede laadtransactievolume richting 2030 een redelijke ordegrootte-verwachting, in lijn met de EU Fit-for-55/AFIR-doelstellingen. De daadwerkelijke groeicurve hangt af van batterijprijzen, subsidiebeleid en netcapaciteit.</p>
+        <span class="label">Groeivooruitzicht tot 2030 <button type="button" class="tag aanname" data-ref="aanname-groeivooruitzicht" aria-haspopup="dialog">AANNAME</button></span>
+        <p>Bij aanhoudende BEV-nieuwverkoopgroei van het huidige tempo (EU BEV-aandeel steeg van 17,4% in 2025 naar 19,4% in Q1 2026 <button type="button" class="tag feit" data-ref="eu-bev-groei-combo" aria-haspopup="dialog">FEIT</button>) is een verdrievoudiging tot verviervoudiging van het EU-brede laadtransactievolume richting 2030 een redelijke ordegrootte-verwachting, in lijn met de EU Fit-for-55/AFIR-doelstellingen. De daadwerkelijke groeicurve hangt af van batterijprijzen, subsidiebeleid en netcapaciteit.</p>
       </div>
 
       <h3>3.2 Transactievolume &amp; technische segmentatie</h3>
@@ -487,7 +613,7 @@
             <tr><td><strong>HPC</strong> (&gt;150 kW)</td><td class="num">6%</td><td class="num">21%</td><td class="num">19%</td><td class="num">€28,40</td><td class="num">34,2 kWh</td><td class="num">22 min</td><td class="num">1,1</td></tr>
           </tbody>
         </table>
-        <caption>Alle waarden <span class="tag schatting">SCHATTING</span> — analytisch model o.b.v. ElaadNL Nationaal Laadonderzoek 2023 als referentiekader, geëxtrapoleerd naar 2026.</caption>
+        <caption>Alle waarden <button type="button" class="tag schatting" data-ref="segment-ac-dc-hpc" aria-haspopup="dialog">SCHATTING</button> — analytisch model o.b.v. ElaadNL Nationaal Laadonderzoek 2023 als referentiekader, geëxtrapoleerd naar 2026.</caption>
       </div>
       <p><strong>Inzicht:</strong> AC-laden is volumedrager maar geen waardedrager; HPC is een klein deel van het volume maar levert disproportioneel veel omzet en energie. Voor een bankpropositie betekent dit dat puur op transactievolume sturen (bijv. focus op stedelijk AC-laden) tot lage omzet per klant leidt, terwijl DC/HPC een hogere transactiewaarde heeft maar minder frequent voorkomt.</p>
 
@@ -504,7 +630,7 @@
             <tr><td>Destination (horeca/hotel)</td><td class="num">7%</td><td class="num">95 min</td><td class="num">€11,60</td><td>Laag-middel</td><td>Vakantierijder</td></tr>
           </tbody>
         </table>
-        <caption>Alle waarden <span class="tag schatting">SCHATTING</span>.</caption>
+        <caption>Alle waarden <button type="button" class="tag schatting" data-ref="locatie-model" aria-haspopup="dialog">SCHATTING</button>.</caption>
       </div>
 
       <h3>3.4 Laadpersona's</h3>
@@ -519,7 +645,7 @@
             <tr><td>Vakantie-/weekendrijder</td><td class="num">6%</td><td class="num">5%</td><td>HPC snelweg</td><td>Middel</td><td><strong>Hoog</strong> — laagste omschakeldrempel</td></tr>
           </tbody>
         </table>
-        <caption><span class="tag schatting">SCHATTING</span>/<span class="tag aanname">AANNAME</span> — analytisch gemodelleerd, geen primair enquêteonderzoek uitgevoerd.</caption>
+        <caption><button type="button" class="tag schatting" data-ref="persona-schatting" aria-haspopup="dialog">SCHATTING</button>/<button type="button" class="tag aanname" data-ref="persona-aanname" aria-haspopup="dialog">AANNAME</button> — analytisch gemodelleerd, geen primair enquêteonderzoek uitgevoerd.</caption>
       </div>
       <p><strong>Strategische implicatie:</strong> de twee segmenten met de hoogste relevantie voor een bankpropositie (particuliere thuislader, vakantierijder) zijn niet de segmenten met het hoogste transactievolume. De grootste markt (stadsbewoner, forens) is het minst voor de hand liggend te winnen via de bank-app.</p>
     </section>
@@ -578,17 +704,17 @@
         <table>
           <thead><tr><th>Partij</th><th>Rol</th><th>Roaming-dekking</th><th>Geschat marktaandeel</th></tr></thead>
           <tbody>
-            <tr><td><strong>Fastned</strong></td><td>CPO (HPC-specialist)</td><td>Eigen netwerk NL/UK/DE/FR/BE/CH</td><td>Dominant in NL snelweg-HPC <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Allego</strong></td><td>CPO (breed AC+DC)</td><td>Groot Europees netwerk</td><td>Top-3 CPO qua laadpunten <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Shell Recharge</strong></td><td>CPO + EMSP</td><td>Zeer breed</td><td>Grote EMSP-speler <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>ANWB</strong></td><td>EMSP (consumentenmerk)</td><td>Breed via partners</td><td>Sterk in NL consument <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Plugsurfing</strong> (Fortum)</td><td>EMSP (roaming-aggregator)</td><td>Zeer breed</td><td>Precedent voor witlabel <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Chargemap</strong></td><td>EMSP + community</td><td>Breed Europees</td><td>Sterk in FR <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Ionity</strong></td><td>CPO (HPC joint venture)</td><td>Eigen netwerk, open extern</td><td>Hoog volume/locatie <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Tesla Supercharger</strong></td><td>CPO (open network)</td><td>Groeiend open netwerk</td><td>Grote HPC-positie <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Eneco/Vattenfall/Equans/TotalEnergies</strong></td><td>Energiebedrijf-CPO's</td><td>Wisselend</td><td>Sterk in gemeenteconcessies <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Elli</strong> (VW Group)</td><td>EMSP/CPO automerk-gelieerd</td><td>Breed via aggregatie</td><td>Groeiend met VW-volume <span class="tag schatting">SCHATTING</span></td></tr>
-            <tr><td><strong>Monta</strong></td><td>SaaS/CPO-platform + app</td><td>Groeiend via OCPI</td><td>Sterk in software-laag <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Fastned</strong></td><td>CPO (HPC-specialist)</td><td>Eigen netwerk NL/UK/DE/FR/BE/CH</td><td>Dominant in NL snelweg-HPC <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Allego</strong></td><td>CPO (breed AC+DC)</td><td>Groot Europees netwerk</td><td>Top-3 CPO qua laadpunten <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Shell Recharge</strong></td><td>CPO + EMSP</td><td>Zeer breed</td><td>Grote EMSP-speler <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>ANWB</strong></td><td>EMSP (consumentenmerk)</td><td>Breed via partners</td><td>Sterk in NL consument <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Plugsurfing</strong> (Fortum)</td><td>EMSP (roaming-aggregator)</td><td>Zeer breed</td><td>Precedent voor witlabel <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Chargemap</strong></td><td>EMSP + community</td><td>Breed Europees</td><td>Sterk in FR <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Ionity</strong></td><td>CPO (HPC joint venture)</td><td>Eigen netwerk, open extern</td><td>Hoog volume/locatie <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Tesla Supercharger</strong></td><td>CPO (open network)</td><td>Groeiend open netwerk</td><td>Grote HPC-positie <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Eneco/Vattenfall/Equans/TotalEnergies</strong></td><td>Energiebedrijf-CPO's</td><td>Wisselend</td><td>Sterk in gemeenteconcessies <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Elli</strong> (VW Group)</td><td>EMSP/CPO automerk-gelieerd</td><td>Breed via aggregatie</td><td>Groeiend met VW-volume <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
+            <tr><td><strong>Monta</strong></td><td>SaaS/CPO-platform + app</td><td>Groeiend via OCPI</td><td>Sterk in software-laag <button type="button" class="tag schatting" data-ref="concurrentie-marktaandeel" aria-haspopup="dialog">SCHATTING</button></td></tr>
           </tbody>
         </table>
         <caption>Volledige details: <code>data/competitors.json</code>. Marktaandeel-cijfers zijn indicatief — geen uniforme officiële bron publiceert marktaandelen per EMSP in Nederland.</caption>
@@ -663,7 +789,7 @@
       </div>
       <p>Welk model realistisch is, hangt direct af van de propositiekeuze (pure betaallaag vs. volwaardig EMSP) — dit is zelf een te valideren strategische keuze, geen vaststaand gegeven.</p>
       <div class="callout">
-        <span class="label">Belangrijke kanttekening <span class="tag aanname">AANNAME</span></span>
+        <span class="label">Belangrijke kanttekening <button type="button" class="tag aanname" data-ref="aanname-marktaandeel-constant" aria-haspopup="dialog">AANNAME</button></span>
         <p>Deze berekening gaat uit van een constant marktaandeel over alle segmenten. In werkelijkheid zal marktaandeel-opbouw waarschijnlijk beginnen bij de segmenten met de hoogste relevantie (particuliere thuisladers, vakantierijders) en pas later doorgroeien naar het volumesegment (stadsbewoners). Zie het interactieve dashboard (<code>webapp/</code>) voor een versie waarin marktaandeel, transactiewaarde en marge los van elkaar te variëren zijn.</p>
       </div>
     </section>
@@ -799,6 +925,175 @@
   Strategisch validatiedossier EV-laadmarkt — opgesteld juli 2026. Volledige broncode, databestanden en het interactieve directiedashboard staan in de repository <code>triqper/ev-marktonderzoek</code>, branch <code>claude/ev-charging-market-validation-4wn5l5</code>.
 </footer>
 
+<div class="ref-overlay" id="ref-overlay" hidden></div>
+<div class="ref-popover" id="ref-popover" role="dialog" aria-modal="false" aria-labelledby="ref-bron" hidden>
+  <div class="ref-popover-head">
+    <span id="ref-badge"></span>
+    <button type="button" class="ref-popover-close" id="ref-close" aria-label="Sluiten">✕</button>
+  </div>
+  <p class="ref-bron" id="ref-bron"></p>
+  <p class="ref-peildatum" id="ref-peildatum" hidden></p>
+  <blockquote class="ref-citaat" id="ref-citaat" hidden></blockquote>
+  <p class="ref-toelichting" id="ref-toelichting" hidden></p>
+  <p class="ref-secondary" id="ref-secondary" hidden></p>
+</div>
+
+<script>
+const REFS = {
+  "def-feit": { type: "feit", bron: "Legenda \u2014 geen citatie", toelichting: "Een FEIT-label betekent: dit cijfer of deze claim is direct en woordelijk ontleend aan een genoemde primaire bron (overheidsinstantie, brancheorganisatie of offici\u00eble dataset). Klik in de tekst op een FEIT-label om de exacte bron, het citaat en een link te zien." },
+  "def-schatting": { type: "schatting", bron: "Legenda \u2014 geen citatie", toelichting: "Een SCHATTING-label betekent: dit cijfer is analytisch afgeleid of berekend door de auteurs van dit dossier, met een expliciet vermelde foutmarge. Klik in de tekst op een SCHATTING-label om de berekeningsmethode en de onderliggende aannames te zien." },
+  "def-aanname": { type: "aanname", bron: "Legenda \u2014 geen citatie", toelichting: "Een AANNAME-label betekent: dit is een expert-inschatting zonder harde onderliggende data \u2014 per definitie iets dat nog getest moet worden voordat erop kan worden voortgebouwd. Klik in de tekst op een AANNAME-label om te zien waarom dit cruciaal is en welk bewijs (niet) beschikbaar is." },
+  "nl-bev-park": { type: "feit", bron: "RVO.nl \u2014 Stand van zaken elektrisch vervoer en laadpunten", url: "https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken", citaat: "\u201cHet aantal elektrische personenauto's op de Nederlandse wegen is 701.149, wat 7,5% van alle personenauto's vertegenwoordigt.\u201d", peildatum: "Geraadpleegd juli 2026 \u2014 RVO publiceert dit maandelijks bijgewerkt overzicht." },
+  "nl-laadpunten": { type: "feit", bron: "RVO.nl \u2014 Stand van zaken elektrisch vervoer en laadpunten", url: "https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken", citaat: "\u201cNederland telt begin 2026 ongeveer 210.000 publieke laadpunten en naar schatting 667.000 particuliere thuislaadpalen. Per tienduizend inwoners zijn er 116 laadmogelijkheden.\u201d", peildatum: "Geraadpleegd juli 2026" },
+  "nl-nieuwverkoop": { type: "feit", bron: "RVO.nl \u2014 Stand van zaken elektrisch vervoer en laadpunten", url: "https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken", citaat: "\u201cHet aantal nieuw verkochte elektrische personenauto's in 2026 is 24.482, wat 31% van alle nieuw verkochte personenauto's uitmaakt.\u201d", peildatum: "Periodecijfer \u2014 geen volledig kalenderjaar, niet optellen bij jaartotalen." },
+  "eu-bev-q1-2026": { type: "feit", bron: "ACEA \u2014 New car registrations, Q1 2026", url: "https://www.acea.auto/pc-registrations/new-car-registrations-4-in-q1-2026-battery-electric-19-4-market-share/", citaat: "\u201cIn the first quarter of 2026, 546,937 new battery-electric cars were registered, capturing 19.4% of the EU market share, an increase from 15.2% one year earlier.\u201d" },
+  "eu-bev-groei-combo": { type: "feit", bron: "ACEA \u2014 New car registrations: full year 2025 &amp; Q1 2026", url: "https://www.acea.auto/pc-registrations/new-car-registrations-1-8-in-2025-battery-electric-17-4-market-share/", bron2: "ACEA \u2014 Q1 2026", url2: "https://www.acea.auto/pc-registrations/new-car-registrations-4-in-q1-2026-battery-electric-19-4-market-share/", citaat: "FY2025: \u201cbattery-electric car market share reaching 17.4%, in line with projections for the year.\u201d \u00b7 Q1 2026: \u201c...capturing 19.4% of the EU market share, an increase from 15.2% one year earlier.\u201d" },
+  "nl-laadomzet": { type: "schatting", bron: "Eigen berekening \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", toelichting: "Geschat transactievolume (~95 mln/jaar) \u00d7 gewogen gemiddelde transactiewaarde van \u20ac10,00 (zie hoofdstuk 6.1). Foutmarge \u00b125%, voortkomend uit de onzekerheid in het onderliggende transactievolume \u2014 er is geen directe omzetstatistiek van CPO's/EMSP's geraadpleegd." },
+  "businesscase-scenarios": { type: "schatting", bron: "Eigen berekening \u2014 zie hoofdstuk 6.1-6.3", url: "#s6", toelichting: "Bandbreedte volgt uit de scenariotabellen in hoofdstuk 6: bij 1% marktaandeel en een take-rate tussen 0,5% (betaalmarge-model) en 15% (volwaardig EMSP-model) op een TPV van \u20ac9,5 mln ontstaat een omzetrange van \u20ac47.500 tot \u20ac1.425.000 \u2014 afgerond weergegeven als \u20ac0,5-1,4 mln." },
+  "aanname-kernvraag": { type: "aanname", bron: "Aannameregister \u2014 data/risk-matrix.json (A1)", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/risk-matrix.json", bron2: "Validatiedossier, hoofdstuk 7", url2: "#s7", toelichting: "Waarom cruciaal: kern van de hele propositie \u2014 zonder aantoonbare vraag geen business. Beschikbaar bewijs: geen \u2014 er is binnen dit dossier geen klantonderzoek uitgevoerd. Betrouwbaarheid bewijs: 1 van 5. Risicoscore 20/25 (kans onjuist 4 \u00d7 impact 5) \u2014 de hoogste van alle aannames in de risicomatrix. Zie hoofdstuk 7.3 voor het experiment dat dit moet valideren (Concierge MVP + interviews)." },
+  "aanname-groeivooruitzicht": { type: "aanname", bron: "Eigen macro-extrapolatie", toelichting: "Lineaire doortrekking van de waargenomen groei in BEV-nieuwverkoopaandeel (17,4% \u2192 19,4% tussen FY2025 en Q1 2026, ACEA) naar een 3-4x groei in laadtransactievolume richting 2030, in lijn met de doelstellingen van AFIR/Fit-for-55. Dit is expliciet geen formeel prognosemodel \u2014 de daadwerkelijke curve hangt af van variabelen (batterijprijzen, subsidiebeleid, netcapaciteit) die hier niet gemodelleerd zijn." },
+  "aanname-marktaandeel-constant": { type: "aanname", bron: "Eigen aanname \u2014 zie hoofdstuk 6.3", url: "#s6", toelichting: "De scenariotabellen gaan uit van een constant marktaandeel over alle klantsegmenten tegelijk. In werkelijkheid start marktaandeel-opbouw vermoedelijk eerst bij de segmenten met de hoogste relevantie (particuliere thuisladers, vakantierijders \u2014 zie persona-analyse) en groeit pas later door naar het volumesegment (stadsbewoners). Dit vereenvoudigde model is gekozen voor transparantie en reproduceerbaarheid, niet omdat het de meest realistische aannamestructuur is." },
+  "locatie-model": { type: "schatting", bron: "Eigen analytisch model \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", bron2: "Referentiekader: ElaadNL \u2014 Nationaal Laadonderzoek 2023", url2: "https://elaad.nl/wp-content/uploads/downloads/Nationaal_Laadonderzoek_2023_Rapport_def.pdf", toelichting: "Aandeel per locatietype is een eigen model, ge\u00ebxtrapoleerd naar 2026 met het ElaadNL Nationaal Laadonderzoek 2023 als kwalitatief referentiekader (dat rapporteert bijvoorbeeld dat EV-rijders 52% van hun kilometers thuis laden, 25% publiek, 13% op werk en 9% onderweg snelladen \u2014 een andere indeling dan de locatietypen hier, maar wel richtinggevend voor de verhoudingen). Geen directe locatie-transactiedata van CPO's gebruikt." },
+  "segment-ac-dc-hpc": { type: "schatting", bron: "Eigen analytisch model \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", bron2: "Referentiekader: ElaadNL \u2014 Nationaal Laadonderzoek 2023", url2: "https://elaad.nl/wp-content/uploads/downloads/Nationaal_Laadonderzoek_2023_Rapport_def.pdf", toelichting: "Verdeling van transacties/omzet/energie over AC, DC en HPC is een eigen model o.b.v. typische vermogensklassen, sessieduur en laadgedrag-patronen uit het ElaadNL Nationaal Laadonderzoek 2023, ge\u00ebxtrapoleerd naar 2026. Er bestaat geen publiek toegankelijke, uniforme AC/DC/HPC-transactiestatistiek voor de Nederlandse markt waarop dit direct gebaseerd kon worden." },
+  "gebruiksfrequentie": { type: "schatting", bron: "Eigen analytisch model \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", toelichting: "Afgeleid van de transacties-per-gebruiker-per-maand-cijfers per laadsegment (AC 9,2 \u00b7 DC 2,8 \u00b7 HPC 1,1 \u2014 zie hoofdstuk 3.2), zelf weer een extrapolatie van ElaadNL-gebruikspatronen. Geen directe meting van individuele klantfrequentie." },
+  "nl-phev-schatting": { type: "schatting", bron: "Eigen extrapolatie \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", toelichting: "RVO publiceert het BEV-park gedetailleerd, maar niet los het resterende PHEV-wagenpark. Dit cijfer is afgeleid uit de historische RDW-kentekenregistratie (piekjaren private lease 2013-2016) en de aflopende vervangingscyclus van die cohorten. Foutmarge \u00b115%." },
+  "de-bev-park": { type: "feit", bron: "EAFO / electrive.com \u2014 Germany tops two million battery-electric cars", url: "https://www.electrive.com/2026/02/27/germany-tops-two-million-battery-electric-cars-in-circulation/", bron2: "EAFO \u2014 Germany's BEV fleet surpasses 2 million units", url2: "https://alternative-fuels-observatory.ec.europa.eu/general-information/news/germanys-bev-fleet-surpasses-2-million-units-major-milestone", citaat: "\u201cAs of 1 January 2026, a total of 2,034,260 BEVs were registered on German roads... the BEV fleet expanded by 382,617 vehicles between 1 January 2025 and 1 January 2026.\u201d" },
+  "de-phev-schatting": { type: "schatting", bron: "Eigen extrapolatie \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", toelichting: "Afgeleid uit KBA-registratiehistorie (Duitse RDW-tegenhanger) en de EU-brede PHEV-aandeel-trend in nieuwverkoop. Foutmarge \u00b120%." },
+  "fr-electrified": { type: "feit", bron: "EAFO \u2014 France's EV Market in 2025: Renewed Momentum and a Growing Fleet", url: "https://alternative-fuels-observatory.ec.europa.eu/general-information/news/frances-ev-market-2025-renewed-momentum-and-growing-fleet", citaat: "\u201cBy the end of 2025, the total number of electrified vehicles (BEVs and PHEVs combined) in circulation in France exceeded 2.5 million.\u201d" },
+  "se-plugin-fleet": { type: "feit", bron: "EAFO \u2014 Sweden reaches 15% EV car fleet in 2025", url: "https://alternative-fuels-observatory.ec.europa.eu/general-information/news/sweden-reaches-15-ev-car-fleet-2025", citaat: "\u201cSweden's plug-in passenger car fleet consisted of approximately 414,000 battery electric vehicles (BEV) and 341,000 plug-in hybrid electric vehicles (PHEV), totaling ~755,000 vehicles, which corresponds to roughly 15% of the total passenger car fleet.\u201d" },
+  "landen-extrapolatie": { type: "schatting", bron: "Eigen extrapolatie \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", toelichting: "Orde-van-grootte-schatting op basis van de relatieve wagenparkgrootte en EV-penetratiegraad van het land t.o.v. landen waarvoor wel een FEIT-cijfer beschikbaar is (NL, DE, FR, SE), plus algemene EAFO-trendrapportages voor West-Europa. Foutmarge 15-30% afhankelijk van het cijfer \u2014 zie de exacte bandbreedte bij het label zelf in de tabel." },
+  "eu27-wagenpark-schatting": { type: "schatting", bron: "Eigen berekening \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", bron2: "Basis: IEA \u2014 Global EV Outlook 2026", url2: "https://www.iea.org/reports/global-ev-outlook-2026/trends-in-electric-cars", toelichting: "Berekend als 5%-aandeel (IEA, zie FEIT-cijfer &lsquo;EU-wagenpark 5% elektrisch&rsquo;) \u00d7 een geschat EU27-wagenpark van ~250 miljoen personenauto's (orde van grootte o.b.v. ACEA vehicles-in-use-rapportages). PHEV-aandeel afgeleid uit de verhouding BEV:PHEV-nieuwverkoop 2024 (13,6% : 7,3%, EEA) doorgetrokken naar het cumulatieve park. Foutmarge \u00b120-25%." },
+  "eu-fleet-share": { type: "feit", bron: "IEA \u2014 Global EV Outlook 2026", url: "https://www.iea.org/reports/global-ev-outlook-2026/trends-in-electric-cars", citaat: "\u201cElectric cars now represent about 5% of the European car fleet.\u201d" },
+  "afir-regulation": { type: "feit", bron: "EUR-Lex \u2014 Regulation (EU) 2023/1804 (AFIR)", url: "https://eur-lex.europa.eu/eli/reg/2023/1804/oj/eng", bron2: "Europese Commissie \u2014 Q&amp;A bij de AFIR-verordening", url2: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure/questions-and-answers-regulation-deployment-alternative-fuels-infrastructure-eu-20231804_en", citaat: "\u201c...common technical specifications and requirements on user information, data provision and payment requirements for alternative fuels infrastructure.\u201d De Commissie licht toe: voor publieke laadpunten geldt sinds april 2024 dat laden toegankelijk moet zijn voor alle rijders, niet alleen abonnees of app-gebruikers." },
+  "keten-structuur": { type: "feit", bron: "Virta \u2014 OCPI protocol explained", url: "https://www.virta.global/blog/ocpi-protocol-explained-the-backbone-of-ev-charging-interoperability", citaat: "\u201cOCPI is an open protocol that allows communication between Charge Point Operators (CPOs)... and E-mobility Service Providers (EMSPs)... By adopting OCPI as a de facto standard, CPOs and EMSPs can easily connect and let EV drivers charge regardless of which charging network they belong to.\u201d" },
+  "witlabel-precedent": { type: "feit", bron: "Plugsurfing \u2014 Car makers solutions", url: "https://plugsurfing.com/car-makers-solutions/", citaat: "\u201cCarmakers benefit from white-label solutions as well as deeper integrations with their in-house technology... Through Plugsurfing's white-label EMP application, flexible Drive API, or Roam OCPI, they help deliver a consistent, trusted charging experience under your brand.\u201d" },
+  "persona-schatting": { type: "schatting", bron: "Eigen analytisch model \u2014 data/personas.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/personas.json", toelichting: "Persona-marktaandelen en laadtransactie-aandelen zijn gemodelleerd op basis van RDW-kentekensegmentatie (particulier vs. zakelijk/lease) en algemeen bekende mobiliteitspatronen \u2014 geen directe enqu\u00eatedata binnen dit dossier." },
+  "persona-aanname": { type: "aanname", bron: "Eigen kwalitatieve inschatting \u2014 data/personas.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/personas.json", toelichting: "De kwalitatieve &lsquo;relevantie voor de bankpropositie&rsquo;-score per persona is een expert-inschatting van de auteurs, niet gevalideerd met klantonderzoek. Dit is precies de reden dat hoofdstuk 7 een Concierge MVP-experiment (A1) voorstelt om deze inschatting te toetsen." },
+  "concurrentie-marktaandeel": { type: "schatting", bron: "Eigen kwalitatieve inschatting \u2014 data/competitors.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/competitors.json", toelichting: "Geen enkele partij publiceert een uniforme, offici\u00eble marktaandeel-statistiek per EMSP/CPO voor Nederland. Deze classificatie is een kwalitatieve inschatting op basis van zichtbare aanwezigheid (aantal laadpunten/locaties), merkbekendheid en \u2014 waar beschikbaar \u2014 publieke jaarverslagen van individuele CPO's zoals Fastned." },
+  "nl-transactievolume": { type: "schatting", bron: "Eigen berekening \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", toelichting: "Publieke laadpunten NL (210.000, RVO) \u00d7 gemiddeld 1,25 sessies per laadpunt per dag \u00d7 365 dagen \u00d7 correctiefactor 0,88 voor de lagere gebruiksfrequentie van semi-publieke palen. Uitkomst: circa 95 miljoen transacties per jaar. Foutmarge \u00b125%, omdat de werkelijke bezettingsgraad per laadpunt niet direct gemeten is." },
+};
+</script>
+
+<script>
+  (function () {
+    var badgeLabel = { feit: "Feit", schatting: "Schatting", aanname: "Aanname" };
+    var overlay = document.getElementById('ref-overlay');
+    var pop = document.getElementById('ref-popover');
+    var badgeEl = document.getElementById('ref-badge');
+    var bronEl = document.getElementById('ref-bron');
+    var peildatumEl = document.getElementById('ref-peildatum');
+    var citaatEl = document.getElementById('ref-citaat');
+    var toelichtingEl = document.getElementById('ref-toelichting');
+    var secondaryEl = document.getElementById('ref-secondary');
+    var closeBtn = document.getElementById('ref-close');
+    var activeTrigger = null;
+
+    function isExternal(url) { return /^https?:\/\//.test(url); }
+
+    function bronHtml(bron, url) {
+      if (!url) return escapeHtml(bron);
+      var extIcon = isExternal(url) ? ' <span class="ext" aria-hidden="true">↗</span>' : '';
+      var attrs = isExternal(url) ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return '<a href="' + url + '"' + attrs + '>' + escapeHtml(bron) + '</a>' + extIcon;
+    }
+
+    function escapeHtml(s) {
+      var d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    function render(ref) {
+      badgeEl.innerHTML = '<span class="tag ' + ref.type + '" style="cursor:default">' + badgeLabel[ref.type] + '</span>';
+      bronEl.innerHTML = bronHtml(ref.bron, ref.url);
+
+      if (ref.peildatum) { peildatumEl.textContent = ref.peildatum; peildatumEl.hidden = false; }
+      else { peildatumEl.hidden = true; }
+
+      if (ref.citaat) { citaatEl.innerHTML = ref.citaat; citaatEl.hidden = false; }
+      else { citaatEl.hidden = true; }
+
+      if (ref.toelichting) { toelichtingEl.innerHTML = ref.toelichting; toelichtingEl.hidden = false; }
+      else { toelichtingEl.hidden = true; }
+
+      if (ref.bron2) {
+        secondaryEl.innerHTML = 'Zie ook: ' + bronHtml(ref.bron2, ref.url2);
+        secondaryEl.hidden = false;
+      } else { secondaryEl.hidden = true; }
+    }
+
+    function position(trigger) {
+      if (window.innerWidth <= 640) {
+        pop.style.left = ''; pop.style.top = ''; pop.style.right = '';
+        return;
+      }
+      var r = trigger.getBoundingClientRect();
+      var popW = pop.offsetWidth || 380;
+      var left = Math.min(Math.max(8, r.left), window.innerWidth - popW - 8);
+      var spaceBelow = window.innerHeight - r.bottom;
+      var top;
+      if (spaceBelow > 260 || spaceBelow > r.top) {
+        top = r.bottom + 8;
+      } else {
+        top = Math.max(8, r.top - (pop.offsetHeight || 300) - 8);
+      }
+      pop.style.left = left + 'px';
+      pop.style.top = top + 'px';
+      pop.style.right = 'auto';
+    }
+
+    var openedAt = 0;
+
+    function open(trigger) {
+      var id = trigger.getAttribute('data-ref');
+      var ref = REFS[id];
+      if (!ref) return;
+      if (activeTrigger) activeTrigger.setAttribute('aria-expanded', 'false');
+      render(ref);
+      overlay.hidden = false;
+      pop.hidden = false;
+      position(trigger);
+      trigger.setAttribute('aria-expanded', 'true');
+      activeTrigger = trigger;
+      openedAt = Date.now();
+      closeBtn.focus({ preventScroll: true });
+    }
+
+    function close() {
+      overlay.hidden = true;
+      pop.hidden = true;
+      if (activeTrigger) {
+        activeTrigger.setAttribute('aria-expanded', 'false');
+        activeTrigger.focus();
+      }
+      activeTrigger = null;
+    }
+
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest && e.target.closest('[data-ref]');
+      if (trigger) {
+        e.preventDefault();
+        if (activeTrigger === trigger) { close(); }
+        else { open(trigger); }
+        return;
+      }
+      if (!pop.hidden && !e.target.closest('#ref-popover')) close();
+    });
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !pop.hidden) close();
+    });
+    window.addEventListener('scroll', function () {
+      if (pop.hidden) return;
+      if (Date.now() - openedAt < 350) return; // ignore scroll caused by opening/focus itself
+      close();
+    }, { passive: true });
+    window.addEventListener('resize', function () { if (!pop.hidden && activeTrigger) position(activeTrigger); });
+  })();
+</script>
+
 <script>
   (function () {
     var links = Array.prototype.slice.call(document.querySelectorAll('.spine a'));
@@ -817,4 +1112,3 @@
 </script>
 </body>
 </html>
-<!-- redeploy trigger: 2026-07-13T09:49:44Z -->
