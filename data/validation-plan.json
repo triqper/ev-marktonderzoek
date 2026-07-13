@@ -1,0 +1,45 @@
+{
+  "_meta": { "framework": "Testing Business Ideas (Bland) + Lean Analytics — per top-aanname (A1, A2, A3, A7) een corporate-realistisch experiment" },
+  "experimenten": [
+    {
+      "aanname_id": "A1",
+      "experiment": "Concierge MVP + 20-25 diepte-interviews met bankklanten die EV rijden",
+      "hypothese": "Minimaal 30% van geïnterviewde EV-rijdende bankklanten geeft aan een laadfunctie in de bank-app te zouden gebruiken bij gelijke prijs/gemak als hun huidige oplossing",
+      "meetbaar_succescriterium": "≥30% expliciete voorkeur + ≥15% geeft aan bereid te zijn over te stappen binnen 3 maanden (falsificatie: <15% → stop)",
+      "kosten_indicatie_eur": "15.000 - 25.000",
+      "doorlooptijd_weken": "3-4",
+      "vervolgstappen_bij_succes": "Door naar Fake Door-test (A1 gecombineerd met A4)",
+      "vervolgstappen_bij_falen": "Herformuleer waardepropositie of stop; heroverweeg gerichte niche (bv. alleen zakelijke klanten) i.p.v. brede consumentenmarkt"
+    },
+    {
+      "aanname_id": "A2",
+      "experiment": "Financieel deskresearch + expertinterviews met CPO/EMSP-finance leads (o.a. via LinkedIn-netwerk, brancheorganisatie) om reële marge-structuur te doorgronden",
+      "hypothese": "Er is minimaal 1,5-2%-punt marge beschikbaar voor een nieuwe partij in de keten zonder eindprijs voor de consument te verhogen",
+      "meetbaar_succescriterium": "Onderbouwd marge-model met ≥3 onafhankelijke expertbronnen dat een positieve business case bij 5% marktaandeel bevestigt (falsificatie: marge-model toont structureel verlies bij alle realistische scenario's → stop/pivot naar fee-based i.p.v. transactiemarge-model)",
+      "kosten_indicatie_eur": "8.000 - 15.000",
+      "doorlooptijd_weken": "2-3",
+      "vervolgstappen_bij_succes": "Formaliseer businesscase-aannames, ga door naar partnerselectie",
+      "vervolgstappen_bij_falen": "Onderzoek alternatief verdienmodel (abonnement/fee i.p.v. transactiemarge) of stop"
+    },
+    {
+      "aanname_id": "A3",
+      "experiment": "Technische haalbaarheidsstudie + gesprekken met 2-3 kandidaat-EMSP/roamingpartners (bv. Plugsurfing-achtige witlabelpartij) over integratiescope en doorlooptijd",
+      "hypothese": "Een witlabel-integratie via een bestaande EMSP is binnen 6-9 maanden technisch te realiseren zonder eigen CPO-koppelingen te hoeven bouwen",
+      "meetbaar_succescriterium": "Minimaal 2 partnerkandidaten bevestigen technische haalbaarheid binnen 9 maanden tegen een marge die aanname A2 niet ondermijnt (falsificatie: alle partners geven >18 maanden of vereisen marge die A2 negatief maakt → stop/heroverweeg)",
+      "kosten_indicatie_eur": "10.000 - 20.000",
+      "doorlooptijd_weken": "4-6",
+      "vervolgstappen_bij_succes": "Start intentieverklaring (LOI) met voorkeurspartner",
+      "vervolgstappen_bij_falen": "Heroverweeg build-vs-partner strategie of stop"
+    },
+    {
+      "aanname_id": "A7",
+      "experiment": "Fake Door-test: een 'Laden'-tegel in de bestaande bank-app (bij een testgroep) die bij aanklikken een korte uitleg + interesse-registratie toont (geen echte functionaliteit)",
+      "hypothese": "Minimaal 8% van EV-rijdende gebruikers die de tegel zien, klikt door en registreert interesse ondanks lage gebruiksfrequentie van de onderliggende activiteit",
+      "meetbaar_succescriterium": "Click-through ≥8% en interesse-registratie ≥3% van geëxposeerde EV-rijdende gebruikers binnen 4 weken (falsificatie: <3% → stop, gedragsverandering-drempel te hoog)",
+      "kosten_indicatie_eur": "5.000 - 10.000",
+      "doorlooptijd_weken": "4",
+      "vervolgstappen_bij_succes": "Door naar prototype-test (Figma) voor daadwerkelijke laadflow (A4)",
+      "vervolgstappen_bij_falen": "Stop of herposition als een 'inzicht/overzicht'-feature i.p.v. transactionele feature"
+    }
+  ]
+}

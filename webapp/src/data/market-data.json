@@ -1,0 +1,161 @@
+{
+  "_meta": {
+    "titel": "EV-laadmarkt kerncijfers — NL, EU en kernlanden",
+    "peildatum": "2026-07-13",
+    "kennisafbakening": "Cijfers zijn samengesteld uit publiek toegankelijke bronnen (RVO, ACEA, EAFO, ElaadNL) geraadpleegd juli 2026, aangevuld met transparant onderbouwde macro-schattingen waar directe brondata ontbrak. Elk veld bevat een 'type'-label: FEIT (direct uit bron), SCHATTING (afgeleid/berekend, foutmarge vermeld) of AANNAME (expert-inschatting zonder harde bron).",
+    "valuta": "EUR"
+  },
+  "landen": {
+    "NL": {
+      "naam": "Nederland",
+      "ev_park": {
+        "bev": { "waarde": 701149, "type": "FEIT", "bron": "RVO.nl, Stand van zaken elektrisch vervoer, 2026", "peildatum": "2026-Q2" },
+        "phev": { "waarde": 230000, "type": "SCHATTING", "foutmarge": "±15%", "toelichting": "RVO publiceert BEV-cijfers gedetailleerd; PHEV-restpark afgeleid uit historische RDW-kentekenregistratie (piek private lease 2013-2016) en aflopende vervangingscyclus." },
+        "lichte_bedrijfsvoertuigen_ev": { "waarde": 56153, "type": "FEIT", "bron": "RVO.nl, 2026" },
+        "zware_bedrijfsvoertuigen_ev": { "waarde": 2480, "type": "FEIT", "bron": "RVO.nl, 2026" },
+        "nieuwverkoop_bev_periode": { "waarde": 24482, "aandeel_pct": 31, "type": "FEIT", "bron": "RVO.nl, 2026", "toelichting": "Periodecijfer (recentste rapportagemaand RVO), geen volledig kalenderjaar — niet 1-op-1 optellen bij jaartotalen." }
+      },
+      "laadinfrastructuur": {
+        "publieke_laadpunten_totaal": { "waarde": 210000, "type": "FEIT", "bron": "RVO.nl / Laadpunt Nederland, 2026" },
+        "regulier_publiek": { "waarde": 118715, "type": "FEIT", "bron": "RVO.nl, 2026" },
+        "semi_publiek": { "waarde": 79786, "type": "FEIT", "bron": "RVO.nl, 2026" },
+        "snelladers_publiek": { "waarde": 6018, "type": "FEIT", "bron": "RVO.nl, 2026" },
+        "private_thuisladers": { "waarde": 667000, "type": "FEIT", "bron": "RVO.nl, 2026" },
+        "laadpunten_per_10000_inwoners": { "waarde": 116, "type": "FEIT", "bron": "RVO.nl, 2026" }
+      },
+      "transacties_en_omzet": {
+        "publieke_transacties_per_jaar": { "waarde": 95000000, "type": "SCHATTING", "foutmarge": "±25%", "methode": "Publieke laadpunten (210.000) × gem. 1,25 sessies/dag × 365 dagen × bezettingscorrectie 0,88 (semi-publiek lagere frequentie). Zie lib/calculations voor reproduceerbare formule." },
+        "totale_laadomzet_publiek_mln_eur": { "waarde": 950, "type": "SCHATTING", "foutmarge": "±25%", "methode": "Transacties × gem. transactiewaarde €10 (zie pricing-tabel)." },
+        "totale_energiebehoefte_publiek_gwh": { "waarde": 1850, "type": "SCHATTING", "foutmarge": "±25%", "methode": "Transacties × gem. 19,5 kWh/sessie (gewogen AC/DC/HPC-mix)." }
+      },
+      "prijzen": {
+        "ac_gemiddeld_eur_kwh": { "waarde": 0.45, "type": "FEIT", "bron": "MyVoltCost / Charge24 / ANWB prijsvergelijking, 2026" },
+        "dc_gemiddeld_eur_kwh": { "waarde": 0.73, "type": "FEIT", "bron": "MyVoltCost / Charge24 prijsvergelijking, 2026" },
+        "blended_gemiddeld_eur_kwh": { "waarde": 0.48, "type": "FEIT", "bron": "Laadpaalthuisinstallatie.nl / Consumentenbond, 2026" },
+        "bandbreedte_eur_kwh": { "min": 0.30, "max": 0.75, "type": "FEIT", "bron": "MyVoltCost tariefvergelijking, 2026" }
+      }
+    },
+    "DE": {
+      "naam": "Duitsland",
+      "ev_park": {
+        "bev": { "waarde": 2034260, "type": "FEIT", "bron": "EAFO, peildatum 1 januari 2026" },
+        "phev": { "waarde": 950000, "type": "SCHATTING", "foutmarge": "±20%", "toelichting": "Afgeleid uit KBA-registratiehistorie en EU PHEV-aandeel-trend." }
+      },
+      "laadinfrastructuur": {
+        "publieke_laadpunten_totaal": { "waarde": 165000, "type": "SCHATTING", "foutmarge": "±15%", "bron": "Orde van grootte o.b.v. Bundesnetzagentur-trend en EAFO-aggregatie" }
+      },
+      "transacties_en_omzet": {
+        "publieke_transacties_per_jaar": { "waarde": 78000000, "type": "SCHATTING", "foutmarge": "±30%" }
+      }
+    },
+    "FR": {
+      "naam": "Frankrijk",
+      "ev_park": {
+        "totaal_geelektrificeerd": { "waarde": 2500000, "type": "FEIT", "bron": "EAFO, eind 2025 (BEV+PHEV gecombineerd)" }
+      },
+      "laadinfrastructuur": {
+        "publieke_laadpunten_totaal": { "waarde": 155000, "type": "SCHATTING", "foutmarge": "±15%", "bron": "Orde van grootte o.b.v. EAFO-aggregatie 2025-2026" }
+      },
+      "transacties_en_omzet": {
+        "publieke_transacties_per_jaar": { "waarde": 62000000, "type": "SCHATTING", "foutmarge": "±30%" }
+      }
+    },
+    "BE": {
+      "naam": "België",
+      "ev_park": {
+        "totaal_geelektrificeerd": { "waarde": 480000, "type": "SCHATTING", "foutmarge": "±20%", "bron": "Orde van grootte o.b.v. EAFO-trend en Belgische leasemarkt-omvang" }
+      },
+      "laadinfrastructuur": {
+        "publieke_laadpunten_totaal": { "waarde": 44000, "type": "SCHATTING", "foutmarge": "±20%" }
+      },
+      "transacties_en_omzet": {
+        "publieke_transacties_per_jaar": { "waarde": 17000000, "type": "SCHATTING", "foutmarge": "±30%" }
+      }
+    },
+    "Nordics": {
+      "naam": "Noorwegen, Zweden, Denemarken, Finland (som)",
+      "ev_park": {
+        "totaal_geelektrificeerd": { "waarde": 2600000, "type": "SCHATTING", "foutmarge": "±20%", "bron": "Zweden: 755.000 (EAFO, eind 2025) geëxtrapoleerd naar regio o.b.v. relatieve BEV-penetratiecijfers Noorwegen/Denemarken/Finland" }
+      },
+      "laadinfrastructuur": {
+        "publieke_laadpunten_totaal": { "waarde": 95000, "type": "SCHATTING", "foutmarge": "±25%" }
+      },
+      "transacties_en_omzet": {
+        "publieke_transacties_per_jaar": { "waarde": 48000000, "type": "SCHATTING", "foutmarge": "±30%" }
+      }
+    },
+    "UK": {
+      "naam": "Verenigd Koninkrijk",
+      "ev_park": {
+        "totaal_geelektrificeerd": { "waarde": 1900000, "type": "SCHATTING", "foutmarge": "±20%", "bron": "Orde van grootte o.b.v. SMMT-registratietrend en EAFO/ZapMap-context" }
+      },
+      "laadinfrastructuur": {
+        "publieke_laadpunten_totaal": { "waarde": 82000, "type": "SCHATTING", "foutmarge": "±15%" }
+      },
+      "transacties_en_omzet": {
+        "publieke_transacties_per_jaar": { "waarde": 55000000, "type": "SCHATTING", "foutmarge": "±30%" }
+      }
+    },
+    "EU27_totaal": {
+      "naam": "Europese Unie (EU27)",
+      "ev_park": {
+        "bev_aandeel_nieuwverkoop_2025_pct": { "waarde": 17.4, "type": "FEIT", "bron": "ACEA, New car registrations full year 2025" },
+        "bev_aandeel_nieuwverkoop_q1_2026_pct": { "waarde": 19.4, "type": "FEIT", "bron": "ACEA, New car registrations Q1 2026" },
+        "phev_aandeel_nieuwverkoop_q1_2026_pct": { "waarde": 9.5, "type": "FEIT", "bron": "ACEA, New car registrations Q1 2026" },
+        "bev_nieuwverkoop_q1_2026_units": { "waarde": 546937, "type": "FEIT", "bron": "ACEA, Q1 2026" },
+        "aandeel_ev_wagenpark_pct": { "waarde": 5, "type": "FEIT", "bron": "ACEA/IEA, 2025-2026" },
+        "geschat_totaal_bev_wagenpark": { "waarde": 12500000, "type": "SCHATTING", "foutmarge": "±20%", "methode": "5% aandeel × geschat EU27 wagenpark van ~250 miljoen personenauto's (ACEA vehicles-in-use)" },
+        "geschat_totaal_phev_wagenpark": { "waarde": 6500000, "type": "SCHATTING", "foutmarge": "±25%", "methode": "Verhouding BEV:PHEV-nieuwverkoop 2024 (13,6% : 7,3%, EEA/EAFO) doorgetrokken naar cumulatief park" }
+      },
+      "laadinfrastructuur": {
+        "publieke_laadpunten_gerapporteerd_deelset": { "waarde": 1155861, "type": "FEIT", "bron": "EAFO Data Update, dekking 14 van 27 lidstaten, 2025-2026", "toelichting": "Dit is GEEN EU27-totaal — slechts de subset lidstaten die op peildatum rapporteerden." },
+        "geschat_eu27_totaal": { "waarde": 1600000, "type": "SCHATTING", "foutmarge": "±20%", "methode": "Lineaire extrapolatie van gerapporteerde deelset naar 27 lidstaten o.b.v. relatief wagenparkaandeel niet-rapporterende landen." }
+      },
+      "transacties_en_omzet": {
+        "publieke_transacties_per_jaar": { "waarde": 620000000, "type": "SCHATTING", "foutmarge": "±30%", "methode": "Som van landenschattingen + resterende EU27-landen geëxtrapoleerd o.b.v. wagenparkaandeel." },
+        "totale_laadomzet_publiek_mld_eur": { "waarde": 7.4, "type": "SCHATTING", "foutmarge": "±30%" }
+      }
+    }
+  },
+  "segmentatie_laadtype": {
+    "AC": {
+      "aandeel_transacties_pct": { "waarde": 68, "type": "SCHATTING", "foutmarge": "±10pp" },
+      "aandeel_omzet_pct": { "waarde": 38, "type": "SCHATTING", "foutmarge": "±10pp" },
+      "aandeel_energie_pct": { "waarde": 42, "type": "SCHATTING", "foutmarge": "±10pp" },
+      "gem_transactiewaarde_eur": { "waarde": 6.50, "type": "SCHATTING" },
+      "gem_kwh_per_sessie": { "waarde": 12.5, "type": "SCHATTING" },
+      "gem_sessieduur_min": { "waarde": 145, "type": "SCHATTING" },
+      "transacties_per_gebruiker_per_maand": { "waarde": 9.2, "type": "SCHATTING" },
+      "toelichting": "AC (t/m 22 kW): overwegend straat, woonwijk, werkplek. Lange sessieduur, laag vermogen."
+    },
+    "DC": {
+      "aandeel_transacties_pct": { "waarde": 26, "type": "SCHATTING", "foutmarge": "±8pp" },
+      "aandeel_omzet_pct": { "waarde": 41, "type": "SCHATTING", "foutmarge": "±8pp" },
+      "aandeel_energie_pct": { "waarde": 39, "type": "SCHATTING", "foutmarge": "±8pp" },
+      "gem_transactiewaarde_eur": { "waarde": 15.80, "type": "SCHATTING" },
+      "gem_kwh_per_sessie": { "waarde": 21.6, "type": "SCHATTING" },
+      "gem_sessieduur_min": { "waarde": 32, "type": "SCHATTING" },
+      "transacties_per_gebruiker_per_maand": { "waarde": 2.8, "type": "SCHATTING" },
+      "toelichting": "DC-snelladen (50-150 kW): snelweg, retail, bestemmingslocaties."
+    },
+    "HPC": {
+      "aandeel_transacties_pct": { "waarde": 6, "type": "SCHATTING", "foutmarge": "±4pp" },
+      "aandeel_omzet_pct": { "waarde": 21, "type": "SCHATTING", "foutmarge": "±4pp" },
+      "aandeel_energie_pct": { "waarde": 19, "type": "SCHATTING", "foutmarge": "±4pp" },
+      "gem_transactiewaarde_eur": { "waarde": 28.40, "type": "SCHATTING" },
+      "gem_kwh_per_sessie": { "waarde": 34.2, "type": "SCHATTING" },
+      "gem_sessieduur_min": { "waarde": 22, "type": "SCHATTING" },
+      "transacties_per_gebruiker_per_maand": { "waarde": 1.1, "type": "SCHATTING" },
+      "toelichting": "HPC (>150 kW): snelweg-hubs (Fastned, Ionity, Tesla Supercharger open network)."
+    }
+  },
+  "locaties": [
+    { "type": "Snelweg/tankstation", "aandeel_transacties_pct": 22, "gem_sessieduur_min": 24, "gem_besteding_eur": 24.50, "gebruiksfrequentie": "Hoog, piekgebonden (spits/vakantie)", "type_gebruiker": "Zakelijk, forens lange afstand, vakantierijder" },
+    { "type": "Stedelijke laadpaal (openbare weg)", "aandeel_transacties_pct": 34, "gem_sessieduur_min": 210, "gem_besteding_eur": 7.80, "gebruiksfrequentie": "Zeer hoog, dagelijks/nachtelijk", "type_gebruiker": "Bewoner zonder eigen oprit" },
+    { "type": "Woonwijk (bestemmingsladen)", "aandeel_transacties_pct": 12, "gem_sessieduur_min": 320, "gem_besteding_eur": 6.20, "gebruiksfrequentie": "Hoog, overwegend nacht", "type_gebruiker": "Particuliere EV-bezitter" },
+    { "type": "Werkplek", "aandeel_transacties_pct": 16, "gem_sessieduur_min": 260, "gem_besteding_eur": 8.10, "gebruiksfrequentie": "Werkdagen, kantooruren", "type_gebruiker": "Lease-rijder, forens" },
+    { "type": "Supermarkt/retail", "aandeel_transacties_pct": 9, "gem_sessieduur_min": 38, "gem_besteding_eur": 9.40, "gebruiksfrequentie": "Middel, boodschappenmoment", "type_gebruiker": "Particuliere EV-bezitter, forens" },
+    { "type": "Destination (horeca/hotel/attractie)", "aandeel_transacties_pct": 7, "gem_sessieduur_min": 95, "gem_besteding_eur": 11.60, "gebruiksfrequentie": "Laag-middel, vrije tijd", "type_gebruiker": "Vakantierijder, consument" }
+  ],
+  "_bron_type_label": "Alle percentages/waarden in 'locaties' en 'segmentatie_laadtype' zijn SCHATTING (analytisch model o.b.v. publiek bekende gebruikspatronen ElaadNL Nationaal Laadonderzoek 2023 als referentiekader, met eigen extrapolatie naar 2026); geen directe FEIT-citaten per cel."
+}

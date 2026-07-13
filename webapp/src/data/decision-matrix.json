@@ -1,0 +1,13 @@
+{
+  "_meta": { "schaal": "1 (laag) - 5 (hoog)", "advies_logica": "Hoog bewijsniveau + lage onzekerheid → Investeren/Pilot. Laag bewijsniveau + hoge onzekerheid → Stop/Verder valideren." },
+  "metrics": [
+    { "metric": "Marktomvang & groei (aantal EV's, laadpunten NL/EU)", "bewijsniveau": 4, "onzekerheid": 2, "advies": "Verder valideren (kwantitatief solide, kwalitatief scherper krijgen per segment)" },
+    { "metric": "Transactievolume & segmentatie AC/DC/HPC", "bewijsniveau": 2, "onzekerheid": 4, "advies": "Verder valideren — vereist primair databronnenonderzoek bij ElaadNL/CPO's" },
+    { "metric": "Klantvraag naar bank-app laadfunctie (desirability)", "bewijsniveau": 1, "onzekerheid": 5, "advies": "Stop met investeren tot Fase 2-validatie; eerst Concierge MVP + Fake Door" },
+    { "metric": "Financiële haalbaarheid / marge-structuur (viability)", "bewijsniveau": 2, "onzekerheid": 4, "advies": "Verder valideren — expertinterviews CPO/EMSP-finance" },
+    { "metric": "Technische integratie-haalbaarheid (feasibility)", "bewijsniveau": 3, "onzekerheid": 3, "advies": "Pilot — technisch precedent bestaat (witlabel-EMSP's), toets met 1 partner" },
+    { "metric": "UX-meerwaarde t.o.v. bestaande laadpas (usability)", "bewijsniveau": 1, "onzekerheid": 4, "advies": "Stop met investeren tot prototype-test is uitgevoerd" },
+    { "metric": "Strategische fit met bank-kernactiviteit", "bewijsniveau": 3, "onzekerheid": 2, "advies": "Verder valideren — directiebesluit over scope (MKB-fleet vs. consumenten)" },
+    { "metric": "Concurrentie- en partnerlandschap in kaart", "bewijsniveau": 4, "onzekerheid": 2, "advies": "Investeren in partnergesprekken — landschap is goed te doorgronden, actie mogelijk" }
+  ]
+}

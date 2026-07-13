@@ -1,0 +1,68 @@
+{
+  "_meta": {
+    "type": "SCHATTING/AANNAME",
+    "toelichting": "Persona-marktaandelen zijn analytisch gemodelleerd op basis van RDW-kentekensegmentatie (particulier vs. zakelijk/lease), ElaadNL laadgedragonderzoek en algemeen bekende mobiliteitspatronen. Geen directe enquêtedata beschikbaar voor dit dossier — classificatie: SCHATTING."
+  },
+  "personas": [
+    {
+      "naam": "De Zakelijke Lease-forens",
+      "marktaandeel_ev_park_pct": 34,
+      "aandeel_laadtransacties_pct": 30,
+      "voorkeur_laadtype": "AC (werkplek/thuis), incidenteel DC op snelweg",
+      "voorkeur_laadmoment": "Kantooruren en 's nachts thuis",
+      "kernbehoeften": ["Gemak/geen omkijken (zakelijke laadpas dekt alles)", "Transparante facturatie richting werkgever", "Betrouwbare snelweg-dekking"],
+      "betaalgedrag": "Vrijwel altijd zakelijke laadpas (EMSP-contract werkgever), zelden eigen app/bank",
+      "prijsgevoeligheid": "Laag (werkgever betaalt)",
+      "gemaksgevoeligheid": "Hoog",
+      "relevantie_bankpropositie": "Laag-middel: betaalstroom loopt via werkgever/leasemaatschappij, bank-app zit niet in de beslisketen tenzij de bank ook de zakelijke leaseportefeuille bedient."
+    },
+    {
+      "naam": "De Particuliere EV-bezitter (thuislader)",
+      "marktaandeel_ev_park_pct": 38,
+      "aandeel_laadtransacties_pct": 22,
+      "voorkeur_laadtype": "Overwegend privé thuis (buiten scope publiek), publiek vooral stedelijk/bestemming",
+      "voorkeur_laadmoment": "Nacht thuis; publiek bij boodschappen/uitjes",
+      "kernbehoeften": ["Lage kWh-prijs", "Eén overzicht van laadkosten naast overige huishouduitgaven"],
+      "betaalgedrag": "Mix van laadpas en publieke app; prijsbewust, vergelijkt aanbieders",
+      "prijsgevoeligheid": "Hoog",
+      "gemaksgevoeligheid": "Middel",
+      "relevantie_bankpropositie": "Hoog: dit segment zoekt actief overzicht/besparing — precies de use case van 'laden + betalen in de bankapp naast de rest van je financiën'."
+    },
+    {
+      "naam": "De Stadsbewoner zonder eigen oprit",
+      "marktaandeel_ev_park_pct": 14,
+      "aandeel_laadtransacties_pct": 27,
+      "voorkeur_laadtype": "Vrijwel uitsluitend AC, openbare weg, lange sessies",
+      "voorkeur_laadmoment": "Overwegend 's nachts",
+      "kernbehoeften": ["Voorspelbare plek/beschikbaarheid", "Simpel starten zonder aparte pas", "Eén rekening"],
+      "betaalgedrag": "Sterk afhankelijk van gemeentelijke concessiehouder-app/pas (vaak verplicht), beperkte keuzevrijheid",
+      "prijsgevoeligheid": "Hoog (frequente gebruiker, groot deel van mobiliteitsbudget)",
+      "gemaksgevoeligheid": "Hoog",
+      "relevantie_bankpropositie": "Middel: grootste transactievolume, maar concessie-gebonden laadpalen beperken vrije keuze van betaalmiddel — technische/contractuele afhankelijkheid van gemeente-CPO's."
+    },
+    {
+      "naam": "De Veelrijder/Zakelijk chauffeur (taxi, logistiek)",
+      "marktaandeel_ev_park_pct": 4,
+      "aandeel_laadtransacties_pct": 11,
+      "voorkeur_laadtype": "DC/HPC, korte stops, hoge frequentie",
+      "voorkeur_laadmoment": "Continu doordeweeks, tussen ritten",
+      "kernbehoeften": ["Snelheid", "Betrouwbare beschikbaarheid HPC-netwerk", "Zakelijke facturatie/BTW"],
+      "betaalgedrag": "Zakelijke laadpas/fleet-contract, hoge frequentie per gebruiker",
+      "prijsgevoeligheid": "Middel (tijd > prijs, maar volume maakt totale kosten materieel)",
+      "gemaksgevoeligheid": "Zeer hoog",
+      "relevantie_bankpropositie": "Middel: interessant voor zakelijke bankklanten (MKB-vlootbeheer), maar smal segment qua transactievolume-aandeel per klant."
+    },
+    {
+      "naam": "De Vakantie-/Weekendrijder",
+      "marktaandeel_ev_park_pct": 6,
+      "aandeel_laadtransacties_pct": 5,
+      "voorkeur_laadtype": "HPC op snelweg, AC bij bestemming (hotel/vakantiewoning)",
+      "voorkeur_laadmoment": "Piekmomenten (vrijdagmiddag, vakantiestart)",
+      "kernbehoeften": ["Grensoverschrijdend roaming zonder gedoe", "Eenvoudige eenmalige/ad-hoc betaling zonder abonnement"],
+      "betaalgedrag": "Ad-hoc: creditcard/contactloos/QR bij paal, weinig loyaliteit aan één aanbieder",
+      "prijsgevoeligheid": "Middel",
+      "gemaksgevoeligheid": "Zeer hoog (ad-hoc, geen zin in nieuwe pas voor één rit)",
+      "relevantie_bankpropositie": "Hoog: ad-hoc/occasional-use is exact het scenario waar 'betalen met wat je al hebt' (bankpas/app) een reëel alternatief is voor losse laadpassen — laagste omschakeldrempel."
+    }
+  ]
+}

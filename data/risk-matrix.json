@@ -1,0 +1,92 @@
+{
+  "_meta": {
+    "methode": "Risico = Impact × Onzekerheid (Kans dat aanname onjuist is). Score 1 (laag) - 5 (hoog) per dimensie, prioriteit = product, gesorteerd hoog naar laag.",
+    "type": "AANNAME-register — dit zijn per definitie ongeteste aannames, geen feiten."
+  },
+  "aannames": [
+    {
+      "id": "A1",
+      "aanname": "Bankklanten willen laden en betalen in de bank-app i.p.v. bestaande laadpas/EMSP-app",
+      "categorie": "Desirability",
+      "waarom_cruciaal": "Kern van de hele propositie — zonder vraag geen business",
+      "kans_onjuist": 4,
+      "impact_indien_onjuist": 5,
+      "hard_bewijs_beschikbaar": "Geen (geen klantonderzoek uitgevoerd binnen dit dossier)",
+      "betrouwbaarheid_bewijs": 1,
+      "prioriteit_score": 20,
+      "prioriteit": "Hoog"
+    },
+    {
+      "id": "A2",
+      "aanname": "De bank kan een marge/take-rate realiseren die de operationele en technische kosten van app-integratie overtreft",
+      "categorie": "Viability",
+      "waarom_cruciaal": "Laadketen heeft van nature dunne marges (CPO/EMSP-marges doorgaans 5-15%); onduidelijk of hier ruimte overblijft voor een extra schakel",
+      "kans_onjuist": 4,
+      "impact_indien_onjuist": 5,
+      "hard_bewijs_beschikbaar": "Indicatieve marge-benchmarks uit publieke CPO/EMSP-jaarverslagen (Fastned, Allego)",
+      "betrouwbaarheid_bewijs": 2,
+      "prioriteit_score": 20,
+      "prioriteit": "Hoog"
+    },
+    {
+      "id": "A3",
+      "aanname": "Directe technische integratie met honderden CPO's (via roaming/OCPI) is haalbaar binnen een realistisch bank-IT-traject",
+      "categorie": "Feasibility",
+      "waarom_cruciaal": "Bank moet kiezen: eigen roaming-koppeling bouwen (duur, langzaam) of witlabelen via bestaande EMSP (sneller, maar marge-afhankelijkheid)",
+      "kans_onjuist": 3,
+      "impact_indien_onjuist": 4,
+      "hard_bewijs_beschikbaar": "Bestaande witlabel-precedenten (Plugsurfing B2B2C, Shell Recharge) tonen technische haalbaarheid via partner",
+      "betrouwbaarheid_bewijs": 3,
+      "prioriteit_score": 12,
+      "prioriteit": "Middel"
+    },
+    {
+      "id": "A4",
+      "aanname": "In-app laden/betalen is merkbaar sneller/prettiger dan scannen van een fysieke laadpas of gebruik van een EMSP-app",
+      "categorie": "Usability",
+      "waarom_cruciaal": "Zonder aantoonbaar UX-voordeel is er geen reden om van gedrag te wisselen",
+      "kans_onjuist": 3,
+      "impact_indien_onjuist": 3,
+      "hard_bewijs_beschikbaar": "Geen (vereist prototype-test)",
+      "betrouwbaarheid_bewijs": 1,
+      "prioriteit_score": 9,
+      "prioriteit": "Middel"
+    },
+    {
+      "id": "A5",
+      "aanname": "Een geïntegreerde laadpropositie past strategisch bij het kernproduct en de merkbelofte van de bank",
+      "categorie": "Strategic fit",
+      "waarom_cruciaal": "Reputatie- en focus-risico als de propositie buiten de kernactiviteit (betalen/sparen/lenen) valt",
+      "kans_onjuist": 2,
+      "impact_indien_onjuist": 4,
+      "hard_bewijs_beschikbaar": "Precedenten van banken die mobility-diensten toevoegen (bv. leasingtak, betaalapps met derde-partij-diensten)",
+      "betrouwbaarheid_bewijs": 3,
+      "prioriteit_score": 8,
+      "prioriteit": "Middel"
+    },
+    {
+      "id": "A6",
+      "aanname": "PSD3/AFIR-regelgeving vormt geen blokkerende juridische horde voor een bank die als tussenpersoon in de laadbetaalketen optreedt",
+      "categorie": "Feasibility/Legal",
+      "waarom_cruciaal": "AFIR verplicht CPO's al directe contactloze kaartbetaling op de paal zelf — een bank-app-laag moet hier complementair aan zijn, niet mee concurreren op regelgevingsniveau",
+      "kans_onjuist": 3,
+      "impact_indien_onjuist": 3,
+      "hard_bewijs_beschikbaar": "AFIR-verordening (EU) 2023/1804 publiek beschikbaar, vereist juridische toetsing op propositieniveau",
+      "betrouwbaarheid_bewijs": 3,
+      "prioriteit_score": 9,
+      "prioriteit": "Middel"
+    },
+    {
+      "id": "A7",
+      "aanname": "Klanten zijn bereid tot gedragsverandering (nieuwe app-flow) voor een activiteit die gemiddeld slechts enkele keren per maand plaatsvindt",
+      "categorie": "Desirability",
+      "waarom_cruciaal": "Lage gebruiksfrequentie (zie persona-analyse: 2-9 transacties/maand) betekent zwakke gewoontevorming — habit-vorming is lastiger dan bij dagelijkse betaalmomenten",
+      "kans_onjuist": 3,
+      "impact_indien_onjuist": 4,
+      "hard_bewijs_beschikbaar": "Vergelijkbare cases van banken die low-frequency diensten toevoegden (wisselend succes, geen EV-specifiek precedent)",
+      "betrouwbaarheid_bewijs": 2,
+      "prioriteit_score": 12,
+      "prioriteit": "Middel"
+    }
+  ]
+}
