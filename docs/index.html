@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Strategisch Validatiedossier — Laden &amp; Betalen in de Bank-App</title>
+<meta name="description" content="Strategisch validatiedossier: laden en betalen in de bank-app — marktcijfers, businesscase en risicoanalyse voor de directie." />
+<style>
+  :root {
+    --paper: #f2f0ea;
+    --paper-raised: #fbfaf7;
+    --ink: #1b1e24;
+    --ink-secondary: #565a63;
+    --ink-faint: #85868f;
+    --rule: #d9d5c9;
+    --rule-strong: #c3bfae;
+    --accent: #2c4a7c;
+    --accent-ink: #1d3053;
+    --accent-soft: #e3e8f1;
+    --feit: #2f7d4f;
+    --feit-soft: #e2efe6;
+    --schatting: #a06a15;
+    --schatting-soft: #f4ead4;
+    --aanname: #a34a2b;
+    --aanname-soft: #f4e3da;
+    --shadow: 0 1px 2px rgba(27,30,36,0.06), 0 8px 24px -12px rgba(27,30,36,0.18);
+    --serif: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Palatino, Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  :root[data-theme="dark"] {
+    --paper: #14171c;
+    --paper-raised: #191d23;
+    --ink: #e9e7e0;
+    --ink-secondary: #a6a9b0;
+    --ink-faint: #6d7079;
+    --rule: #2b2f38;
+    --rule-strong: #383d48;
+    --accent: #8fadde;
+    --accent-ink: #cddaf2;
+    --accent-soft: #1f2c40;
+    --feit: #6fc190;
+    --feit-soft: #1c2c22;
+    --schatting: #e0ac52;
+    --schatting-soft: #332512;
+    --aanname: #e08a63;
+    --aanname-soft: #33221a;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14171c;
+      --paper-raised: #191d23;
+      --ink: #e9e7e0;
+      --ink-secondary: #a6a9b0;
+      --ink-faint: #6d7079;
+      --rule: #2b2f38;
+      --rule-strong: #383d48;
+      --accent: #8fadde;
+      --accent-ink: #cddaf2;
+      --accent-soft: #1f2c40;
+      --feit: #6fc190;
+      --feit-soft: #1c2c22;
+      --schatting: #e0ac52;
+      --schatting-soft: #332512;
+      --aanname: #e08a63;
+      --aanname-soft: #33221a;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent-soft); }
+
+  a { color: var(--accent-ink); }
+
+  .skip { position: absolute; left: -9999px; }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 4.5rem 1.75rem 3rem;
+  }
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.35rem 0.7rem;
+  }
+  .stamp::before { content: "●"; font-size: 0.55rem; color: var(--accent); }
+  .cover h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2rem, 4.4vw, 3rem);
+    line-height: 1.14;
+    letter-spacing: -0.01em;
+    margin: 1.1rem 0 0;
+    max-width: 19ch;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  .cover-meta {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem 2rem;
+  }
+  .cover-meta dt {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.3rem;
+  }
+  .cover-meta dd {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--ink-secondary);
+  }
+  .leeswijzer {
+    margin-top: 2rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 1.1rem 1.3rem;
+    font-size: 0.92rem;
+    color: var(--ink-secondary);
+  }
+  .leeswijzer strong { color: var(--ink); }
+  .leeswijzer .tags { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+  /* ---------- Frame: spine + content ---------- */
+  .frame {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 0;
+    padding: 0 1.75rem 6rem;
+  }
+  @media (max-width: 880px) {
+    .frame { grid-template-columns: 1fr; }
+    .spine { display: none; }
+  }
+
+  .spine {
+    position: sticky;
+    top: 2.5rem;
+    align-self: start;
+    padding-top: 0.5rem;
+    padding-right: 1.5rem;
+  }
+  .spine-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.9rem;
+  }
+  .spine ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--rule);
+  }
+  .spine li { margin: 0; }
+  .spine a {
+    display: block;
+    padding: 0.4rem 0 0.4rem 0.85rem;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    font-size: 0.84rem;
+    color: var(--ink-secondary);
+    text-decoration: none;
+    line-height: 1.35;
+  }
+  .spine a:hover { color: var(--ink); border-left-color: var(--rule-strong); }
+  .spine a.active { color: var(--accent-ink); border-left-color: var(--accent); font-weight: 600; }
+  .spine num { font-variant-numeric: tabular-nums; color: var(--ink-faint); margin-right: 0.4em; }
+
+  main { min-width: 0; padding-top: 1rem; }
+
+  section { padding: 2.6rem 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 1.5rem; }
+  section:last-of-type { border-bottom: none; }
+
+  .eyebrow {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent-ink);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .eyebrow .num {
+    font-weight: 600;
+    background: var(--accent-soft);
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    margin: 0 0 1.1rem;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin: 2rem 0 0.8rem;
+    color: var(--ink);
+  }
+  section > .eyebrow + h2 + * { margin-top: 0; }
+
+  p { max-width: 74ch; margin: 0 0 1rem; color: var(--ink); }
+  p.lead { font-size: 1.07rem; color: var(--ink-secondary); }
+  ul, ol.prose { max-width: 74ch; padding-left: 1.3rem; margin: 0 0 1.2rem; }
+  li { margin-bottom: 0.5rem; }
+  strong { color: var(--ink); font-weight: 650; }
+  code { font-family: var(--mono); font-size: 0.87em; background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 3px; padding: 0.05em 0.35em; }
+
+  /* epistemic tags */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--sans);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0.08em 0.45em;
+    border-radius: 3px;
+    vertical-align: 0.05em;
+    cursor: default;
+    white-space: nowrap;
+  }
+  .tag.feit { background: var(--feit-soft); color: var(--feit); }
+  .tag.schatting { background: var(--schatting-soft); color: var(--schatting); }
+  .tag.aanname { background: var(--aanname-soft); color: var(--aanname); }
+
+  .callout {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    margin: 1.3rem 0;
+    max-width: 74ch;
+    box-shadow: var(--shadow);
+  }
+  .callout.recommend { border-left: 3px solid var(--accent); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* tables */
+  .table-wrap { overflow-x: auto; margin: 1rem 0 1.6rem; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper-raised); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  thead th {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule-strong);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--accent-soft); }
+  td.num, th.num { font-variant-numeric: tabular-nums; text-align: right; }
+  td strong { white-space: nowrap; }
+  caption { caption-side: bottom; text-align: left; font-size: 0.82rem; color: var(--ink-faint); padding: 0.6rem 0.1rem 0; }
+
+  /* ascii diagram */
+  .diagram-wrap { overflow-x: auto; margin: 1rem 0 1.6rem; }
+  pre.ascii {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    min-width: 640px;
+    color: var(--ink-secondary);
+  }
+  pre.formula {
+    font-family: var(--mono);
+    font-size: 0.83rem;
+    line-height: 1.65;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.1rem 1.3rem;
+    overflow-x: auto;
+    color: var(--ink-secondary);
+    margin: 1rem 0 1.6rem;
+  }
+
+  /* badges for pill-style labels e.g. priority */
+  .pill { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.12rem 0.55rem; border-radius: 99px; }
+  .pill.hoog { background: var(--aanname-soft); color: var(--aanname); }
+  .pill.middel { background: var(--schatting-soft); color: var(--schatting); }
+  .pill.stop { background: var(--aanname-soft); color: var(--aanname); }
+  .pill.investeren { background: var(--feit-soft); color: var(--feit); }
+  .pill.pilot { background: var(--accent-soft); color: var(--accent-ink); }
+  .pill.valideren { background: var(--paper); color: var(--ink-secondary); border: 1px solid var(--rule-strong); }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.85rem; margin: 1.2rem 0 1.8rem; max-width: 900px; }
+  .kpi { background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 6px; padding: 0.95rem 1.05rem; }
+  .kpi .v { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); line-height: 1.15; }
+  .kpi .l { font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.3rem; }
+
+  footer {
+    max-width: 74ch;
+    margin: 0 auto;
+    padding: 2.5rem 1.75rem 5rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 600px) {
+    .cover { padding: 3rem 1.25rem 2rem; }
+    .frame { padding: 0 1.25rem 4rem; }
+    section { padding: 2rem 0; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a, .spine a { transition: color 0.15s ease, border-color 0.15s ease; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <span class="stamp">Directievoorstel — Vertrouwelijk</span>
+  <h1>Laden en betalen in de bank-app: kansrijk, maar nog niet bewezen</h1>
+  <dl class="cover-meta">
+    <div><dt>Voor</dt><dd>Directie / Innovatiecomité</dd></div>
+    <div><dt>Onderwerp</dt><dd>Go/no-go — geïntegreerde EV-laad- en betaalpropositie in de bank-app</dd></div>
+    <div><dt>Peildatum cijfers</dt><dd>Juli 2026</dd></div>
+    <div><dt>Status</dt><dd>Validatiedossier — geen investeringsadvies, wel een besluitvormingsinstrument</dd></div>
+  </dl>
+  <div class="leeswijzer">
+    <strong>Leeswijzer epistemische labels.</strong> Elke cijfermatige claim in dit rapport is gelabeld naar bewijskracht — hover over een label voor de bron of foutmarge.
+    <div class="tags">
+      <span class="tag feit" title="Direct ontleend aan een genoemde primaire bron">FEIT</span>
+      <span class="tag schatting" title="Analytisch afgeleid/berekend, met vermelde foutmarge">SCHATTING</span>
+      <span class="tag aanname" title="Expert-inschatting zonder harde onderliggende data — per definitie te valideren">AANNAME</span>
+      <span style="font-size:0.85rem; color:var(--ink-faint);">Volledig register: <code>/data/*.json</code></span>
+    </div>
+  </div>
+</div>
+
+<div class="frame">
+  <nav class="spine" aria-label="Inhoudsopgave">
+    <div class="spine-label">Inhoud</div>
+    <ol id="spine-list">
+      <li><a href="#s1"><num>1</num>Executive summary</a></li>
+      <li><a href="#s2"><num>2</num>Belangrijkste inzichten</a></li>
+      <li><a href="#s3"><num>3</num>Marktanalyse &amp; cijfers</a></li>
+      <li><a href="#s4"><num>4</num>Techniek &amp; concurrentie</a></li>
+      <li><a href="#s5"><num>5</num>Kansen &amp; risico's</a></li>
+      <li><a href="#s6"><num>6</num>Businesscase</a></li>
+      <li><a href="#s7"><num>7</num>Validatie &amp; risico</a></li>
+      <li><a href="#s8"><num>8</num>Roadmap</a></li>
+      <li><a href="#s9"><num>9</num>Beslismatrix</a></li>
+      <li><a href="#s10"><num>10</num>Kennishiaten</a></li>
+      <li><a href="#s11"><num>11</num>Bronnen</a></li>
+    </ol>
+  </nav>
+
+  <main id="main">
+
+    <section id="s1">
+      <div class="eyebrow"><span class="num">01</span> Executive summary</div>
+      <h2>Executive summary</h2>
+      <p class="lead">De Europese en Nederlandse EV-laadmarkt groeit hard: Nederland telt medio 2026 ca. <strong>701.149 volledig elektrische personenauto's</strong> <span class="tag feit" title="RVO.nl, 2026">FEIT</span> en <strong>~210.000 publieke laadpunten</strong> <span class="tag feit" title="RVO.nl, 2026">FEIT</span>, terwijl de EU-brede BEV-nieuwverkoop in Q1 2026 een marktaandeel van <strong>19,4%</strong> bereikte <span class="tag feit" title="ACEA, 2026">FEIT</span>. Dit vertaalt zich naar een geschat Nederlands publiek laadtransactievolume van <strong>~95 miljoen transacties/jaar</strong> en een publieke laadomzet van <strong>~€950 miljoen/jaar</strong> <span class="tag schatting" title="±25%">SCHATTING</span>.</p>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="v">210.000</div><div class="l">NL publieke laadpunten</div></div>
+        <div class="kpi"><div class="v">701.149</div><div class="l">NL BEV-park</div></div>
+        <div class="kpi"><div class="v">~95 mln</div><div class="l">Geschat NL transactievolume/jr</div></div>
+        <div class="kpi"><div class="v">€2,4–7,1 mln</div><div class="l">Omzetpotentieel bank, 5% aandeel</div></div>
+      </div>
+
+      <p>Een bank die een geïntegreerde laad- en betaaloplossing in de app aanbiedt, speelt in op een reële markt met een duidelijke betaalketen-frictie: consumenten jongleren vandaag met meerdere laadpassen, apps en tarieven. De bank kan hier in theorie waarde toevoegen via vertrouwd betaalgemak, KYC-infrastructuur en bereik. <strong>Echter: de kernaanname dat klanten specifiek via de bank-app willen laden — in plaats van via een bestaande laadpas of EMSP-app — is vandaag volledig onbewezen</strong> <span class="tag aanname" title="Hoogste risicoprioriteit in dit dossier">AANNAME</span>. Ook de marge-haalbaarheid is onzeker: de laadketen kent van nature dunne marges (CPO/EMSP-niveau doorgaans 5-15%), en het is niet vanzelfsprekend dat daar ruimte overblijft voor een extra financiële schakel.</p>
+
+      <p>Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van <strong>1% van alle Nederlandse publieke laadtransacties</strong> (~950.000 transacties/jaar) bij een aannemelijke take-rate al een omzetpotentieel van <strong>circa €0,5–1,4 miljoen/jaar</strong> voor de bank kan opleveren <span class="tag schatting" title="Zie hoofdstuk 6 voor formules">SCHATTING</span>; bij 10% marktaandeel loopt dit op tot <strong>€5–14 miljoen/jaar</strong>. Dit is aantrekkelijk genoeg om verder te valideren, maar te onzeker om nu al te investeren in een volledige bouw.</p>
+
+      <div class="callout recommend">
+        <span class="label">Aanbeveling</span>
+        <p><strong>Verder valideren, niet direct bouwen.</strong> Start een 90-dagen validatietraject (hoofdstuk 8) met vier gerichte experimenten rond de meest risicovolle aannames (klantvraag, marge, technische integratie, gedragsverandering) voordat een investeringsbesluit voor een MVP of pilot wordt genomen. De totale kosten van dit validatietraject bedragen naar schatting €38.000–70.000 en 8–10 weken — een fractie van de kosten van een voortijdige bouw van een verkeerde propositie.</p>
+      </div>
+    </section>
+
+    <section id="s2">
+      <div class="eyebrow"><span class="num">02</span> Belangrijkste inzichten</div>
+      <h2>Belangrijkste inzichten — top 10</h2>
+      <ol class="prose">
+        <li>De Nederlandse EV-markt is volwassen genoeg voor een serieuze propositie: 701.149 BEV's, 210.000 publieke laadpunten, groeiend <span class="tag feit" title="RVO.nl, 2026">FEIT</span>.</li>
+        <li>Stedelijke laadpalen (openbare weg) genereren het grootste transactievolume (~34%) maar de laagste besteding per sessie — dit is het lastigste segment om marge op te maken <span class="tag schatting">SCHATTING</span>.</li>
+        <li>AC-laden domineert qua transactievolume (~68%) maar DC/HPC domineert qua omzet en energie — de waarde zit in een kleiner aantal grotere sessies <span class="tag schatting">SCHATTING</span>.</li>
+        <li>De betaalketen kent al meerdere schakels (CPO, EMSP, roamingplatform, PSP) die elk een marge nemen — een bank voegt een extra schakel toe, geen vervanging <span class="tag feit" title="Zie hoofdstuk 4">FEIT/analyse</span>.</li>
+        <li>AFIR-regelgeving verplicht CPO's al tot directe contactloze kaartbetaling op de paal zelf — een bank-app-oplossing moet hier complementair aan zijn, niet mee concurreren <span class="tag feit" title="EU-verordening 2023/1804">FEIT</span>.</li>
+        <li>Er bestaan al witlabel-precedenten (Plugsurfing, vergelijkbare EMSP-platformen) die aantonen dat technische integratie via een partner haalbaar is zonder dat de bank zelf honderden CPO-koppelingen hoeft te bouwen <span class="tag feit">FEIT/analyse</span>.</li>
+        <li>De grootste commerciële kans zit niet bij de zakelijke lease-rijder (betaalstroom loopt al via werkgever) maar bij de <strong>particuliere thuislader</strong> en de <strong>ad-hoc vakantierijder</strong> — segmenten waar bankgemak een reëel alternatief is voor een aparte laadpas <span class="tag schatting" title="Persona-analyse, hoofdstuk 3.4">SCHATTING</span>.</li>
+        <li>De kernaanname — willen klanten dit specifiek via de bank-app? — is de meest kritieke en tegelijk de minst onderbouwde aanname in dit hele dossier <span class="tag aanname" title="Risicoscore 20/25, hoogste in de matrix">AANNAME</span>.</li>
+        <li>Lage gebruiksfrequentie (gemiddeld 2-9 transacties/maand afhankelijk van laadtype) is een structureel obstakel voor gewoontevorming rond een nieuwe app-flow <span class="tag schatting">SCHATTING</span>.</li>
+        <li>Bij 5% marktaandeel is de businesscase potentieel aantrekkelijk (~€2,4-7 miljoen omzet/jaar), maar dit scenario staat of valt met aannames die nu nog niet getest zijn — vandaar het advies om eerst te valideren, niet te bouwen.</li>
+      </ol>
+    </section>
+
+    <section id="s3">
+      <div class="eyebrow"><span class="num">03</span> Marktanalyse &amp; cijfers</div>
+      <h2>Marktanalyse &amp; cijfers</h2>
+
+      <h3>3.1 Omvang van de markt — NL, EU en kernlanden</h3>
+      <p>Huidige status en verwachting tot 2030, per land.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Land</th><th>EV-park (BEV+PHEV)</th><th>Publieke laadpunten</th><th>Laadtransacties/jaar</th><th>Laadomzet/jaar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nederland</strong></td><td>~931.000 (701.149 BEV <span class="tag feit">FEIT</span> + ~230.000 PHEV <span class="tag schatting">SCHATTING</span>)</td><td>~210.000 <span class="tag feit">FEIT</span></td><td>~95 mln <span class="tag schatting" title="±25%">SCHATTING</span></td><td>~€950 mln <span class="tag schatting" title="±25%">SCHATTING</span></td></tr>
+            <tr><td><strong>Duitsland</strong></td><td>~2,98 mln (2,03 mln BEV <span class="tag feit">FEIT</span> + ~0,95 mln PHEV <span class="tag schatting">SCHATTING</span>)</td><td>~165.000 <span class="tag schatting" title="±15%">SCHATTING</span></td><td>~78 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
+            <tr><td><strong>Frankrijk</strong></td><td>~2,5 mln geëlektrificeerd <span class="tag feit" title="EAFO, eind 2025">FEIT</span></td><td>~155.000 <span class="tag schatting" title="±15%">SCHATTING</span></td><td>~62 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
+            <tr><td><strong>België</strong></td><td>~480.000 <span class="tag schatting" title="±20%">SCHATTING</span></td><td>~44.000 <span class="tag schatting" title="±20%">SCHATTING</span></td><td>~17 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
+            <tr><td><strong>Nordics</strong> (NO/SE/DK/FI)</td><td>~2,6 mln <span class="tag schatting" title="±20%">SCHATTING</span> — Zweden alleen: 755.000 <span class="tag feit" title="EAFO">FEIT</span></td><td>~95.000 <span class="tag schatting" title="±25%">SCHATTING</span></td><td>~48 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
+            <tr><td><strong>Verenigd Koninkrijk</strong></td><td>~1,9 mln <span class="tag schatting" title="±20%">SCHATTING</span></td><td>~82.000 <span class="tag schatting" title="±15%">SCHATTING</span></td><td>~55 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>n.b.</td></tr>
+            <tr><td><strong>EU27 totaal</strong></td><td>~19 mln (12,5 mln BEV + 6,5 mln PHEV) <span class="tag schatting" title="±20-25%">SCHATTING</span></td><td>~1,6 mln <span class="tag schatting" title="Extrapolatie o.b.v. EAFO-deelset van 1.155.861 uit 14/27 lidstaten, ±20%">SCHATTING</span></td><td>~620 mln <span class="tag schatting" title="±30%">SCHATTING</span></td><td>~€7,4 mld <span class="tag schatting" title="±30%">SCHATTING</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="label">Groeivooruitzicht tot 2030 <span class="tag aanname" title="Macro-extrapolatie, geen voorspelling">AANNAME</span></span>
+        <p>Bij aanhoudende BEV-nieuwverkoopgroei van het huidige tempo (EU BEV-aandeel steeg van 17,4% in 2025 naar 19,4% in Q1 2026 <span class="tag feit">FEIT</span>) is een verdrievoudiging tot verviervoudiging van het EU-brede laadtransactievolume richting 2030 een redelijke ordegrootte-verwachting, in lijn met de EU Fit-for-55/AFIR-doelstellingen. De daadwerkelijke groeicurve hangt af van batterijprijzen, subsidiebeleid en netcapaciteit.</p>
+      </div>
+
+      <h3>3.2 Transactievolume &amp; technische segmentatie</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Segment</th><th class="num">Aandeel transacties</th><th class="num">Aandeel omzet</th><th class="num">Aandeel energie</th><th class="num">Gem. waarde</th><th class="num">Gem. kWh</th><th class="num">Sessieduur</th><th class="num">Tx/gebruiker/mnd</th></tr></thead>
+          <tbody>
+            <tr><td><strong>AC</strong> (≤22 kW)</td><td class="num">68%</td><td class="num">38%</td><td class="num">42%</td><td class="num">€6,50</td><td class="num">12,5 kWh</td><td class="num">145 min</td><td class="num">9,2</td></tr>
+            <tr><td><strong>DC</strong> (50-150 kW)</td><td class="num">26%</td><td class="num">41%</td><td class="num">39%</td><td class="num">€15,80</td><td class="num">21,6 kWh</td><td class="num">32 min</td><td class="num">2,8</td></tr>
+            <tr><td><strong>HPC</strong> (&gt;150 kW)</td><td class="num">6%</td><td class="num">21%</td><td class="num">19%</td><td class="num">€28,40</td><td class="num">34,2 kWh</td><td class="num">22 min</td><td class="num">1,1</td></tr>
+          </tbody>
+        </table>
+        <caption>Alle waarden <span class="tag schatting">SCHATTING</span> — analytisch model o.b.v. ElaadNL Nationaal Laadonderzoek 2023 als referentiekader, geëxtrapoleerd naar 2026.</caption>
+      </div>
+      <p><strong>Inzicht:</strong> AC-laden is volumedrager maar geen waardedrager; HPC is een klein deel van het volume maar levert disproportioneel veel omzet en energie. Voor een bankpropositie betekent dit dat puur op transactievolume sturen (bijv. focus op stedelijk AC-laden) tot lage omzet per klant leidt, terwijl DC/HPC een hogere transactiewaarde heeft maar minder frequent voorkomt.</p>
+
+      <h3>3.3 Differentiatie naar laadlocaties</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Locatietype</th><th class="num">Aandeel tx</th><th class="num">Sessieduur</th><th class="num">Gem. besteding</th><th>Frequentie</th><th>Gebruikersprofiel</th></tr></thead>
+          <tbody>
+            <tr><td>Snelweg/tankstation</td><td class="num">22%</td><td class="num">24 min</td><td class="num">€24,50</td><td>Hoog, piekgebonden</td><td>Zakelijk, lange afstand, vakantie</td></tr>
+            <tr><td>Stedelijke laadpaal</td><td class="num">34%</td><td class="num">210 min</td><td class="num">€7,80</td><td>Zeer hoog, dagelijks</td><td>Bewoner zonder eigen oprit</td></tr>
+            <tr><td>Woonwijk (bestemming)</td><td class="num">12%</td><td class="num">320 min</td><td class="num">€6,20</td><td>Hoog, overwegend nacht</td><td>Particuliere EV-bezitter</td></tr>
+            <tr><td>Werkplek</td><td class="num">16%</td><td class="num">260 min</td><td class="num">€8,10</td><td>Werkdagen</td><td>Lease-rijder, forens</td></tr>
+            <tr><td>Supermarkt/retail</td><td class="num">9%</td><td class="num">38 min</td><td class="num">€9,40</td><td>Middel</td><td>Particulier, forens</td></tr>
+            <tr><td>Destination (horeca/hotel)</td><td class="num">7%</td><td class="num">95 min</td><td class="num">€11,60</td><td>Laag-middel</td><td>Vakantierijder</td></tr>
+          </tbody>
+        </table>
+        <caption>Alle waarden <span class="tag schatting">SCHATTING</span>.</caption>
+      </div>
+
+      <h3>3.4 Laadpersona's</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Persona</th><th class="num">Marktaandeel</th><th class="num">Aandeel tx</th><th>AC/DC-voorkeur</th><th>Prijsgevoeligheid</th><th>Relevantie bankpropositie</th></tr></thead>
+          <tbody>
+            <tr><td>Zakelijke lease-forens</td><td class="num">34%</td><td class="num">30%</td><td>AC werkplek/thuis</td><td>Laag</td><td><strong>Laag-middel</strong> — werkgever betaalt</td></tr>
+            <tr><td>Particuliere thuislader</td><td class="num">38%</td><td class="num">22%</td><td>AC thuis, publiek incidenteel</td><td>Hoog</td><td><strong>Hoog</strong> — zoekt overzicht/besparing</td></tr>
+            <tr><td>Stadsbewoner zonder oprit</td><td class="num">14%</td><td class="num">27%</td><td>AC, lange sessies</td><td>Hoog</td><td><strong>Middel</strong> — grootste volume, concessie-gebonden</td></tr>
+            <tr><td>Veelrijder/logistiek</td><td class="num">4%</td><td class="num">11%</td><td>DC/HPC</td><td>Middel</td><td><strong>Middel</strong> — MKB-vlootbeheer, smal segment</td></tr>
+            <tr><td>Vakantie-/weekendrijder</td><td class="num">6%</td><td class="num">5%</td><td>HPC snelweg</td><td>Middel</td><td><strong>Hoog</strong> — laagste omschakeldrempel</td></tr>
+          </tbody>
+        </table>
+        <caption><span class="tag schatting">SCHATTING</span>/<span class="tag aanname">AANNAME</span> — analytisch gemodelleerd, geen primair enquêteonderzoek uitgevoerd.</caption>
+      </div>
+      <p><strong>Strategische implicatie:</strong> de twee segmenten met de hoogste relevantie voor een bankpropositie (particuliere thuislader, vakantierijder) zijn niet de segmenten met het hoogste transactievolume. De grootste markt (stadsbewoner, forens) is het minst voor de hand liggend te winnen via de bank-app.</p>
+    </section>
+
+    <section id="s4">
+      <div class="eyebrow"><span class="num">04</span> Techniek &amp; concurrentie</div>
+      <h2>De betaalketen &amp; concurrentielandschap</h2>
+
+      <h3>4.1 De betaalketen — rollen, marges en stromen</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Rol</th><th>Functie</th><th>Typische marge/verdienmodel</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CPO</strong></td><td>Exploiteert de fysieke laadpaal, koopt stroom in, onderhoudt hardware</td><td>kWh-marge + exploitatiefee</td></tr>
+            <tr><td><strong>EMSP</strong></td><td>Levert de laadpas/app aan de eindgebruiker, factureert de klant</td><td>Marge op doorverkoop kWh (~15%)</td></tr>
+            <tr><td><strong>Roamingplatform (OCPI)</strong></td><td>Koppelt CPO's en EMSP's technisch aan elkaar</td><td>Transactiefee per roaming-sessie</td></tr>
+            <tr><td><strong>PSP</strong></td><td>Verwerkt de daadwerkelijke geldtransactie</td><td>Transactiefee (interchange + PSP-marge)</td></tr>
+            <tr><td><strong>Bank/kaartuitgever</strong></td><td>Faciliteert de onderliggende rekening/kaart</td><td>Interchange fee (klein, EU-gereguleerd)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>ASCII-schema: geld- en datastroom bij een publieke laadtransactie</h3>
+      <div class="diagram-wrap">
+<pre class="ascii">  EV-RIJDER
+     |  (1) start sessie via app/pas/contactloos
+     v
+  LAADPAS / APP  &lt;--------------------------------+
+     |  (2) authenticatie + sessiestart              |
+     v                                               |
+  EMSP  ---(3) roaming-verzoek (indien niet eigen paal)---&gt; ROAMINGPLATFORM (OCPI)
+     |                                                          |
+     |                                                (4) routeert naar juiste CPO
+     v                                                          v
+  FACTURATIE EMSP &lt;-----------------------------------------  CPO (fysieke laadpaal)
+     |  (5) kWh x tarief + evt. sessiefee                       |
+     v                                                (6) levert stroom, meet kWh
+  PSP / BETAALPROVIDER                                          |
+     |  (7) incasseert bedrag van klantrekening/kaart           |
+     v                                                          |
+  BANK / KAARTUITGEVER  ------------------------(8) interchange-fee-----+
+     |
+     v
+  UITBETALING RICHTING EMSP  --(9) na aftrek PSP- en roamingmarges--&gt;  CPO ontvangt
+                                                                        kWh-opbrengst
+                                                                        (na aftrek eigen
+                                                                        marge aan EMSP)
+
+  Geldstroom:  Rijder -&gt; PSP/Bank -&gt; EMSP -&gt; (roamingfee) -&gt; CPO
+  Datastroom:  App/Pas -&gt; EMSP -&gt; OCPI-hub -&gt; CPO -&gt; (meterstand terug via dezelfde route)</pre>
+      </div>
+      <p><strong>Waar zou een bank in dit schema landen?</strong> Een bank die "laden in de app" aanbiedt, positioneert zich in de praktijk als een <strong>EMSP-laag bovenop een bestaand roamingnetwerk</strong> (witlabel) — ze vervangt niet de CPO of het roamingplatform, maar wordt een nieuwe voordeur naast/in plaats van bestaande EMSP-apps. De bank erft de bestaande marge-stapeling in de keten en moet zijn eigen marge daarbovenop realiseren.</p>
+
+      <h3>4.2 Concurrentielandschap</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Partij</th><th>Rol</th><th>Roaming-dekking</th><th>Geschat marktaandeel</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Fastned</strong></td><td>CPO (HPC-specialist)</td><td>Eigen netwerk NL/UK/DE/FR/BE/CH</td><td>Dominant in NL snelweg-HPC <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Allego</strong></td><td>CPO (breed AC+DC)</td><td>Groot Europees netwerk</td><td>Top-3 CPO qua laadpunten <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Shell Recharge</strong></td><td>CPO + EMSP</td><td>Zeer breed</td><td>Grote EMSP-speler <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>ANWB</strong></td><td>EMSP (consumentenmerk)</td><td>Breed via partners</td><td>Sterk in NL consument <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Plugsurfing</strong> (Fortum)</td><td>EMSP (roaming-aggregator)</td><td>Zeer breed</td><td>Precedent voor witlabel <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Chargemap</strong></td><td>EMSP + community</td><td>Breed Europees</td><td>Sterk in FR <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Ionity</strong></td><td>CPO (HPC joint venture)</td><td>Eigen netwerk, open extern</td><td>Hoog volume/locatie <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Tesla Supercharger</strong></td><td>CPO (open network)</td><td>Groeiend open netwerk</td><td>Grote HPC-positie <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Eneco/Vattenfall/Equans/TotalEnergies</strong></td><td>Energiebedrijf-CPO's</td><td>Wisselend</td><td>Sterk in gemeenteconcessies <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Elli</strong> (VW Group)</td><td>EMSP/CPO automerk-gelieerd</td><td>Breed via aggregatie</td><td>Groeiend met VW-volume <span class="tag schatting">SCHATTING</span></td></tr>
+            <tr><td><strong>Monta</strong></td><td>SaaS/CPO-platform + app</td><td>Groeiend via OCPI</td><td>Sterk in software-laag <span class="tag schatting">SCHATTING</span></td></tr>
+          </tbody>
+        </table>
+        <caption>Volledige details: <code>data/competitors.json</code>. Marktaandeel-cijfers zijn indicatief — geen uniforme officiële bron publiceert marktaandelen per EMSP in Nederland.</caption>
+      </div>
+      <p><strong>Observatie:</strong> er bestaat al een precedent-categorie — <strong>witlabel-EMSP-platformen</strong> (Plugsurfing-achtig) — specifiek bedoeld om derde partijen (autofabrikanten, potentieel banken) een laadfunctie te laten aanbieden zonder zelf honderden CPO-koppelingen te bouwen. Dit is de meest realistische technische route voor een bank.</p>
+    </section>
+
+    <section id="s5">
+      <div class="eyebrow"><span class="num">05</span> Kansen &amp; risico's</div>
+      <h2>Strategische kansen &amp; risico's voor de bank</h2>
+
+      <h3>5.1 Kansen</h3>
+      <ul>
+        <li><strong>Vertrouwd betaalgemak</strong> — de bank-app is al het centrale betaalpunt; laden toevoegen kan frictie wegnemen van "nog een pas/app nodig."</li>
+        <li><strong>KYC/identiteit als asset</strong> — geverifieerde klantidentiteit en betaalgegevens zijn al aanwezig.</li>
+        <li><strong>Bereik</strong> — een grootbank heeft een klantenbestand dat de meeste EMSP's niet hebben.</li>
+        <li><strong>Overzicht/besparing-propositie</strong> — relevant voor de prijsbewuste particuliere thuislader.</li>
+        <li><strong>Ad-hoc/occasional-use-niche</strong> — vakantierijders hebben weinig loyaliteit aan één laadpas.</li>
+      </ul>
+
+      <h3>5.2 Risico's</h3>
+      <ul>
+        <li><strong>Strategisch</strong> — risico op focusverlies; mobility valt buiten de kernactiviteit van de meeste banken.</li>
+        <li><strong>Juridisch (AFIR/PSD3)</strong> — AFIR verplicht CPO's al tot contactloze kaartbetaling op de paal; PSD3 kan aanvullende eisen stellen. Vereist gerichte juridische toetsing.</li>
+        <li><strong>Operationeel</strong> — afhankelijkheid van een technische partner voor dekking; laadpaal-uptime ligt buiten controle van de bank.</li>
+        <li><strong>Commercieel</strong> — dunne marges in de keten laten mogelijk weinig ruimte voor een extra schakel.</li>
+      </ul>
+      <p><strong>Logische partners om witte vlekken in te vullen:</strong> een witlabel-EMSP/roamingplatform (dekking + techniek), gecombineerd met eventueel een CPO-partnerschap voor exclusieve tarieven.</p>
+    </section>
+
+    <section id="s6">
+      <div class="eyebrow"><span class="num">06</span> Businesscase</div>
+      <h2>Bankpropositie &amp; businesscase (scenario-analyse)</h2>
+
+      <h3>6.1 Expliciete formules</h3>
+<pre class="formula">(1) Totaal NL publieke laadtransacties/jaar (T_totaal) = 95.000.000  [SCHATTING]
+(2) Marktaandeel bank (s)                             = 1% / 5% / 10%
+(3) Transacties bank (T_bank)                          = T_totaal x s
+(4) Gemiddelde transactiewaarde (v)                     = EUR 10,00  [SCHATTING]
+(5) Total Payment Volume (TPV)                          = T_bank x v
+(6) Take-rate / marge bank (m)                          = 0,5% - 15%  [AANNAME-bandbreedte]
+(7) Bruto-omzet bank                                     = TPV x m</pre>
+
+      <h3>6.2 Scenariotabel — betaalmarge-model (0,5%-1,5%)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Scenario</th><th class="num">Marktaandeel</th><th class="num">Tx/jaar</th><th class="num">TPV</th><th class="num">Omzet m=0,5%</th><th class="num">Omzet m=1,0%</th><th class="num">Omzet m=1,5%</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Scenario 1</strong></td><td class="num">1%</td><td class="num">950.000</td><td class="num">€9.500.000</td><td class="num">€47.500</td><td class="num">€95.000</td><td class="num">€142.500</td></tr>
+            <tr><td><strong>Scenario 2</strong></td><td class="num">5%</td><td class="num">4.750.000</td><td class="num">€47.500.000</td><td class="num">€237.500</td><td class="num">€475.000</td><td class="num">€712.500</td></tr>
+            <tr><td><strong>Scenario 3</strong></td><td class="num">10%</td><td class="num">9.500.000</td><td class="num">€95.000.000</td><td class="num">€475.000</td><td class="num">€950.000</td><td class="num">€1.425.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="label">Let op — herziening t.o.v. executive summary</span>
+        <p>De executive summary noemt bredere ranges (€0,5-1,4 mln bij 1%, €5-14 mln bij 10%) omdat daar ook hogere take-rate-varianten (tot 15%, volwaardige EMSP-marge) zijn meegenomen. Bovenstaande tabel toont het conservatieve betaalmarge-scenario (0,5-1,5%, interchange-achtig). Het bredere EMSP-scenario staat hieronder in §6.3.</p>
+      </div>
+
+      <h3>6.3 Alternatief verdienmodel: volledige EMSP-marge</h3>
+      <p>Indien de bank niet alleen de betaling faciliteert maar als volwaardige EMSP optreedt (marge op de volledige kWh-waarde, zoals ANWB of Shell Recharge, typisch 5-15%):</p>
+<pre class="formula">Omzet bank (EMSP-model) = TPV x m_emsp,  met m_emsp = 5%-15%</pre>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Scenario</th><th class="num">TPV</th><th class="num">Omzet m=5%</th><th class="num">Omzet m=10%</th><th class="num">Omzet m=15%</th></tr></thead>
+          <tbody>
+            <tr><td>1% marktaandeel</td><td class="num">€9.500.000</td><td class="num">€475.000</td><td class="num">€950.000</td><td class="num">€1.425.000</td></tr>
+            <tr><td>5% marktaandeel</td><td class="num">€47.500.000</td><td class="num">€2.375.000</td><td class="num">€4.750.000</td><td class="num">€7.125.000</td></tr>
+            <tr><td>10% marktaandeel</td><td class="num">€95.000.000</td><td class="num">€4.750.000</td><td class="num">€9.500.000</td><td class="num">€14.250.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Welk model realistisch is, hangt direct af van de propositiekeuze (pure betaallaag vs. volwaardig EMSP) — dit is zelf een te valideren strategische keuze, geen vaststaand gegeven.</p>
+      <div class="callout">
+        <span class="label">Belangrijke kanttekening <span class="tag aanname">AANNAME</span></span>
+        <p>Deze berekening gaat uit van een constant marktaandeel over alle segmenten. In werkelijkheid zal marktaandeel-opbouw waarschijnlijk beginnen bij de segmenten met de hoogste relevantie (particuliere thuisladers, vakantierijders) en pas later doorgroeien naar het volumesegment (stadsbewoners). Zie het interactieve dashboard (<code>webapp/</code>) voor een versie waarin marktaandeel, transactiewaarde en marge los van elkaar te variëren zijn.</p>
+      </div>
+    </section>
+
+    <section id="s7">
+      <div class="eyebrow"><span class="num">07</span> Validatie &amp; risico</div>
+      <h2>Validatie- &amp; risicodossier</h2>
+
+      <h3>7.1 Validatie van het businessidee — 5 kerngebieden</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Dimensie</th><th>Kernvraag</th><th>Voorlopig oordeel</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Desirability</strong></td><td>Willen bankklanten laden/betalen via de bank-app?</td><td><strong>Onbewezen</strong> — hoogste risico</td></tr>
+            <tr><td><strong>Viability</strong></td><td>Financieel rendabel gezien dunne marges?</td><td><strong>Onzeker</strong> — enorme bandbreedte</td></tr>
+            <tr><td><strong>Feasibility</strong></td><td>Witlabel-integratie technisch haalbaar?</td><td><strong>Waarschijnlijk haalbaar</strong></td></tr>
+            <tr><td><strong>Usability</strong></td><td>UX beter dan een fysieke pas?</td><td><strong>Onbewezen</strong> — vereist prototype-test</td></tr>
+            <tr><td><strong>Strategic Fit</strong></td><td>Past dit bij de kernactiviteit?</td><td><strong>Directiebeslissing vereist</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>7.2 Kritieke risicoanalyse (Risico = Impact × Onzekerheid)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Aanname</th><th class="num">Kans onjuist</th><th class="num">Impact</th><th class="num">Betrouwbaarheid bewijs</th><th class="num">Score</th><th>Prioriteit</th></tr></thead>
+          <tbody>
+            <tr><td>A1</td><td>Klanten willen laden/betalen via bank-app</td><td class="num">4</td><td class="num">5</td><td class="num">1</td><td class="num">20</td><td><span class="pill hoog">Hoog</span></td></tr>
+            <tr><td>A2</td><td>Bank kan marge realiseren boven operationele kosten</td><td class="num">4</td><td class="num">5</td><td class="num">2</td><td class="num">20</td><td><span class="pill hoog">Hoog</span></td></tr>
+            <tr><td>A3</td><td>Technische integratie via roaming is haalbaar</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">12</td><td><span class="pill middel">Middel</span></td></tr>
+            <tr><td>A7</td><td>Klanten veranderen gedrag ondanks lage frequentie</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">12</td><td><span class="pill middel">Middel</span></td></tr>
+            <tr><td>A4</td><td>In-app-UX is merkbaar beter dan fysieke pas</td><td class="num">3</td><td class="num">3</td><td class="num">1</td><td class="num">9</td><td><span class="pill middel">Middel</span></td></tr>
+            <tr><td>A6</td><td>AFIR/PSD3 vormen geen blokkerende horde</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">9</td><td><span class="pill middel">Middel</span></td></tr>
+            <tr><td>A5</td><td>Propositie past strategisch bij de bank</td><td class="num">2</td><td class="num">4</td><td class="num">3</td><td class="num">8</td><td><span class="pill middel">Middel</span></td></tr>
+          </tbody>
+        </table>
+        <caption>Volledig register met toelichting per aanname: <code>data/risk-matrix.json</code>.</caption>
+      </div>
+
+      <h3>7.3 Concreet validatieplan (per top-aanname)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aanname</th><th>Experiment</th><th>Succescriterium (falsificatiegrens)</th><th>Kosten</th><th>Doorlooptijd</th></tr></thead>
+          <tbody>
+            <tr><td>A1 — desirability</td><td>Concierge MVP + 20-25 diepte-interviews</td><td>≥30% voorkeur, ≥15% wisselbereid (falsificatie: &lt;15%)</td><td>€15.000-25.000</td><td>3-4 wk</td></tr>
+            <tr><td>A2 — viability</td><td>Deskresearch + expertinterviews CPO/EMSP-finance</td><td>Marge-model ≥1,5-2%pt bij 3+ bronnen</td><td>€8.000-15.000</td><td>2-3 wk</td></tr>
+            <tr><td>A3 — feasibility</td><td>Haalbaarheidsstudie + 2-3 kandidaat-EMSP's</td><td>2+ partners bevestigen &lt;9 mnd</td><td>€10.000-20.000</td><td>4-6 wk</td></tr>
+            <tr><td>A7 — gedrag</td><td>Fake Door-test in bestaande bank-app</td><td>Click-through ≥8%, interesse ≥3%</td><td>€5.000-10.000</td><td>4 wk</td></tr>
+            <tr><td><strong>Totaal</strong></td><td></td><td></td><td><strong>€38.000-70.000</strong></td><td><strong>8-10 wk</strong></td></tr>
+          </tbody>
+        </table>
+        <caption>Volledige experimentbeschrijvingen incl. vervolgstappen: <code>data/validation-plan.json</code>.</caption>
+      </div>
+    </section>
+
+    <section id="s8">
+      <div class="eyebrow"><span class="num">08</span> Roadmap</div>
+      <h2>Roadmap naar bewijs — 90-dagen cyclus</h2>
+
+      <h3>Fase 1 — Desk Research &amp; Expert Validation (week 1-2)</h3>
+      <p>Doel: elimineer bekende onzekerheden met harde secundaire data. Activiteiten: verdiepend marktonderzoek per segment, juridische quickscan AFIR/PSD3, expertinterviews CPO/EMSP-finance (start A2). <strong>Kill/pivot/go:</strong> Go indien marge-model uit A2 plausibel positief is; anders pivot naar alternatief verdienmodel of stop.</p>
+
+      <h3>Fase 2 — Probleem- &amp; Waardevalidatie (week 2-4)</h3>
+      <p>Doel: bewijs daadwerkelijke klantfrictie en -vraag. Activiteiten: Concierge MVP-interviews (A1), Fake Door-test live (A7), technische gesprekken kandidaat-partners (A3). <strong>Kill/pivot/go:</strong> Go indien A1-succescriterium (≥15% wisselbereid) wordt gehaald; anders pivot naar nichesegment of stop.</p>
+
+      <h3>Fase 3 — Oplossings- &amp; Gedragsvalidatie (week 4-8)</h3>
+      <p>Doel: test prototypes en meet daadwerkelijke bereidheid tot handelen. Activiteiten: Figma-prototype UX-test (A4), Fake Door-resultaten analyseren (A7), partnerkeuze formaliseren via LOI. <strong>Kill/pivot/go:</strong> Go naar pilot/MVP-besluit indien 3 van de 4 top-aannames slagen; anders terug naar Fase 1 of definitief stop.</p>
+    </section>
+
+    <section id="s9">
+      <div class="eyebrow"><span class="num">09</span> Beslismatrix</div>
+      <h2>Beslismatrix — bewijsniveau vs. onzekerheid</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Metric</th><th class="num">Bewijsniveau</th><th class="num">Onzekerheid</th><th>Strategisch advies</th></tr></thead>
+          <tbody>
+            <tr><td>Marktomvang &amp; groei</td><td class="num">4/5</td><td class="num">2/5</td><td><span class="pill valideren">Verder valideren</span></td></tr>
+            <tr><td>Transactievolume &amp; segmentatie</td><td class="num">2/5</td><td class="num">4/5</td><td><span class="pill valideren">Verder valideren</span></td></tr>
+            <tr><td>Klantvraag bank-app (desirability)</td><td class="num">1/5</td><td class="num">5/5</td><td><span class="pill stop">Stop met investeren</span></td></tr>
+            <tr><td>Financiële haalbaarheid (viability)</td><td class="num">2/5</td><td class="num">4/5</td><td><span class="pill valideren">Verder valideren</span></td></tr>
+            <tr><td>Technische haalbaarheid (feasibility)</td><td class="num">3/5</td><td class="num">3/5</td><td><span class="pill pilot">Pilot</span></td></tr>
+            <tr><td>UX-meerwaarde (usability)</td><td class="num">1/5</td><td class="num">4/5</td><td><span class="pill stop">Stop met investeren</span></td></tr>
+            <tr><td>Strategische fit</td><td class="num">3/5</td><td class="num">2/5</td><td><span class="pill valideren">Verder valideren</span></td></tr>
+            <tr><td>Concurrentie-/partnerlandschap</td><td class="num">4/5</td><td class="num">2/5</td><td><span class="pill investeren">Investeren</span></td></tr>
+          </tbody>
+        </table>
+        <caption>Volledig register: <code>data/decision-matrix.json</code>.</caption>
+      </div>
+    </section>
+
+    <section id="s10">
+      <div class="eyebrow"><span class="num">10</span> Kennishiaten</div>
+      <h2>"Wat weten we nog niet?"</h2>
+      <p>Dit rapport is opgebouwd uit publiek beschikbare marktdata en analytische extrapolaties. Voor een definitieve miljoeneninvestering ontbreekt op dit moment:</p>
+      <ol class="prose">
+        <li><strong>Primair klantonderzoek</strong> onder daadwerkelijke bankklanten die EV rijden — dit dossier bevat geen enquête- of interviewdata, alleen persona-modellering.</li>
+        <li><strong>Exacte, geverifieerde transactiedata</strong> van Nederlandse CPO's/EMSP's — de huidige volumes en waarden zijn macro-schattingen, geen brondata.</li>
+        <li><strong>Onderhandelde marge-condities</strong> met een concreet kandidaat-partnerplatform.</li>
+        <li><strong>Formele juridische opinie</strong> over de PSD3/AFIR-positionering van een bank als laadbetaal-intermediair.</li>
+        <li><strong>IT-architectuur-assessment</strong> van de daadwerkelijke bank-systemen voor reële integratie-doorlooptijd en -kosten.</li>
+        <li><strong>Concurrentiereactie-scenario's</strong>: hoe reageren bestaande EMSP's/CPO's als een grootbank deze markt betreedt?</li>
+      </ol>
+      <p>Dit rapport is expliciet <strong>niet</strong> bedoeld als vervanging van deze vervolgstappen, maar als het fundament waarop het validatietraject in hoofdstuk 8 kan starten.</p>
+    </section>
+
+    <section id="s11">
+      <div class="eyebrow"><span class="num">11</span> Bronnen</div>
+      <h2>Bijlage — bronnenlijst</h2>
+
+      <h3>Internationaal / publiek</h3>
+      <ul>
+        <li>ACEA — <em>New car registrations: full year 2025 &amp; Q1 2026</em>, 2026.</li>
+        <li>EAFO (European Alternative Fuels Observatory, Europese Commissie) — <em>Data updates en landenrapportages</em>, 2025-2026.</li>
+        <li>Europese Commissie — AFIR-verordening (EU) 2023/1804.</li>
+        <li>EEA — <em>New registrations of electric vehicles</em>, indicatorrapportage.</li>
+      </ul>
+      <h3>Nederlandse overheid &amp; validatie-instellingen</h3>
+      <ul>
+        <li>RVO.nl — <em>Stand van zaken elektrisch vervoer en laadpunten</em>, 2026.</li>
+        <li>ElaadNL — <em>Nationaal Laadonderzoek 2023</em> (referentiekader gebruikspatronen).</li>
+      </ul>
+      <h3>Marktdata / prijsvergelijking</h3>
+      <ul>
+        <li>MyVoltCost, Charge24, ANWB, Consumentenbond — laadtariefvergelijkingen NL, 2026.</li>
+      </ul>
+      <p><strong>Kanttekening bij bronnenhiërarchie:</strong> dit dossier kon binnen de beschikbare tijd en toegang geen betaalde consultancyrapporten (McKinsey, Deloitte, EY, PwC, Roland Berger, BCG) of ACM/BOVAG/CBS-microdata raadplegen. Waar dergelijke bronnen normaliter de voorkeur zouden hebben boven eigen extrapolatie, is dit expliciet benoemd als kennishiaat in hoofdstuk 10.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  Strategisch validatiedossier EV-laadmarkt — opgesteld juli 2026. Volledige broncode, databestanden en het interactieve directiedashboard staan in de repository <code>triqper/ev-marktonderzoek</code>, branch <code>claude/ev-charging-market-validation-4wn5l5</code>.
+</footer>
+
+<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.spine a'));
+    var sections = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var idx = sections.indexOf(entry.target);
+        links.forEach(function (l) { l.classList.remove('active'); });
+        if (idx > -1) links[idx].classList.add('active');
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    sections.forEach(function (s) { if (s) io.observe(s); });
+  })();
+</script>
+</body>
+</html>
