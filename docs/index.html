@@ -24,6 +24,11 @@
     --aanname: #a34a2b;
     --aanname-soft: #f4e3da;
     --chart-2: #6a4c9c;
+    --cat-1: #3a6ea5;
+    --cat-2: #1a9c8c;
+    --cat-3: #9457c9;
+    --cat-4: #c17d12;
+    --chart-surface: #fbfaf7;
     --shadow: 0 1px 2px rgba(27,30,36,0.06), 0 8px 24px -12px rgba(27,30,36,0.18);
     --serif: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Palatino, Georgia, serif;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -47,6 +52,11 @@
     --aanname: #e08a63;
     --aanname-soft: #33221a;
     --chart-2: #b09ae0;
+    --cat-1: #4384c2;
+    --cat-2: #25957e;
+    --cat-3: #9c53c4;
+    --cat-4: #b87f27;
+    --chart-surface: #191d23;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
   }
   @media (prefers-color-scheme: dark) {
@@ -68,6 +78,11 @@
       --aanname: #e08a63;
       --aanname-soft: #33221a;
       --chart-2: #b09ae0;
+      --cat-1: #4384c2;
+      --cat-2: #25957e;
+      --cat-3: #9c53c4;
+      --cat-4: #b87f27;
+      --chart-surface: #191d23;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
     }
   }
@@ -598,6 +613,65 @@
   .scenario-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
   .scenario-legend i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
   #scenario-chart text { font-family: var(--sans); }
+
+  /* ---------- figures & charts ---------- */
+  figure.chart {
+    margin: 1.4rem 0 1.8rem;
+    max-width: 900px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.2rem 1.3rem 1.1rem;
+  }
+  figure.chart figcaption {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin-top: 0.7rem;
+    line-height: 1.5;
+  }
+  .chart-title {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin: 0 0 0.15rem;
+  }
+  .chart-sub { font-size: 0.76rem; color: var(--ink-faint); margin: 0 0 0.9rem; }
+  .chart-svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart-svg text { font-family: var(--sans); }
+  .chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    margin-top: 0.7rem;
+    font-size: 0.78rem;
+    color: var(--ink-secondary);
+  }
+  .chart-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .chart-legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex-shrink: 0; }
+  .chart-mark { transition: opacity 0.12s ease; }
+  .chart-svg:hover .chart-mark.dim { opacity: 0.32; }
+  .chart-tip {
+    position: fixed;
+    z-index: 62;
+    pointer-events: none;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule-strong);
+    border-radius: 7px;
+    box-shadow: var(--shadow);
+    padding: 0.5rem 0.65rem;
+    font-size: 0.78rem;
+    color: var(--ink);
+    max-width: 240px;
+    line-height: 1.4;
+  }
+  .chart-tip[hidden] { display: none; }
+  .chart-tip .tip-t { font-weight: 700; display: block; margin-bottom: 0.2rem; }
+  .chart-tip .tip-r { display: flex; justify-content: space-between; gap: 0.9rem; }
+  .chart-tip .tip-r b { font-variant-numeric: tabular-nums; font-weight: 650; }
+  .chart-tip .tip-k { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--ink-secondary); }
+  .chart-tip .tip-k i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 </style>
 </head>
 <body>
@@ -704,13 +778,14 @@
       </div>
       <div class="callout">
         <span class="label">Toelichting NL-stekkerpark en transactiemodel</span>
-        <p>Het <button type="button" class="abbr" data-abbr="PHEV" aria-haspopup="dialog">PHEV</button>-cijfer (543.355) is een RVO-feit met peildatum juli 2026 en corrigeert een eerdere eigen schatting van ~230.000 (factor 2,3 te laag); het totale NL-stekkerpark komt daarmee op ~1.244.500. Belangrijk: PHEV's laden gemiddeld minder frequent publiek dan <button type="button" class="abbr" data-abbr="BEV" aria-haspopup="dialog">BEV</button>'s. Het transactiemodel achter de kolom "laadtransacties/jaar" (zie hoofdstuk 6 en <code>lib/calculations.ts</code>) is <strong>laadpunt-gebaseerd</strong> (publieke laadpunten × sessiefrequentie) en dus niet 1-op-1 aan het BEV- of PHEV-park gekoppeld — een expliciete modelaanname. De ~210.000 (semi-)publieke laadpunten bestaan uit ~119.000 regulier publiek (openbare weg), ~80.000 semi-publiek (parkeerterreinen winkels/bedrijven) en ~6.000 snelladers <button type="button" class="tag feit" data-ref="nl-laadpunten" aria-haspopup="dialog">FEIT</button>.</p>
+        <p>Het <button type="button" class="abbr" data-abbr="PHEV" aria-haspopup="dialog">PHEV</button>-cijfer (543.355) is een RVO-feit met peildatum juli 2026; het totale NL-stekkerpark komt daarmee op ~1.244.500. Belangrijk: PHEV's laden gemiddeld minder frequent publiek dan <button type="button" class="abbr" data-abbr="BEV" aria-haspopup="dialog">BEV</button>'s. Het transactiemodel achter de kolom "laadtransacties/jaar" (zie hoofdstuk 6 en <code>lib/calculations.ts</code>) is <strong>laadpunt-gebaseerd</strong> (publieke laadpunten × sessiefrequentie) en dus niet 1-op-1 aan het BEV- of PHEV-park gekoppeld — een expliciete modelaanname. De ~210.000 (semi-)publieke laadpunten bestaan uit ~119.000 regulier publiek (openbare weg), ~80.000 semi-publiek (parkeerterreinen winkels/bedrijven) en ~6.000 snelladers <button type="button" class="tag feit" data-ref="nl-laadpunten" aria-haspopup="dialog">FEIT</button>.</p>
       </div>
-      <div class="callout">
-        <span class="label">Groeivooruitzicht tot 2030 <button type="button" class="tag aanname" data-ref="aanname-groeivooruitzicht" aria-haspopup="dialog">AANNAME</button></span>
-        <p><strong>EU-scenario:</strong> bij aanhoudende <button type="button" class="abbr" data-abbr="BEV" aria-haspopup="dialog">BEV</button>-nieuwverkoopgroei van het huidige tempo (EU <button type="button" class="abbr" data-abbr="BEV" aria-haspopup="dialog">BEV</button>-aandeel steeg van 17,4% in 2025 naar 19,4% in Q1 2026; t/m mei 2026: 20% <button type="button" class="tag feit" data-ref="eu-bev-groei-combo" aria-haspopup="dialog">FEIT</button>) is een verdrievoudiging tot verviervoudiging van het EU-brede laadtransactievolume richting 2030 een redelijke ordegrootte-verwachting, in lijn met de EU Fit-for-55/<button type="button" class="abbr" data-abbr="AFIR" aria-haspopup="dialog">AFIR</button>-doelstellingen.</p>
-        <p><strong>NL-scenario (voorzichtiger):</strong> de Nederlandse BEV-nieuwverkoop kromp begin 2026 door afbouw van fiscale voordelen (YTD mei 2026: -9,7% t.o.v. 2025). Voor Nederland is ×2 tot ×3 richting 2030 een realistischer bandbreedte, gegeven aflopende fiscale prikkels. De daadwerkelijke groeicurve hangt af van batterijprijzen, subsidiebeleid en netcapaciteit.</p>
-      </div>
+      <figure class="chart">
+        <p class="chart-title">EV-park per land — geëlektrificeerd wagenpark (BEV + PHEV)</p>
+        <p class="chart-sub">Miljoenen personenauto's, meest recente peildatum per land. Het EU27-totaal (~19 mln) valt buiten de schaal en is weggelaten.</p>
+        <svg class="chart-svg" id="fig-landen" viewBox="0 0 620 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Staafdiagram: geëlektrificeerd wagenpark per land in miljoenen personenauto's"></svg>
+        <figcaption>Bron: NL = RVO (juli 2026); DE = EAFO (1-1-2026) + KBA-schatting PHEV; FR = EAFO (eind 2025); BE/Nordics/VK = eigen extrapolatie o.b.v. EAFO. Foutmarges en labels: zie §3.1-tabel. Beweeg over een staaf voor publieke laadpunten en transactievolume.</figcaption>
+      </figure>
 
       <h3>3.2 Transactievolume &amp; technische segmentatie</h3>
       <div class="callout">
@@ -727,6 +802,13 @@
         </table>
         <caption>Alle waarden <button type="button" class="tag schatting" data-ref="segment-ac-dc-hpc" aria-haspopup="dialog">SCHATTING</button> — analytisch model met het Nationaal Laadonderzoek (VER/RUG/RVO, 5e editie) als referentiekader, geëxtrapoleerd naar 2026. Door afronding tellen aandelen niet altijd exact op tot 100%.</caption>
       </div>
+      <figure class="chart">
+        <p class="chart-title">Volume vs. waarde: AC draagt het volume, DC/HPC de omzet</p>
+        <p class="chart-sub">Aandeel van AC, DC en HPC in transacties, omzet en energie (% van NL publiek totaal).</p>
+        <svg class="chart-svg" id="fig-segment" viewBox="0 0 620 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Gegroepeerd staafdiagram: aandeel van AC, DC en HPC in transacties, omzet en energie"></svg>
+        <div class="chart-legend" id="fig-segment-legend"></div>
+        <figcaption>Kernpatroon: AC levert ~70% van de transacties maar slechts ~40% van de omzet; HPC is ~5% van de transacties maar ~20% van de omzet. De waarde zit in een kleiner aantal grotere sessies. Alle waarden <button type="button" class="tag schatting" data-ref="segment-ac-dc-hpc" aria-haspopup="dialog">SCHATTING</button>.</figcaption>
+      </figure>
       <p><strong>Inzicht:</strong> <button type="button" class="abbr" data-abbr="AC" aria-haspopup="dialog">AC</button>-laden is volumedrager maar geen waardedrager; <button type="button" class="abbr" data-abbr="HPC" aria-haspopup="dialog">HPC</button> is een klein deel van het volume maar levert disproportioneel veel omzet en energie. Voor een bankpropositie betekent dit dat puur op transactievolume sturen (bijv. focus op stedelijk <button type="button" class="abbr" data-abbr="AC" aria-haspopup="dialog">AC</button>-laden) tot lage omzet per klant leidt, terwijl <button type="button" class="abbr" data-abbr="DC" aria-haspopup="dialog">DC</button>/<button type="button" class="abbr" data-abbr="HPC" aria-haspopup="dialog">HPC</button> een hogere transactiewaarde heeft maar minder frequent voorkomt.</p>
 
       <h3>3.3 Differentiatie naar laadlocaties</h3>
@@ -747,6 +829,12 @@
         </table>
         <caption>Alle waarden <button type="button" class="tag schatting" data-ref="locatie-model" aria-haspopup="dialog">SCHATTING</button>. Door afronding tellen aandelen niet exact op tot 100%.</caption>
       </div>
+      <figure class="chart">
+        <p class="chart-title">Waar wordt geladen — aandeel transacties per locatietype</p>
+        <p class="chart-sub">% van alle publieke laadtransacties. Beweeg over een staaf voor de gemiddelde besteding en sessieduur.</p>
+        <svg class="chart-svg" id="fig-locatie" viewBox="0 0 620 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Staafdiagram: aandeel transacties per laadlocatietype"></svg>
+        <figcaption>De stedelijke laadpaal genereert het grootste volume (~35%) maar de laagste besteding per sessie (~€8) — het lastigste segment om marge op te maken. Snelweg/HPC heeft het omgekeerde profiel. Beweeg over een staaf voor sessieduur en besteding. Alle waarden <button type="button" class="tag schatting" data-ref="locatie-model" aria-haspopup="dialog">SCHATTING</button>.</figcaption>
+      </figure>
 
       <h3>3.4 Laadpersona's</h3>
       <div class="table-wrap">
@@ -762,7 +850,40 @@
         </table>
         <caption><button type="button" class="tag schatting" data-ref="persona-schatting" aria-haspopup="dialog">SCHATTING</button>/<button type="button" class="tag aanname" data-ref="persona-aanname" aria-haspopup="dialog">AANNAME</button> — analytisch gemodelleerd, geen primair enquêteonderzoek uitgevoerd. Percentages afgerond op 5%-stappen; werkelijke waarden kunnen ±20-30% afwijken.</caption>
       </div>
+      <figure class="chart">
+        <p class="chart-title">Grootste markt ≠ grootste kans voor de bank</p>
+        <p class="chart-sub">Marktaandeel (% van EV-rijders) versus aandeel in publieke laadtransacties, per persona.</p>
+        <svg class="chart-svg" id="fig-persona" viewBox="0 0 620 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Gegroepeerd staafdiagram: marktaandeel versus transactie-aandeel per persona"></svg>
+        <div class="chart-legend" id="fig-persona-legend"></div>
+        <figcaption>De twee persona's met de hoogste relevantie voor een bankpropositie (particuliere thuislader, vakantierijder) zijn niet de grootste volumesegmenten. Beweeg over een staaf voor de relevantie-inschatting. <button type="button" class="tag schatting" data-ref="persona-schatting" aria-haspopup="dialog">SCHATTING</button>/<button type="button" class="tag aanname" data-ref="persona-aanname" aria-haspopup="dialog">AANNAME</button>.</figcaption>
+      </figure>
       <p><strong>Strategische implicatie:</strong> de twee segmenten met de hoogste relevantie voor een bankpropositie (particuliere thuislader, vakantierijder) zijn niet de segmenten met het hoogste transactievolume. De grootste markt (stadsbewoner, forens) is het minst voor de hand liggend te winnen via de bank-app.</p>
+
+      <h3>3.5 Groeiprognose 2026–2030</h3>
+      <p>Hoe groot wordt de markt de komende vijf jaar? De onderstaande prognose combineert het huidige NL-startpunt (RVO, juli 2026) met drie externe ankers: de <strong><button type="button" class="abbr" data-abbr="NAL" aria-haspopup="dialog">NAL</button>/ElaadNL-prognose</strong> van circa 1,7 miljoen laadpunten in 2030, de <strong>overheids-/EAFO-verwachting</strong> van ~1,9 miljoen elektrische personenauto's in 2030, en de <strong>IEA Global EV Outlook 2026</strong> (Europese publieke laadpunten verdubbelen richting 2030). Omdat de Nederlandse BEV-nieuwverkoop begin 2026 kromp door afbouw van fiscale voordelen (YTD mei 2026: -9,7%), houdt het middenscenario een voorzichtiger tempo aan dan het EU-gemiddelde.</p>
+      <figure class="chart">
+        <p class="chart-title">NL-markt tot 2030 — geïndexeerd (2026 = 100)</p>
+        <p class="chart-sub">Middenscenario. Indexering maakt de drie grootheden (wagenpark, laadpunten, transacties) op één schaal vergelijkbaar.</p>
+        <svg class="chart-svg" id="fig-groei" viewBox="0 0 620 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Lijndiagram: geïndexeerde groei van BEV-park, publieke laadpunten en laadtransacties in Nederland 2026 tot 2030"></svg>
+        <div class="chart-legend" id="fig-groei-legend"></div>
+        <figcaption>Beweeg over een punt voor de absolute waarde in dat jaar. Groeiprognose <button type="button" class="tag aanname" data-ref="aanname-groeivooruitzicht" aria-haspopup="dialog">AANNAME</button> — modelmatige interpolatie tussen het FEIT-startpunt (2026) en de externe 2030-ankers; geen formeel prognosemodel.</figcaption>
+      </figure>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Indicator (NL)</th><th class="num">2026</th><th class="num">2027</th><th class="num">2028</th><th class="num">2029</th><th class="num">2030 (midden)</th><th class="num">2030 (bandbreedte)</th><th class="num">Groei ’26→’30</th></tr></thead>
+          <tbody>
+            <tr><td><button type="button" class="abbr" data-abbr="BEV" aria-haspopup="dialog">BEV</button>-park (mln)</td><td class="num">0,70</td><td class="num">0,90</td><td class="num">1,12</td><td class="num">1,38</td><td class="num">1,70</td><td class="num">1,5–1,9</td><td class="num">≈ ×2,4</td></tr>
+            <tr><td>(Semi-)publieke laadpunten (×1.000)</td><td class="num">210</td><td class="num">250</td><td class="num">300</td><td class="num">355</td><td class="num">420</td><td class="num">380–520</td><td class="num">≈ ×2,0</td></tr>
+            <tr><td>Publieke laadtransacties (mln/jr)</td><td class="num">80</td><td class="num">100</td><td class="num">125</td><td class="num">160</td><td class="num">200</td><td class="num">160–240</td><td class="num">≈ ×2,5</td></tr>
+            <tr><td>Publieke laadomzet (mld €/jr)</td><td class="num">0,8</td><td class="num">1,0</td><td class="num">1,3</td><td class="num">1,5</td><td class="num">1,7</td><td class="num">1,3–2,2</td><td class="num">≈ ×2,1</td></tr>
+          </tbody>
+          <caption>Groeiprognose NL <button type="button" class="tag aanname" data-ref="aanname-groeivooruitzicht" aria-haspopup="dialog">AANNAME</button>. Startpunt 2026 = RVO/eigen SCHATTING (zie §3.1–3.2); 2030-ankers = NAL/ElaadNL (laadpunten), EAFO/overheid (wagenpark), IEA (EU-laadpunten verdubbelen). Omzet volgt transacties met een lichte prijsdaling per kWh. Bandbreedte weerspiegelt de onzekerheid over fiscaal beleid, batterijprijzen en netcapaciteit.</caption>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="label">Implicatie voor de businesscase</span>
+        <p>Een markt die richting 2030 ruwweg <strong>verdubbelt tot verdrievoudigt</strong>, betekent dat elk marktaandeel-scenario in hoofdstuk 6 meegroeit: 5% van de NL-transacties is vandaag ~4 miljoen transacties, maar bij ~200 miljoen totaal in 2030 circa <strong>10 miljoen transacties/jaar</strong>. De markt wordt dus groter én concurrerender — de <button type="button" class="abbr" data-abbr="EMSP" aria-haspopup="dialog">EMSP</button>-laag waarin een bank zou landen, groeit even hard mee. Groei lost het kernrisico (klantvraag, marge) niet op, maar vergroot wel de beloning als de propositie zich bewijst.</p>
+      </div>
     </section>
 
     <section id="s4">
@@ -872,7 +993,7 @@
 (5) Total Payment Volume (TPV)                          = T_bank x v
 (6) Take-rate / marge bank (m)                          = 0,5% - 15%  [AANNAME-bandbreedte]
 (7) Bruto-omzet bank                                     = TPV x m</pre>
-      <p>Onderbouwing T_totaal-bandbreedte: bottom-up check o.b.v. ~205.000 publieke punten × gemiddelde sessiefrequentie geeft 60-100 mln; de eerdere puntschatting van 95 mln zit aan de bovenkant van deze range. Externe kalibratiecheck: Vattenfall InCharge rapporteert ~8 mln publieke sessies/jaar bij één <button type="button" class="abbr" data-abbr="CPO" aria-haspopup="dialog">CPO</button> (2025, +68% YoY). Het model is laadpunt-gebaseerd (niet <button type="button" class="abbr" data-abbr="BEV" aria-haspopup="dialog">BEV</button>/<button type="button" class="abbr" data-abbr="PHEV" aria-haspopup="dialog">PHEV</button>-specifiek) <button type="button" class="tag schatting" data-ref="nl-transactievolume" aria-haspopup="dialog">SCHATTING</button>.</p>
+      <p>Onderbouwing T_totaal-bandbreedte: bottom-up check o.b.v. ~205.000 publieke punten × gemiddelde sessiefrequentie geeft 60-100 mln. Externe kalibratiecheck: Vattenfall InCharge rapporteert ~8 mln publieke sessies/jaar bij één <button type="button" class="abbr" data-abbr="CPO" aria-haspopup="dialog">CPO</button> (2025, +68% YoY). Het model is laadpunt-gebaseerd (niet <button type="button" class="abbr" data-abbr="BEV" aria-haspopup="dialog">BEV</button>/<button type="button" class="abbr" data-abbr="PHEV" aria-haspopup="dialog">PHEV</button>-specifiek) <button type="button" class="tag schatting" data-ref="nl-transactievolume" aria-haspopup="dialog">SCHATTING</button>.</p>
 
       <h3>Interactieve scenario-verkenner</h3>
       <p>Pas de aannames hieronder aan — de KPI's en de grafiek rekenen live door met exact dezelfde rekenkern als hierboven (<code>lib/calculations.ts</code>).</p>
@@ -931,7 +1052,7 @@
         <caption>Gecombineerde onzekerheid in volume, transactiewaarde en take-rate betekent dat de werkelijke jaaromzet een factor 3-5 kan afwijken van de middenwaarde in bovenstaande tabel.</caption>
       </div>
       <div class="callout">
-        <span class="label">Let op — herziening t.o.v. executive summary</span>
+        <span class="label">Twee verdienmodellen — betaallaag vs. EMSP</span>
         <p>De executive summary noemt bredere ranges (€0,3-1,5 mln bij 1%, €3-15 mln bij 10%) omdat daar ook hogere take-rate-varianten (tot 15%, volwaardige <button type="button" class="abbr" data-abbr="EMSP" aria-haspopup="dialog">EMSP</button>-marge) zijn meegenomen. Bovenstaande tabel toont het conservatieve betaallaag-scenario (0,5-1,5% totale take-rate, vergelijkbaar met <button type="button" class="abbr" data-abbr="PSP" aria-haspopup="dialog">PSP</button>-/acquiring-marges). Ter referentie: zuivere interchange is in de EU gereguleerd op 0,2% (debit) / 0,3% (credit) voor consumentenkaarten (Verordening (EU) 2015/751, Interchange Fee Regulation) en is op zichzelf dus geen zelfstandig verdienmodel voor de bank. Het bredere <button type="button" class="abbr" data-abbr="EMSP" aria-haspopup="dialog">EMSP</button>-scenario staat hieronder in §6.3.</p>
       </div>
 
@@ -990,6 +1111,13 @@
         </table>
         <caption>Volledig register met toelichting per aanname: <code>data/risk-matrix.json</code>.</caption>
       </div>
+      <figure class="chart">
+        <p class="chart-title">Risicokaart — kans onjuist × impact</p>
+        <p class="chart-sub">Positie = kans dat de aanname onjuist is (horizontaal) × impact bij onjuistheid (verticaal). Bolgrootte = risicoscore. Rechtsboven = grootste risico.</p>
+        <svg class="chart-svg" id="fig-risico" viewBox="0 0 620 340" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Spreidingsdiagram risicomatrix: kans onjuist tegen impact per aanname"></svg>
+        <div class="chart-legend" id="fig-risico-legend"></div>
+        <figcaption>A1 (klantvraag) en A2 (marge) liggen rechtsboven — hoogste prioriteit, laagste bewijskracht. Dit zijn precies de aannames die het validatietraject in §7.3 het eerst adresseert. Beweeg over een bol voor de volledige aanname en score.</figcaption>
+      </figure>
 
       <h3>7.3 Concreet validatieplan (per top-aanname)</h3>
       <div class="table-wrap">
@@ -1068,12 +1196,15 @@
         <li>Europese Commissie — <button type="button" class="abbr" data-abbr="AFIR" aria-haspopup="dialog">AFIR</button>-verordening (EU) 2023/1804 (m.n. artikel 5, lid 1-2 inzake betaalvereisten).</li>
         <li>Europese Commissie — Verordening (EU) 2015/751 (Interchange Fee Regulation): interchange-plafond 0,2% (debit) / 0,3% (credit) voor consumentenkaarten.</li>
         <li><button type="button" class="abbr" data-abbr="EEA" aria-haspopup="dialog">EEA</button> — <em>New registrations of electric vehicles</em>, indicatorrapportage.</li>
+        <li><button type="button" class="abbr" data-abbr="IEA" aria-haspopup="dialog">IEA</button> — <em>Global EV Outlook 2026</em>; o.a. Europese publieke laadpunten verdubbelen richting 2030 (Stated Policies Scenario) — anker voor de groeiprognose in §3.5.<!-- LLM-verwerkbaarheid: verwerkbaar (rapport + datatabellen) --></li>
       </ul>
       <h3>Nederlandse overheid &amp; validatie-instellingen</h3>
       <ul>
         <li><button type="button" class="abbr" data-abbr="RVO" aria-haspopup="dialog">RVO</button>.nl — <em>Stand van zaken elektrisch vervoer en laadpunten</em> (maandelijks bijgewerkt), peildatum juli 2026; bron voor park- en verkoopcijfers, incl. het <button type="button" class="abbr" data-abbr="PHEV" aria-haspopup="dialog">PHEV</button>-park (543.355).<!-- LLM-verwerkbaarheid: direct verwerkbaar --></li>
-        <li>Nationaal Laadonderzoek (samenwerking Vereniging Elektrische Rijders (VER), Rijksuniversiteit Groningen (RUG) en <button type="button" class="abbr" data-abbr="RVO" aria-haspopup="dialog">RVO</button>) — meest recente 5e editie, 3.500+ respondenten; referentiekader voor gebruikspatronen. Volledig rapport via de VER-website. <em>NB: eerdere versies van dit dossier schreven dit onderzoek onterecht primair toe aan ElaadNL.</em><!-- LLM-verwerkbaarheid: verwerkbaar, vervangt verouderde bron (ElaadNL 2023) --></li>
+        <li>Nationaal Laadonderzoek (samenwerking Vereniging Elektrische Rijders (VER), Rijksuniversiteit Groningen (RUG) en <button type="button" class="abbr" data-abbr="RVO" aria-haspopup="dialog">RVO</button>) — meest recente 5e editie, 3.500+ respondenten; referentiekader voor gebruikspatronen. Volledig rapport via de VER-website.<!-- LLM-verwerkbaarheid: direct verwerkbaar --></li>
         <li>NAL Voortgangsrapportage 2025 (Nationale Agenda Laadinfrastructuur, gepubliceerd april 2026) — plaatsingstempo, laadmix en laaddrukanalyse (aanvullende bron voor §3.2/3.3).<!-- LLM-verwerkbaarheid: verwerkbaar (PDF-tabellen) --></li>
+        <li>NAL — <em>Prognoses laadinfrastructuur</em> (o.b.v. ElaadNL Outlook): ~1,7 miljoen laadpunten in 2030; primair anker voor de laadpunten-lijn in de groeiprognose (§3.5). Beschikbaar via agendalaadinfrastructuur.nl.<!-- LLM-verwerkbaarheid: verwerkbaar (prognosetabellen) --></li>
+        <li>EAFO — <em>Netherlands EV Market Overview 2025</em> en overheidsambitie ~1,9 miljoen elektrische personenauto's in 2030; anker voor de wagenpark-lijn in §3.5.<!-- LLM-verwerkbaarheid: direct verwerkbaar --></li>
         <li><button type="button" class="abbr" data-abbr="CBS" aria-haspopup="dialog">CBS</button> StatLine — wagenpark, historische reeksen (vrij toegankelijke open API).<!-- LLM-verwerkbaarheid: direct verwerkbaar (open API) --></li>
       </ul>
       <h3>Marktdata / prijsvergelijking</h3>
@@ -1118,12 +1249,12 @@ const REFS = {
   "nl-laadomzet": { type: "schatting", bron: "Eigen berekening \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", peildatum: "data_asof: juli 2026", toelichting: "Geschat transactievolume (60-100 mln/jaar, midden 80 mln) \u00d7 gewogen gemiddelde transactiewaarde van \u20ac10,00 (zie hoofdstuk 6.1) = ~\u20ac600-1.000 mln (midden ~\u20ac800 mln). Foutmarge \u00b125%, voortkomend uit de onzekerheid in het onderliggende transactievolume \u2014 er is geen directe omzetstatistiek van CPO's/EMSP's geraadpleegd." },
   "businesscase-scenarios": { type: "schatting", bron: "Eigen berekening \u2014 zie hoofdstuk 6.1-6.3", url: "#s6", peildatum: "data_asof: juli 2026", toelichting: "Bandbreedte volgt uit de scenariotabellen in hoofdstuk 6, doorgerekend over de T_totaal-range van 60-100 mln transacties/jaar: bij 1% marktaandeel geeft het EMSP-model (5-15% marge op een TPV van \u20ac6-10 mln) \u20ac0,3-1,5 mln/jaar en het conservatieve betaallaag-model (0,5-1,5%) \u20ac30.000-150.000/jaar. Gecombineerde onzekerheid in volume, transactiewaarde en take-rate betekent dat de werkelijke jaaromzet een factor 3-5 kan afwijken van de middenwaarde." },
   "aanname-kernvraag": { type: "aanname", bron: "Aannameregister \u2014 data/risk-matrix.json (A1)", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/risk-matrix.json", bron2: "Validatiedossier, hoofdstuk 7", url2: "#s7", toelichting: "Waarom cruciaal: kern van de hele propositie \u2014 zonder aantoonbare vraag geen business. Beschikbaar bewijs: geen \u2014 er is binnen dit dossier geen klantonderzoek uitgevoerd. Betrouwbaarheid bewijs: 1 van 5. Risicoscore 20/25 (kans onjuist 4 \u00d7 impact 5) \u2014 de hoogste van alle aannames in de risicomatrix. Zie hoofdstuk 7.3 voor het experiment dat dit moet valideren (Concierge MVP + interviews)." },
-  "aanname-groeivooruitzicht": { type: "aanname", bron: "Eigen macro-extrapolatie", toelichting: "Lineaire doortrekking van de waargenomen groei in BEV-nieuwverkoopaandeel (17,4% \u2192 19,4% tussen FY2025 en Q1 2026, ACEA) naar een 3-4x groei in laadtransactievolume richting 2030, in lijn met de doelstellingen van AFIR/Fit-for-55. Dit is expliciet geen formeel prognosemodel \u2014 de daadwerkelijke curve hangt af van variabelen (batterijprijzen, subsidiebeleid, netcapaciteit) die hier niet gemodelleerd zijn." },
+  "aanname-groeivooruitzicht": { type: "aanname", bron: "Eigen macro-prognose \u2014 NL 2026-2030 (\u00a73.5)", url: "#s3", peildatum: "data_asof: juli 2026", citaat: "Middenscenario 2030: BEV-park ~1,7 mln \u00b7 (semi-)publieke laadpunten ~420.000 \u00b7 publieke laadtransacties ~200 mln/jaar \u00b7 laadomzet ~\u20ac1,7 mld/jaar.", toelichting: "Methode: interpolatie tussen het FEIT-startpunt 2026 (RVO: 701.149 BEV, ~210.000 publieke laadpunten) en drie externe 2030-ankers \u2014 (1) NAL/ElaadNL-prognose ~1,7 mln laadpunten in 2030; (2) EAFO/overheidsverwachting ~1,9 mln elektrische personenauto's in 2030; (3) IEA Global EV Outlook 2026: Europese publieke laadpunten verdubbelen richting 2030. Het NL-tempo is bewust voorzichtiger dan het EU-gemiddelde omdat de NL BEV-nieuwverkoop begin 2026 kromp (YTD mei 2026: -9,7%, ACEA). Bandbreedtes: BEV-park 1,5-1,9 mln, laadpunten 380.000-520.000, transacties 160-240 mln. Geen formeel prognosemodel \u2014 de curve hangt af van fiscaal beleid, batterijprijzen en netcapaciteit.", bron2: "NAL / agendalaadinfrastructuur.nl \u2014 prognose 1,7 mln laadpunten 2030", url2: "https://www.agendalaadinfrastructuur.nl/ondersteuning+gemeenten/prognoses/default.aspx" },
   "aanname-marktaandeel-constant": { type: "aanname", bron: "Eigen aanname \u2014 zie hoofdstuk 6.3", url: "#s6", toelichting: "De scenariotabellen gaan uit van een constant marktaandeel over alle klantsegmenten tegelijk. In werkelijkheid start marktaandeel-opbouw vermoedelijk eerst bij de segmenten met de hoogste relevantie (particuliere thuisladers, vakantierijders \u2014 zie persona-analyse) en groeit pas later door naar het volumesegment (stadsbewoners). Dit vereenvoudigde model is gekozen voor transparantie en reproduceerbaarheid, niet omdat het de meest realistische aannamestructuur is." },
   "locatie-model": { type: "schatting", bron: "Eigen analytisch model \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", bron2: "Referentiekader: Nationaal Laadonderzoek (VER/RUG/RVO), meest recente 5e editie \u2014 via de VER-website", url2: "https://www.evrijders.nl/", peildatum: "data_asof: juli 2026", toelichting: "Aandeel per locatietype is een eigen model, ge\u00ebxtrapoleerd naar 2026 met het Nationaal Laadonderzoek \u2014 een samenwerking van de Vereniging Elektrische Rijders (VER), Rijksuniversiteit Groningen (RUG) en RVO, 5e editie met 3.500+ respondenten \u2014 als kwalitatief referentiekader (dat rapporteert bijvoorbeeld welk deel van de kilometers thuis, publiek, op werk en onderweg wordt geladen \u2014 een andere indeling dan de locatietypen hier, maar richtinggevend voor de verhoudingen), aangevuld met de NAL Voortgangsrapportage 2025 (april 2026). Geen directe locatie-transactiedata van CPO's gebruikt. Waarden afgerond op 5%-stappen; werkelijke waarden kunnen \u00b120-30% afwijken." },
   "segment-ac-dc-hpc": { type: "schatting", bron: "Eigen analytisch model \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", bron2: "Referentiekader: Nationaal Laadonderzoek (VER/RUG/RVO), meest recente 5e editie \u2014 via de VER-website", url2: "https://www.evrijders.nl/", peildatum: "data_asof: juli 2026", toelichting: "Verdeling van transacties/omzet/energie over AC, DC en HPC is een eigen model o.b.v. typische vermogensklassen, sessieduur en laadgedrag-patronen uit het Nationaal Laadonderzoek (samenwerking VER, RUG en RVO; 5e editie, 3.500+ respondenten), ge\u00ebxtrapoleerd naar 2026 en aangevuld met de NAL Voortgangsrapportage 2025 (april 2026) voor laadmix. Er bestaat geen publiek toegankelijke, uniforme AC/DC/HPC-transactiestatistiek voor de Nederlandse markt. Waarden bewust afgerond; werkelijke waarden kunnen \u00b120-30% afwijken." },
   "gebruiksfrequentie": { type: "schatting", bron: "Eigen analytisch model \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", peildatum: "data_asof: juli 2026", toelichting: "Afgeleid van de transacties-per-gebruiker-per-maand-bandbreedtes per laadsegment (AC 8-10 \u00b7 DC 2-4 \u00b7 HPC 1-2 \u2014 zie hoofdstuk 3.2), zelf weer een extrapolatie van gebruikspatronen uit het Nationaal Laadonderzoek (VER/RUG/RVO). Geen directe meting van individuele klantfrequentie." },
-  "nl-phev-park": { type: "feit", bron: "RVO.nl \u2014 Stand van zaken elektrisch vervoer en laadpunten", url: "https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken", peildatum: "data_asof: juli 2026 \u2014 RVO publiceert dit maandelijks bijgewerkt overzicht.", citaat: "RVO rapporteert medio 2026 een park van 543.355 plug-in hybride personenauto's.", toelichting: "Dit RVO-feit corrigeert een eerdere eigen schatting van ~230.000 (factor 2,3 te laag). Let op: PHEV's laden gemiddeld minder frequent publiek dan BEV's; het transactiemodel in dit dossier is laadpunt-gebaseerd en dus niet 1-op-1 aan het stekkerpark gekoppeld \u2014 zie \u00a73.1 en data/market-data.json." },
+  "nl-phev-park": { type: "feit", bron: "RVO.nl \u2014 Stand van zaken elektrisch vervoer en laadpunten", url: "https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken", peildatum: "data_asof: juli 2026 \u2014 RVO publiceert dit maandelijks bijgewerkt overzicht.", citaat: "RVO rapporteert medio 2026 een park van 543.355 plug-in hybride personenauto's.", toelichting: "Let op: PHEV's laden gemiddeld minder frequent publiek dan BEV's; het transactiemodel in dit dossier is laadpunt-gebaseerd en dus niet 1-op-1 aan het stekkerpark gekoppeld \u2014 zie \u00a73.1 en data/market-data.json." },
   "de-bev-park": { type: "feit", bron: "EAFO / electrive.com \u2014 Germany tops two million battery-electric cars", url: "https://www.electrive.com/2026/02/27/germany-tops-two-million-battery-electric-cars-in-circulation/", bron2: "EAFO \u2014 Germany's BEV fleet surpasses 2 million units", url2: "https://alternative-fuels-observatory.ec.europa.eu/general-information/news/germanys-bev-fleet-surpasses-2-million-units-major-milestone", citaat: "\u201cAs of 1 January 2026, a total of 2,034,260 BEVs were registered on German roads... the BEV fleet expanded by 382,617 vehicles between 1 January 2025 and 1 January 2026.\u201d" },
   "de-phev-schatting": { type: "schatting", bron: "Eigen extrapolatie \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", toelichting: "Afgeleid uit KBA-registratiehistorie (Duitse RDW-tegenhanger) en de EU-brede PHEV-aandeel-trend in nieuwverkoop. Foutmarge \u00b120%." },
   "fr-electrified": { type: "feit", bron: "EAFO \u2014 France's EV Market in 2025: Renewed Momentum and a Growing Fleet", url: "https://alternative-fuels-observatory.ec.europa.eu/general-information/news/frances-ev-market-2025-renewed-momentum-and-growing-fleet", citaat: "\u201cBy the end of 2025, the total number of electrified vehicles (BEVs and PHEVs combined) in circulation in France exceeded 2.5 million.\u201d" },
@@ -1131,14 +1262,14 @@ const REFS = {
   "landen-extrapolatie": { type: "schatting", bron: "Eigen extrapolatie \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", bron2: "EAFO (Europese Commissie) \u2014 uniforme referentiebron landenvergelijking", url2: "https://alternative-fuels-observatory.ec.europa.eu/", peildatum: "data_asof: begin 2026 (per land verschillend \u2014 zie data/market-data.json)", toelichting: "Waar mogelijk ge\u00fcniformeerd op EAFO. Waar EAFO geen recent cijfer heeft, is dit een orde-van-grootte-schatting op basis van de relatieve wagenparkgrootte en EV-penetratiegraad t.o.v. landen met een FEIT-cijfer (NL, DE, FR, SE), met per rij de gebruikte bron in de tabelcaption (o.a. KBA voor Duitsland, Avere-France voor Frankrijk, SMMT/ZapMap voor het VK). Foutmarge 15-30% afhankelijk van het cijfer \u2014 zie de exacte bandbreedte bij het label zelf in de tabel." },
   "eu27-wagenpark-schatting": { type: "schatting", bron: "Eigen berekening \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", bron2: "Basis: IEA \u2014 Global EV Outlook 2026", url2: "https://www.iea.org/reports/global-ev-outlook-2026/trends-in-electric-cars", toelichting: "Berekend als 5%-aandeel (IEA, zie FEIT-cijfer &lsquo;EU-wagenpark 5% elektrisch&rsquo;) \u00d7 een geschat EU27-wagenpark van ~250 miljoen personenauto's (orde van grootte o.b.v. ACEA vehicles-in-use-rapportages). PHEV-aandeel afgeleid uit de verhouding BEV:PHEV-nieuwverkoop 2024 (13,6% : 7,3%, EEA) doorgetrokken naar het cumulatieve park. Foutmarge \u00b120-25%." },
   "eu-fleet-share": { type: "feit", bron: "IEA \u2014 Global EV Outlook 2026", url: "https://www.iea.org/reports/global-ev-outlook-2026/trends-in-electric-cars", citaat: "\u201cElectric cars now represent about 5% of the European car fleet.\u201d" },
-  "afir-regulation": { type: "feit", bron: "EUR-Lex \u2014 Regulation (EU) 2023/1804 (AFIR), artikel 5, lid 1-2", url: "https://eur-lex.europa.eu/eli/reg/2023/1804/oj/eng", bron2: "Europese Commissie \u2014 Q&amp;A bij de AFIR-verordening", url2: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure/questions-and-answers-regulation-deployment-alternative-fuels-infrastructure-eu-20231804_en", peildatum: "data_asof: verordening van kracht sinds 13 april 2024", citaat: "Artikel 5, lid 1-2: de verplichting tot betaling met een wijdverbreid betaalinstrument incl. contactloze kaartlezer geldt voor publiek toegankelijke laadpunten met een vermogen van 50 kW of meer (nieuw geplaatst vanaf 13 april 2024; bestaande \u226550 kW-punten uiterlijk 1 januari 2027). Voor laadpunten onder 50 kW volstaan ad-hoc betaalopties zoals app/QR-code, zonder verplichte fysieke kaartlezer.", toelichting: "Eerdere versies van dit dossier stelden te breed dat AFIR CPO's verplicht tot contactloze kaartbetaling 'op de paal zelf'. Dat geldt alleen voor het DC/HPC-segment \u226550 kW; regulier AC-laden (<50 kW, ~95% van het NL-netwerk) kent die verplichting niet. Dit maakt het AC-segment relevanter voor een bank-app-oplossing dan het DC/HPC-segment." },
+  "afir-regulation": { type: "feit", bron: "EUR-Lex \u2014 Regulation (EU) 2023/1804 (AFIR), artikel 5, lid 1-2", url: "https://eur-lex.europa.eu/eli/reg/2023/1804/oj/eng", bron2: "Europese Commissie \u2014 Q&amp;A bij de AFIR-verordening", url2: "https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure/questions-and-answers-regulation-deployment-alternative-fuels-infrastructure-eu-20231804_en", peildatum: "data_asof: verordening van kracht sinds 13 april 2024", citaat: "Artikel 5, lid 1-2: de verplichting tot betaling met een wijdverbreid betaalinstrument incl. contactloze kaartlezer geldt voor publiek toegankelijke laadpunten met een vermogen van 50 kW of meer (nieuw geplaatst vanaf 13 april 2024; bestaande \u226550 kW-punten uiterlijk 1 januari 2027). Voor laadpunten onder 50 kW volstaan ad-hoc betaalopties zoals app/QR-code, zonder verplichte fysieke kaartlezer.", toelichting: "De verplichting tot een fysieke contactloze kaartlezer op de paal geldt alleen voor het DC/HPC-segment \u226550 kW; regulier AC-laden (<50 kW, ~95% van het NL-netwerk) kent die verplichting niet. Dit maakt het AC-segment relevanter voor een bank-app-oplossing dan het DC/HPC-segment." },
   "psd3-status": { type: "aanname", bron: "Europese Commissie \u2014 voorstel PSD3/PSR (juni 2023)", url: "https://finance.ec.europa.eu/publications/financial-data-access-and-payments-package_en", peildatum: "data_asof: juli 2026 \u2014 wetgevingstraject nog niet afgerond", toelichting: "PSD3/PSR is een EU-wetgevingstraject (Commissievoorstel juni 2023), nog niet van kracht. Welke aanvullende eisen het uiteindelijk stelt aan banken als betaalintermediair in nieuwe verticals is daarom een AANNAME, geen feit. Verifieer de actuele triloog-/implementatiestatus bij aanvang van het validatietraject (hoofdstuk 8, Fase 1; zie ook de juridische quickscan-subtaak in data/validation-plan.json)." },
   "keten-structuur": { type: "feit", bron: "Virta \u2014 OCPI protocol explained", url: "https://www.virta.global/blog/ocpi-protocol-explained-the-backbone-of-ev-charging-interoperability", citaat: "\u201cOCPI is an open protocol that allows communication between Charge Point Operators (CPOs)... and E-mobility Service Providers (EMSPs)... By adopting OCPI as a de facto standard, CPOs and EMSPs can easily connect and let EV drivers charge regardless of which charging network they belong to.\u201d" },
   "witlabel-precedent": { type: "feit", bron: "Plugsurfing \u2014 Car makers solutions", url: "https://plugsurfing.com/car-makers-solutions/", citaat: "\u201cCarmakers benefit from white-label solutions as well as deeper integrations with their in-house technology... Through Plugsurfing's white-label EMP application, flexible Drive API, or Roam OCPI, they help deliver a consistent, trusted charging experience under your brand.\u201d" },
   "persona-schatting": { type: "schatting", bron: "Eigen analytisch model \u2014 data/personas.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/personas.json", toelichting: "Persona-marktaandelen en laadtransactie-aandelen zijn gemodelleerd op basis van RDW-kentekensegmentatie (particulier vs. zakelijk/lease) en algemeen bekende mobiliteitspatronen \u2014 geen directe enqu\u00eatedata binnen dit dossier." },
   "persona-aanname": { type: "aanname", bron: "Eigen kwalitatieve inschatting \u2014 data/personas.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/personas.json", toelichting: "De kwalitatieve &lsquo;relevantie voor de bankpropositie&rsquo;-score per persona is een expert-inschatting van de auteurs, niet gevalideerd met klantonderzoek. Dit is precies de reden dat hoofdstuk 7 een Concierge MVP-experiment (A1) voorstelt om deze inschatting te toetsen." },
   "concurrentie-marktaandeel": { type: "schatting", bron: "Eigen kwalitatieve inschatting \u2014 data/competitors.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/competitors.json", toelichting: "Geen enkele partij publiceert een uniforme, offici\u00eble marktaandeel-statistiek per EMSP/CPO voor Nederland. Deze classificatie is een kwalitatieve inschatting op basis van zichtbare aanwezigheid (aantal laadpunten/locaties), merkbekendheid en \u2014 waar beschikbaar \u2014 publieke jaarverslagen van individuele CPO's zoals Fastned." },
-  "nl-transactievolume": { type: "schatting", bron: "Eigen berekening \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", peildatum: "data_asof: juli 2026", toelichting: "Bandbreedte i.p.v. puntschatting: bottom-up geeft ~205.000-210.000 publieke laadpunten \u00d7 gemiddelde sessiefrequentie = 60-100 miljoen transacties/jaar; middenscenario 80 miljoen. De eerdere puntschatting van 95 miljoen zit aan de bovenkant van deze range. Externe kalibratiecheck: Vattenfall InCharge rapporteert ~8 mln publieke sessies/jaar bij \u00e9\u00e9n CPO (2025, +68% YoY). Het model is laadpunt-gebaseerd en maakt geen onderscheid tussen BEV- en PHEV-laadgedrag. Foutmarge \u00b125%, omdat de werkelijke bezettingsgraad per laadpunt niet direct gemeten is." },
+  "nl-transactievolume": { type: "schatting", bron: "Eigen berekening \u2014 data/market-data.json", url: "https://github.com/triqper/ev-marktonderzoek/blob/claude/ev-charging-market-validation-4wn5l5/data/market-data.json", peildatum: "data_asof: juli 2026", toelichting: "Bandbreedte i.p.v. puntschatting: bottom-up geeft ~205.000-210.000 publieke laadpunten \u00d7 gemiddelde sessiefrequentie = 60-100 miljoen transacties/jaar; middenscenario 80 miljoen. Externe kalibratiecheck: Vattenfall InCharge rapporteert ~8 mln publieke sessies/jaar bij \u00e9\u00e9n CPO (2025, +68% YoY). Het model is laadpunt-gebaseerd en maakt geen onderscheid tussen BEV- en PHEV-laadgedrag. Foutmarge \u00b125%, omdat de werkelijke bezettingsgraad per laadpunt niet direct gemeten is." },
 };
 
 const GLOSS = {
@@ -1161,6 +1292,7 @@ const GLOSS = {
   "UX": "User Experience \u2014 de gebruikservaring: hoe prettig en intu\u00eftief een product of dienst aanvoelt in gebruik.",
   "EU27": "De 27 lidstaten van de Europese Unie gezamenlijk \u2014 de standaardaggregatie waarmee Europese instanties zoals ACEA en EAFO EU-brede cijfers rapporteren.",
   "RVO": "Rijksdienst voor Ondernemend Nederland \u2014 de Nederlandse overheidsinstantie die o.a. maandelijks offici\u00eble cijfers over elektrisch vervoer en laadpunten publiceert.",
+  "NAL": "Nationale Agenda Laadinfrastructuur \u2014 het Nederlandse samenwerkingsprogramma van rijk, provincies, gemeenten, netbeheerders en ElaadNL dat de uitrol van laadinfrastructuur co\u00f6rdineert en prognoses (o.a. ~1,7 mln laadpunten in 2030) opstelt.",
   "ACEA": "European Automobile Manufacturers&rsquo; Association \u2014 de Europese brancheorganisatie van autofabrikanten; publiceert de offici\u00eble nieuwverkoopcijfers per brandstoftype.",
   "EAFO": "European Alternative Fuels Observatory \u2014 het Europese kennisplatform (Europese Commissie) dat landendata over elektrisch vervoer en laadinfrastructuur bijhoudt.",
   "EEA": "European Environment Agency \u2014 het Europees Milieuagentschap, publiceert onder meer indicatoren over nieuwe EV-registraties in Europa.",
@@ -1319,8 +1451,7 @@ const GLOSS = {
     // dashboard nooit uit elkaar kunnen lopen.
     // T_totaal is een bandbreedte i.p.v. puntschatting. Onderbouwing: bottom-up check
     // op basis van ~205.000 publieke punten × gemiddelde sessiefrequentie geeft
-    // 60-100 mln; 95 mln (de eerdere puntschatting) zit aan de bovenkant van deze
-    // range. Externe kalibratiecheck: Vattenfall InCharge ~8 mln publieke
+    // 60-100 mln. Externe kalibratiecheck: Vattenfall InCharge ~8 mln publieke
     // sessies/jaar bij één CPO (2025, +68% YoY). Het model is laadpunt-gebaseerd,
     // niet BEV/PHEV-specifiek — zie data/market-data.json.
     var T_TOTAAL = { low: 60000000, mid: 80000000, high: 100000000 };
@@ -1465,6 +1596,336 @@ const GLOSS = {
       });
     }, { rootMargin: '-35% 0px -55% 0px' });
     sections.forEach(function (s) { if (s) io.observe(s); });
+  })();
+</script>
+
+<script>
+  // ---- Statische datagrafieken (rapportcijfers gevisualiseerd) ----
+  (function () {
+    var SVGNS = 'http://www.w3.org/2000/svg';
+    function esc(s){ var d=document.createElement('div'); d.textContent=String(s); return d.innerHTML; }
+    function nl(n, dec){ return Number(n).toLocaleString('nl-NL', { minimumFractionDigits: dec||0, maximumFractionDigits: dec===undefined?1:dec }); }
+
+    // ---- gedeelde tooltip ----
+    var tip = document.createElement('div');
+    tip.className = 'chart-tip'; tip.hidden = true; document.body.appendChild(tip);
+    var TIPS = {};
+    function tipHTML(t){
+      var h = '<span class="tip-t">' + esc(t.title) + '</span>';
+      (t.rows||[]).forEach(function(r){
+        h += '<span class="tip-r"><span class="tip-k">' + (r.color ? '<i style="background:'+r.color+'"></i>' : '') + esc(r.label) + '</span><b>' + esc(r.val) + '</b></span>';
+      });
+      if (t.note) h += '<span class="tip-r" style="color:var(--ink-faint);display:block;margin-top:0.3rem">' + esc(t.note) + '</span>';
+      return h;
+    }
+    function showTip(html, x, y){
+      tip.innerHTML = html; tip.hidden = false;
+      var w = tip.offsetWidth, h = tip.offsetHeight;
+      var left = x + 14, top = y + 14;
+      if (left + w > window.innerWidth - 8) left = x - w - 14;
+      if (left < 8) left = 8;
+      if (top + h > window.innerHeight - 8) top = y - h - 14;
+      if (top < 8) top = 8;
+      tip.style.left = left + 'px'; tip.style.top = top + 'px';
+    }
+    function hideTip(){ tip.hidden = true; }
+    document.addEventListener('mousemove', function(e){
+      var m = e.target.closest && e.target.closest('.chart-mark[data-c][data-i]');
+      if (!m){ if(!tip.hidden) hideTip(); return; }
+      var store = TIPS[m.getAttribute('data-c')];
+      if (!store) { hideTip(); return; }
+      var t = store[+m.getAttribute('data-i')];
+      if (!t) { hideTip(); return; }
+      showTip(tipHTML(t), e.clientX, e.clientY);
+    }, { passive: true });
+    document.addEventListener('mouseleave', hideTip, true);
+    window.addEventListener('scroll', hideTip, { passive: true });
+
+    function legend(id, items){
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = items.map(function(it){
+        return '<span><i style="background:' + it.color + '"></i>' + esc(it.name) + '</span>';
+      }).join('');
+    }
+
+    // ---- gegroepeerde/enkele staven ----
+    function bars(cfg){
+      var svg = document.getElementById(cfg.id); if (!svg) return;
+      var vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+      var padL = cfg.padL || 46, padR = 14, padT = 16, padB = cfg.padB || 46;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var G = cfg.groups.length, S = cfg.series.length;
+      var yMax = cfg.yMax, y0 = padT + plotH;
+      var s = '';
+      // gridlines + y-as
+      var ticks = cfg.ticks || 4;
+      for (var g=0; g<=ticks; g++){
+        var val = yMax * g/ticks, y = y0 - plotH * g/ticks;
+        s += '<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="var(--rule)" stroke-dasharray="'+(g===0?'0':'2,3')+'"/>';
+        s += '<text x="'+(padL-8)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="var(--ink-faint)">'+cfg.fmtAxis(val)+'</text>';
+      }
+      var groupW = plotW / G;
+      var innerPad = groupW * 0.16;
+      var bandW = groupW - innerPad*2;
+      var barW = Math.min(cfg.maxBarW||46, (bandW - (S-1)*2) / S);
+      var totalBars = barW*S + (S-1)*2;
+      var store = [];
+      cfg.groups.forEach(function(label, gi){
+        var gx = padL + gi*groupW + groupW/2;
+        var startX = gx - totalBars/2;
+        cfg.series.forEach(function(ser, si){
+          var v = ser.values[gi];
+          var bh = plotH * (v / yMax);
+          var bx = startX + si*(barW+2);
+          var by = y0 - bh;
+          var emph = (cfg.emphasize && cfg.emphasize(gi)) ? ' stroke="var(--accent)" stroke-width="1.5"' : '';
+          s += '<rect class="chart-mark" data-c="'+cfg.id+'" data-i="'+store.length+'" x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+Math.max(bh,1).toFixed(1)+'" rx="3" fill="'+ser.color+'"'+emph+'/>';
+          if (cfg.valueLabels !== false && barW >= 20) {
+            s += '<text x="'+gx0(bx,barW)+'" y="'+(by-4).toFixed(1)+'" text-anchor="middle" font-size="9" font-weight="600" fill="var(--ink-secondary)">'+ser.fmt(v)+'</text>';
+          }
+          store.push(cfg.tip(gi, si));
+        });
+        // x-label (mogelijk meerregelig via \n)
+        var lines = String(label).split('\n');
+        var bold = (cfg.emphasize && cfg.emphasize(gi)) ? ' font-weight="700"' : '';
+        lines.forEach(function(ln, li){
+          s += '<text x="'+gx.toFixed(1)+'" y="'+(y0 + 16 + li*11).toFixed(1)+'" text-anchor="middle" font-size="9.5" fill="var(--ink-secondary)"'+bold+'>'+esc(ln)+'</text>';
+        });
+      });
+      function gx0(bx,bw){ return (bx+bw/2).toFixed(1); }
+      svg.innerHTML = s;
+      TIPS[cfg.id] = store;
+    }
+
+    // ---- lijnen (geïndexeerd) ----
+    function lines(cfg){
+      var svg = document.getElementById(cfg.id); if (!svg) return;
+      var vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+      var padL = 44, padR = 54, padT = 18, padB = 40;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var yMax = cfg.yMax, yMin = cfg.yMin||0, y0 = padT + plotH;
+      var N = cfg.xLabels.length;
+      var xAt = function(i){ return padL + plotW * (N===1?0.5:i/(N-1)); };
+      var yAt = function(v){ return y0 - plotH * (v - yMin)/(yMax - yMin); };
+      var s = '';
+      var ticks = cfg.ticks || 4;
+      for (var g=0; g<=ticks; g++){
+        var val = yMin + (yMax-yMin)*g/ticks, y = yAt(val);
+        s += '<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="var(--rule)" stroke-dasharray="'+(g===0?'0':'2,3')+'"/>';
+        s += '<text x="'+(padL-8)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="var(--ink-faint)">'+Math.round(val)+'</text>';
+      }
+      cfg.xLabels.forEach(function(lb, i){
+        s += '<text x="'+xAt(i).toFixed(1)+'" y="'+(y0+18)+'" text-anchor="middle" font-size="9.5" fill="var(--ink-secondary)">'+esc(lb)+'</text>';
+      });
+      var store = [];
+      cfg.series.forEach(function(ser){
+        var pts = ser.values.map(function(v,i){ return xAt(i).toFixed(1)+','+yAt(v).toFixed(1); }).join(' ');
+        s += '<polyline points="'+pts+'" fill="none" stroke="'+ser.color+'" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>';
+      });
+      cfg.series.forEach(function(ser){
+        ser.values.forEach(function(v,i){
+          s += '<circle class="chart-mark" data-c="'+cfg.id+'" data-i="'+store.length+'" cx="'+xAt(i).toFixed(1)+'" cy="'+yAt(v).toFixed(1)+'" r="4.5" fill="var(--chart-surface)" stroke="'+ser.color+'" stroke-width="2.2"/>';
+          store.push({ title: cfg.xLabels[i], rows: [{ color: ser.color, label: ser.name, val: 'index ' + Math.round(v) + (ser.abs ? '  ·  ' + ser.abs[i] : '') }] });
+        });
+        // eindwaarde-label
+        var li = ser.values.length-1;
+        s += '<text x="'+(xAt(li)+8)+'" y="'+(yAt(ser.values[li])+3).toFixed(1)+'" font-size="9.5" font-weight="700" fill="var(--ink-secondary)">'+Math.round(ser.values[li])+'</text>';
+      });
+      svg.innerHTML = s;
+      TIPS[cfg.id] = store;
+    }
+
+    // ---- spreidingsdiagram (risicomatrix) ----
+    function scatter(cfg){
+      var svg = document.getElementById(cfg.id); if (!svg) return;
+      var vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+      var padL = 52, padR = 20, padT = 18, padB = 46;
+      var plotW = W - padL - padR, plotH = H - padT - padB;
+      var xMin=0.5, xMax=5.5, yMin=0.5, yMax=5.5;
+      var xAt = function(v){ return padL + plotW*(v-xMin)/(xMax-xMin); };
+      var yAt = function(v){ return padT + plotH*(1-(v-yMin)/(yMax-yMin)); };
+      var s = '';
+      // hoog-risico zone (rechtsboven)
+      s += '<rect x="'+xAt(3.5).toFixed(1)+'" y="'+yAt(5.5).toFixed(1)+'" width="'+(xAt(5.5)-xAt(3.5)).toFixed(1)+'" height="'+(yAt(3.5)-yAt(5.5)).toFixed(1)+'" fill="var(--aanname-soft)" opacity="0.5"/>';
+      s += '<text x="'+(xAt(5.4)).toFixed(1)+'" y="'+(yAt(5.35)).toFixed(1)+'" text-anchor="end" font-size="9" font-style="italic" fill="var(--aanname)">hoogste risico</text>';
+      for (var g=1; g<=5; g++){
+        s += '<line x1="'+xAt(g)+'" y1="'+yAt(0.5)+'" x2="'+xAt(g)+'" y2="'+yAt(5.5)+'" stroke="var(--rule)" stroke-dasharray="2,3"/>';
+        s += '<line x1="'+xAt(0.5)+'" y1="'+yAt(g)+'" x2="'+xAt(5.5)+'" y2="'+yAt(g)+'" stroke="var(--rule)" stroke-dasharray="2,3"/>';
+        s += '<text x="'+xAt(g)+'" y="'+(yAt(0.5)+16)+'" text-anchor="middle" font-size="9" fill="var(--ink-faint)">'+g+'</text>';
+        s += '<text x="'+(xAt(0.5)-8)+'" y="'+(yAt(g)+3)+'" text-anchor="end" font-size="9" fill="var(--ink-faint)">'+g+'</text>';
+      }
+      // astitels
+      s += '<text x="'+(padL+plotW/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="9.5" fill="var(--ink-faint)">Kans dat aanname onjuist is  →</text>';
+      s += '<text transform="translate(13,'+(padT+plotH/2)+') rotate(-90)" text-anchor="middle" font-size="9.5" fill="var(--ink-faint)">Impact  →</text>';
+      var store = [];
+      cfg.points.forEach(function(p){
+        var r = 7 + p.score*0.7;
+        s += '<circle class="chart-mark" data-c="'+cfg.id+'" data-i="'+store.length+'" cx="'+xAt(p.x).toFixed(1)+'" cy="'+yAt(p.y).toFixed(1)+'" r="'+r.toFixed(1)+'" fill="'+p.color+'" fill-opacity="0.82" stroke="var(--chart-surface)" stroke-width="1.5"/>';
+        s += '<text x="'+xAt(p.x).toFixed(1)+'" y="'+(yAt(p.y)+3).toFixed(1)+'" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fff" stroke="rgba(0,0,0,0.35)" stroke-width="0.5" paint-order="stroke" style="pointer-events:none">'+esc(p.id)+'</text>';
+        store.push({ title: p.id + ' — ' + p.label, rows: [
+          { label: 'Kans onjuist', val: p.x0 + ' / 5' },
+          { label: 'Impact', val: p.y + ' / 5' },
+          { label: 'Risicoscore', val: p.score + ' / 25' },
+          { color: p.color, label: 'Prioriteit', val: p.prio }
+        ] });
+      });
+      svg.innerHTML = s;
+      TIPS[cfg.id] = store;
+    }
+
+    var css = getComputedStyle(document.documentElement);
+    function C(name){ return 'var(' + name + ')'; }
+
+    // ===== 1. EV-park per land =====
+    (function(){
+      var d = [
+        { land:'Duitsland', short:'Duitsland', park:2.98, lp:'~165.000', tx:'~78 mln' },
+        { land:'Nordics (NO/SE/DK/FI)', short:'Nordics', park:2.60, lp:'~95.000', tx:'~48 mln' },
+        { land:'Frankrijk', short:'Frankrijk', park:2.50, lp:'~155.000', tx:'~62 mln' },
+        { land:'Verenigd Koninkrijk', short:'VK', park:1.90, lp:'~82.000', tx:'~55 mln' },
+        { land:'Nederland', short:'Nederland', park:1.24, lp:'~210.000', tx:'~80 mln' },
+        { land:'België', short:'België', park:0.48, lp:'~44.000', tx:'~17 mln' }
+      ];
+      bars({
+        id:'fig-landen', yMax:3.3, ticks:3, maxBarW:54,
+        fmtAxis:function(v){ return nl(v,0); },
+        groups: d.map(function(x){ return x.short; }),
+        series: [{ name:'EV-park', color:C('--cat-1'), values:d.map(function(x){return x.park;}), fmt:function(v){ return nl(v,2); } }],
+        emphasize:function(gi){ return d[gi].land==='Nederland'; },
+        tip:function(gi){ var x=d[gi]; return { title:x.land, rows:[
+          { color:C('--cat-1'), label:'EV-park (BEV+PHEV)', val: nl(x.park,2)+' mln' },
+          { label:'Publieke laadpunten', val:x.lp },
+          { label:'Laadtransacties/jaar', val:x.tx }
+        ] }; }
+      });
+    })();
+
+    // ===== 2. Groeiprognose NL 2026-2030 (geïndexeerd) =====
+    (function(){
+      lines({
+        id:'fig-groei', yMax:260, ticks:4,
+        xLabels:['2026','2027','2028','2029','2030'],
+        series:[
+          { name:'BEV-park', color:C('--cat-1'), values:[100,129,160,197,243], abs:['0,70 mln','0,90 mln','1,12 mln','1,38 mln','1,70 mln'] },
+          { name:'Publieke laadpunten', color:C('--cat-2'), values:[100,119,143,169,200], abs:['210K','250K','300K','355K','420K'] },
+          { name:'Laadtransacties', color:C('--cat-3'), values:[100,125,156,200,250], abs:['80 mln','100 mln','125 mln','160 mln','200 mln'] }
+        ]
+      });
+      legend('fig-groei-legend', [
+        { name:'BEV-park (0,70 → 1,70 mln)', color:C('--cat-1') },
+        { name:'Publieke laadpunten (210K → 420K)', color:C('--cat-2') },
+        { name:'Laadtransacties (80 → 200 mln/jr)', color:C('--cat-3') }
+      ]);
+    })();
+
+    // ===== 3. Segmentatie AC/DC/HPC =====
+    (function(){
+      var pctFmt = function(v){ return v+'%'; };
+      bars({
+        id:'fig-segment', yMax:80, ticks:4,
+        fmtAxis:function(v){ return v+'%'; },
+        groups:['AC (≤22 kW)','DC (50–150 kW)','HPC (>150 kW)'],
+        series:[
+          { name:'Transacties', color:C('--cat-1'), values:[70,25,5], fmt:pctFmt },
+          { name:'Omzet', color:C('--cat-2'), values:[40,40,20], fmt:pctFmt },
+          { name:'Energie', color:C('--cat-3'), values:[40,40,20], fmt:pctFmt }
+        ],
+        tip:function(gi,si){
+          var seg=['AC','DC','HPC'][gi], metr=['Transacties','Omzet','Energie'][si];
+          var extra=[
+            { waarde:'~€6,50', kwh:'~12,5 kWh', dur:'~145 min' },
+            { waarde:'~€16', kwh:'~22 kWh', dur:'~30 min' },
+            { waarde:'~€28,50', kwh:'~34 kWh', dur:'~20 min' }
+          ][gi];
+          var col=[C('--cat-1'),C('--cat-2'),C('--cat-3')][si];
+          var val=[[70,25,5],[40,40,20],[40,40,20]][si][gi];
+          return { title:seg+' — aandeel '+metr.toLowerCase(), rows:[
+            { color:col, label:'Aandeel '+metr.toLowerCase(), val:val+'%' },
+            { label:'Gem. transactiewaarde', val:extra.waarde },
+            { label:'Gem. sessieduur', val:extra.dur }
+          ] };
+        }
+      });
+      legend('fig-segment-legend', [
+        { name:'Aandeel transacties', color:C('--cat-1') },
+        { name:'Aandeel omzet', color:C('--cat-2') },
+        { name:'Aandeel energie', color:C('--cat-3') }
+      ]);
+    })();
+
+    // ===== 4. Laadlocaties =====
+    (function(){
+      var d = [
+        { lab:'Stedelijke\npaal', full:'Stedelijke laadpaal (openbare weg)', pct:35, best:'~€8', dur:'~210 min', prof:'Bewoner zonder oprit' },
+        { lab:'Snelweg', full:'Snelweg/tankstation', pct:20, best:'~€24,50', dur:'~25 min', prof:'Zakelijk, lange afstand, vakantie' },
+        { lab:'Werkplek', full:'Werkplek', pct:15, best:'~€8', dur:'~260 min', prof:'Lease-rijder, forens' },
+        { lab:'Woonwijk', full:'Woonwijk (bestemmingsladen)', pct:10, best:'~€6', dur:'~320 min', prof:'Particuliere EV-bezitter' },
+        { lab:'Retail', full:'Supermarkt/retail', pct:10, best:'~€9,50', dur:'~40 min', prof:'Particulier, forens' },
+        { lab:'Destination', full:'Destination (horeca/hotel)', pct:5, best:'~€11,50', dur:'~95 min', prof:'Vakantierijder' }
+      ];
+      bars({
+        id:'fig-locatie', yMax:40, ticks:4, maxBarW:52,
+        fmtAxis:function(v){ return v+'%'; },
+        groups:d.map(function(x){return x.lab;}),
+        series:[{ name:'Aandeel transacties', color:C('--cat-1'), values:d.map(function(x){return x.pct;}), fmt:function(v){return v+'%';} }],
+        tip:function(gi){ var x=d[gi]; return { title:x.full, rows:[
+          { color:C('--cat-1'), label:'Aandeel transacties', val:x.pct+'%' },
+          { label:'Gem. besteding/sessie', val:x.best },
+          { label:'Gem. sessieduur', val:x.dur },
+          { label:'Gebruiker', val:x.prof }
+        ] }; }
+      });
+    })();
+
+    // ===== 5. Persona's =====
+    (function(){
+      var d = [
+        { lab:'Lease-\nforens', full:'Zakelijke lease-forens', mkt:35, tx:30, rel:'Laag-middel — werkgever betaalt' },
+        { lab:'Thuis-\nlader', full:'Particuliere thuislader', mkt:40, tx:20, rel:'Hoog — zoekt overzicht/besparing' },
+        { lab:'Stads-\nbewoner', full:'Stadsbewoner zonder oprit', mkt:15, tx:25, rel:'Middel — grootste volume' },
+        { lab:'Veelrijder', full:'Veelrijder/logistiek', mkt:5, tx:10, rel:'Middel — smal segment' },
+        { lab:'Vakantie', full:'Vakantie-/weekendrijder', mkt:5, tx:5, rel:'Hoog — laagste omschakeldrempel' }
+      ];
+      bars({
+        id:'fig-persona', yMax:45, ticks:3, padB:52,
+        fmtAxis:function(v){ return v+'%'; },
+        groups:d.map(function(x){return x.lab;}),
+        series:[
+          { name:'Marktaandeel', color:C('--cat-1'), values:d.map(function(x){return x.mkt;}), fmt:function(v){return v+'%';} },
+          { name:'Aandeel transacties', color:C('--cat-2'), values:d.map(function(x){return x.tx;}), fmt:function(v){return v+'%';} }
+        ],
+        tip:function(gi,si){ var x=d[gi]; var col=[C('--cat-1'),C('--cat-2')][si];
+          return { title:x.full, rows:[
+            { color:C('--cat-1'), label:'Marktaandeel', val:x.mkt+'%' },
+            { color:C('--cat-2'), label:'Aandeel transacties', val:x.tx+'%' },
+            { label:'Relevantie bank', val:x.rel }
+          ] }; }
+      });
+      legend('fig-persona-legend', [
+        { name:'Marktaandeel (% EV-rijders)', color:C('--cat-1') },
+        { name:'Aandeel publieke transacties', color:C('--cat-2') }
+      ]);
+    })();
+
+    // ===== 6. Risicomatrix =====
+    (function(){
+      var HOOG=C('--aanname'), MID=C('--schatting');
+      var pts = [
+        { id:'A1', x:3.83, x0:4, y:5, score:20, prio:'Hoog', color:HOOG, label:'Klanten willen laden/betalen via bank-app' },
+        { id:'A2', x:4.17, x0:4, y:5, score:20, prio:'Hoog', color:HOOG, label:'Bank kan marge realiseren boven kosten' },
+        { id:'A3', x:2.82, x0:3, y:4, score:12, prio:'Middel', color:MID, label:'Technische integratie via roaming haalbaar' },
+        { id:'A7', x:3.18, x0:3, y:4, score:12, prio:'Middel', color:MID, label:'Klanten veranderen gedrag ondanks lage frequentie' },
+        { id:'A4', x:2.82, x0:3, y:3, score:9, prio:'Middel', color:MID, label:'In-app-UX merkbaar beter dan fysieke pas' },
+        { id:'A6', x:3.18, x0:3, y:3, score:9, prio:'Middel', color:MID, label:'AFIR/PSD3 vormen geen blokkerende horde' },
+        { id:'A5', x:2, x0:2, y:4, score:8, prio:'Middel', color:MID, label:'Propositie past strategisch bij de bank' }
+      ];
+      scatter({ id:'fig-risico', points:pts });
+      legend('fig-risico-legend', [
+        { name:'Hoge prioriteit (score ≥ 15)', color:HOOG },
+        { name:'Middelhoge prioriteit', color:MID }
+      ]);
+    })();
   })();
 </script>
 </body>

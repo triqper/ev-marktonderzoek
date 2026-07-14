@@ -55,7 +55,7 @@ Een grove scenario-analyse laat zien dat zelfs een bescheiden marktaandeel van *
 
 *Bronherijking: waar mogelijk zijn de landencijfers geüniformeerd op EAFO (European Alternative Fuels Observatory, Europese Commissie). Waar EAFO geen recent cijfer publiceert, is de SCHATTING-markering behouden en is per rij vermeld welke bron wél is gebruikt.*
 
-**Toelichting NL-stekkerpark en transactiemodel.** Het PHEV-cijfer (543.355) is een RVO-feit met peildatum juli 2026 en corrigeert een eerdere eigen schatting van ~230.000 (factor 2,3 te laag); het totale NL-stekkerpark komt daarmee op ~1.244.500. Belangrijk voor de interpretatie: PHEV's laden gemiddeld minder frequent publiek dan BEV's. Het transactiemodel achter de kolom "laadtransactievolume" (zie `lib/calculations.ts` en hoofdstuk 6) is **laadpunt-gebaseerd** (publieke laadpunten × sessiefrequentie) en dus niet 1-op-1 aan het BEV- of PHEV-park gekoppeld — dit is een expliciete modelaanname. De ~210.000 (semi-)publieke laadpunten bestaan uit ~119.000 regulier publiek (openbare weg), ~80.000 semi-publiek (parkeerterreinen winkels/bedrijven) en ~6.000 snelladers [FEIT, RVO/Nationale Agenda Laadinfrastructuur, begin 2026].
+**Toelichting NL-stekkerpark en transactiemodel.** Het PHEV-cijfer (543.355) is een RVO-feit met peildatum juli 2026; het totale NL-stekkerpark komt daarmee op ~1.244.500. Belangrijk voor de interpretatie: PHEV's laden gemiddeld minder frequent publiek dan BEV's. Het transactiemodel achter de kolom "laadtransactievolume" (zie `lib/calculations.ts` en hoofdstuk 6) is **laadpunt-gebaseerd** (publieke laadpunten × sessiefrequentie) en dus niet 1-op-1 aan het BEV- of PHEV-park gekoppeld — dit is een expliciete modelaanname. De ~210.000 (semi-)publieke laadpunten bestaan uit ~119.000 regulier publiek (openbare weg), ~80.000 semi-publiek (parkeerterreinen winkels/bedrijven) en ~6.000 snelladers [FEIT, RVO/Nationale Agenda Laadinfrastructuur, begin 2026].
 
 **Groeivooruitzicht tot 2030 [AANNAME, macro-extrapolatie]:**
 - **EU-scenario:** bij aanhoudende BEV-nieuwverkoopgroei van het huidige tempo (EU BEV-aandeel steeg van 17,4% in 2025 naar 19,4% in Q1 2026; t/m mei 2026: 20% [FEIT, ACEA]) is een verdrievoudiging tot verviervoudiging van het EU-brede laadtransactievolume richting 2030 een redelijke ordegrootte-verwachting, in lijn met de EU Fit-for-55/AFIR-doelstellingen voor laadinfrastructuur.
@@ -213,7 +213,7 @@ Dit is een macro-extrapolatie, geen voorspelling — de daadwerkelijke groeicurv
 (7) Bruto-omzet bank                                            = TPV × m
 ```
 
-*Onderbouwing T_totaal-bandbreedte: bottom-up check op basis van ~205.000 publieke punten × gemiddelde sessiefrequentie geeft 60-100 mln; de eerdere puntschatting van 95 mln zit aan de bovenkant van deze range. Externe kalibratiecheck: Vattenfall InCharge rapporteert ~8 mln publieke sessies/jaar bij één CPO (2025, +68% YoY). Het model is laadpunt-gebaseerd en maakt geen onderscheid tussen BEV- en PHEV-laadgedrag — zie §3.1 en `lib/calculations.ts`.*
+*Onderbouwing T_totaal-bandbreedte: bottom-up check op basis van ~205.000 publieke punten × gemiddelde sessiefrequentie geeft 60-100 mln. Externe kalibratiecheck: Vattenfall InCharge rapporteert ~8 mln publieke sessies/jaar bij één CPO (2025, +68% YoY). Het model is laadpunt-gebaseerd en maakt geen onderscheid tussen BEV- en PHEV-laadgedrag — zie §3.1 en `lib/calculations.ts`.*
 
 ### 6.2 Scenariotabel
 
@@ -227,7 +227,7 @@ Elke cel toont de laag-hoog-bandbreedte van T_totaal (60-100 mln); het middensce
 
 > Gecombineerde onzekerheid in volume, transactiewaarde en take-rate betekent dat de werkelijke jaaromzet een factor 3-5 kan afwijken van de middenwaarde in bovenstaande tabel.
 
-**Let op — herziening t.o.v. Executive Summary:** de Executive Summary noemt bredere ranges (€0,3-1,5 mln bij 1%, €3-15 mln bij 10%) omdat daar ook hogere take-rate-varianten (tot 15%, zoals bij een volwaardige EMSP-marge in plaats van een dunne betaal-toeslag) zijn meegenomen. Deze tabel toont het conservatieve betaallaag-scenario (0,5-1,5% totale take-rate, vergelijkbaar met PSP-/acquiring-marges). Ter referentie: zuivere interchange is in de EU gereguleerd op 0,2% (debit) / 0,3% (credit) voor consumentenkaarten [FEIT, Verordening (EU) 2015/751, Interchange Fee Regulation] en is op zichzelf dus geen zelfstandig verdienmodel voor de bank. Het bredere scenario (EMSP-achtige marge van 5-15% op de volledige kWh-waarde) staat in §6.3.
+**Twee verdienmodellen — betaallaag vs. EMSP:** de Executive Summary noemt bredere ranges (€0,3-1,5 mln bij 1%, €3-15 mln bij 10%) omdat daar ook hogere take-rate-varianten (tot 15%, zoals bij een volwaardige EMSP-marge in plaats van een dunne betaal-toeslag) zijn meegenomen. Deze tabel toont het conservatieve betaallaag-scenario (0,5-1,5% totale take-rate, vergelijkbaar met PSP-/acquiring-marges). Ter referentie: zuivere interchange is in de EU gereguleerd op 0,2% (debit) / 0,3% (credit) voor consumentenkaarten [FEIT, Verordening (EU) 2015/751, Interchange Fee Regulation] en is op zichzelf dus geen zelfstandig verdienmodel voor de bank. Het bredere scenario (EMSP-achtige marge van 5-15% op de volledige kWh-waarde) staat in §6.3.
 
 ### 6.3 Alternatief verdienmodel: volledige EMSP-marge i.p.v. betaalmarge
 
@@ -353,7 +353,7 @@ Dit rapport is expliciet **niet** bedoeld als vervanging van deze vervolgstappen
 
 **Nederlandse overheid & validatie-instellingen:**
 - RVO.nl — *Stand van zaken elektrisch vervoer en laadpunten* (maandelijks bijgewerkt), https://www.rvo.nl/onderwerpen/elektrisch-vervoer/stand-van-zaken — peildatum juli 2026; bron voor park- en verkoopcijfers, incl. het PHEV-park (543.355). <!-- LLM-verwerkbaarheid: direct verwerkbaar -->
-- Nationaal Laadonderzoek (samenwerking Vereniging Elektrische Rijders (VER), Rijksuniversiteit Groningen (RUG) en RVO) — meest recente 5e editie, 3.500+ respondenten; referentiekader voor gebruikspatronen (§3.2/3.3). Volledig rapport via de VER-website. *NB: eerdere versies van dit dossier schreven dit onderzoek onterecht primair toe aan ElaadNL.* <!-- LLM-verwerkbaarheid: verwerkbaar, vervangt verouderde bron (ElaadNL 2023) -->
+- Nationaal Laadonderzoek (samenwerking Vereniging Elektrische Rijders (VER), Rijksuniversiteit Groningen (RUG) en RVO) — meest recente 5e editie, 3.500+ respondenten; referentiekader voor gebruikspatronen (§3.2/3.3). Volledig rapport via de VER-website. <!-- LLM-verwerkbaarheid: direct verwerkbaar -->
 - NAL Voortgangsrapportage 2025 (Nationale Agenda Laadinfrastructuur, gepubliceerd april 2026) — plaatsingstempo, laadmix en laaddrukanalyse (aanvullende bron voor §3.2/3.3). <!-- LLM-verwerkbaarheid: verwerkbaar (PDF-tabellen) -->
 - CBS StatLine (wagenpark, historische reeksen) — vrij toegankelijke open API. <!-- LLM-verwerkbaarheid: direct verwerkbaar (open API) -->
 

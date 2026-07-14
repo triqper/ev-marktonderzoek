@@ -22,7 +22,7 @@ const bronCategorieen = [
     titel: "Nederlandse overheid & validatie-instellingen",
     bronnen: [
       "RVO.nl — Stand van zaken elektrisch vervoer en laadpunten (maandelijks; peildatum juli 2026, incl. PHEV-park 543.355)",
-      "Nationaal Laadonderzoek (VER/RUG/RVO, 5e editie, 3.500+ respondenten) — referentiekader gebruikspatronen; volledig rapport via de VER-website. NB: eerder onterecht primair aan ElaadNL toegeschreven",
+      "Nationaal Laadonderzoek (VER/RUG/RVO, 5e editie, 3.500+ respondenten) — referentiekader gebruikspatronen; volledig rapport via de VER-website",
       "NAL Voortgangsrapportage 2025 (april 2026) — plaatsingstempo, laadmix, laaddruk",
       "CBS StatLine — wagenpark, historische reeksen (open API)",
     ],
