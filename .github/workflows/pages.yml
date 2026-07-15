@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - claude/ev-charging-market-validation-4wn5l5
+      - claude/ev-market-report-enhancements-qtumrg
     paths:
       - "docs/**"
       - ".github/workflows/pages.yml"
